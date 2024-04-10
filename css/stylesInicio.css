@@ -67,39 +67,53 @@ body {
     height: 60px; 
 }
 
+.usuario-publicacion::-webkit-scrollbar {
+    width: 0; 
+} 
+
 .usuario-publicacion {
-    width: 100%; /* Ocupa todo el ancho disponible */
-    max-width: 600px; /* Ancho máximo de la publicación */
-    color:white; 
-    margin: 20px auto; /* Margen vertical y centrado horizontalmente */
-    padding: 10px; /* Espacio interior de la publicación */
-    border-radius: 8px; /* Bordes redondeados */
+    background-color: #56565673;
+    margin-left: 7cm;
+    overflow-y: auto;
+    scrollbar-width: none; 
+}
+
+.publicacion {
+    max-width: 600px;
+    max-height: calc(100vh - 5cm); 
+    margin: 1cm 6cm; /* 2cm arriba y abajo, 6cm a la izquierda y derecha */
+    padding: 20px;
+    color: white;
+    border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .foto-usuario img {
-    width: 40px; /* Tamaño de la foto de usuario */
-    height: 40px;
-    border-radius: 50%; /* Para hacer la imagen redonda */
-}
-
-.contenido-publicacion {
-    margin-top: 10px; /* Espacio entre la foto de usuario y el contenido de la publicación */
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
 }
 
 .info-usuario {
-    display: flex; /* Utiliza flexbox para organizar los elementos en línea */
-    align-items: center; /* Centra verticalmente los elementos */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
 }
 
 .nombre-usuario {
-    margin-right: 5px; /* Espacio entre el nombre de usuario y los puntos */
+    font-size: 28px;
+    font-weight: bold;
+    margin-right: 20px;
 }
 
 .foto-publicacion img {
-    width: 100%; /* Ancho completo */
+    width: 400px; 
+    height: 400px; 
+    align-content: center;
     border-radius: 8px; /* Bordes redondeados */
-    margin-top: 10px; /* Espacio entre la foto de usuario y la publicación */
+    margin-top: 10px; /* Espacio entre la foto de usuario y la apublicación */
 }
 
 .interacciones {
@@ -108,6 +122,5 @@ body {
 }
 
 .mas-opciones {
-    color: white; /* Cambia el color del texto a blanco */
     font-size: 20px; /* Ajusta el tamaño de la fuente */
 }
