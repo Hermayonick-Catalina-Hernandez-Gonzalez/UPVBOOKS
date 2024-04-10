@@ -73,15 +73,18 @@ body {
 
 .usuario-publicacion {
     background-color: #56565673;
-    margin-left: 7cm;
+    margin-left: 6cm;
+    height: 99.5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow-y: auto;
     scrollbar-width: none; 
 }
 
 .publicacion {
-    max-width: 600px;
+    max-width: 800px;
     max-height: calc(100vh - 5cm); 
-    margin: 1cm 6cm; /* 2cm arriba y abajo, 6cm a la izquierda y derecha */
     padding: 20px;
     color: white;
     border-radius: 10px;
