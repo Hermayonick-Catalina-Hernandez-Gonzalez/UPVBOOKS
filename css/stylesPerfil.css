@@ -14,20 +14,22 @@ body {
     flex-direction: column;
     justify-content: space-evenly;
     align-items: flex-start;
-    position: fixed; 
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
 .opcion {
     display: flex;
     align-items: center;
-    margin: 10px 0; 
+    margin: 10px 0;
     margin-left: 30px;
 }
 
 .opcion img {
     width: 35px;
-    height: 35px; 
-    margin-right: 10px; 
+    height: 35px;
+    margin-right: 10px;
 }
 
 .opcion a {
@@ -62,12 +64,87 @@ body {
 
 #perfil img {
     width: 60px;
-    height: 60px; 
+    height: 60px;
 }
 
 .contenedor {
     background-color: #56565673;
-    height: calc(100vh - 210px); 
-    overflow-y: auto; 
-    margin-left: 6cm; 
+    height: calc(100vh - 210px);
+    overflow-y: auto;
+    margin-left: 6cm;
+}
+
+.perfil {
+    max-width: 600px;
+    margin: 2cm auto;
+    padding: 20px;
+    color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.foto-usuario img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+.info-usuario {
+    display: flex;
+    align-items: center; /* Asegura que los elementos estén centrados verticalmente */
+    justify-content: space-between; /* Distribuye el espacio entre los elementos */
+    margin-bottom: 20px;
+}
+
+.foto-usuario img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 20px; /* Asegura que haya espacio entre la foto y el nombre */
+}
+
+.nombre-usuario {
+    font-size: 24px;
+    font-weight: bold;
+    margin-right: 20px; /* Asegura que haya espacio entre el nombre y el botón de editar */
+}
+
+.editar-perfil {
+    background: linear-gradient(#3B0A42, #89006B);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.datos-usuario {
+    display: flex; /* Habilita Flexbox */
+    justify-content: space-between; /* Distribuye el espacio entre los elementos */
+    align-items: center; /* Alinea los elementos verticalmente en el centro */
+    margin-bottom: 20px;
+}
+
+.informacion-usuario {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px; /* Aumenta el espacio inferior para separar de los detalles del usuario */
+    white-space: nowrap; /* Evita saltos de línea */
+}
+
+.informacion-detallada {
+    margin-bottom: 10px; /* Aumenta el espacio inferior para separar cada detalle del usuario */
+}
+
+.galeria {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.galeria img {
+    width: 100%;
+    border-radius: 10px;
 }

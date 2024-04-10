@@ -14,7 +14,9 @@ body {
     flex-direction: column;
     justify-content: space-evenly;
     align-items: flex-start;
-    position: fixed; 
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
 .opcion {
@@ -64,10 +66,59 @@ body {
     width: 60px;
     height: 60px; 
 }
-
 .contenedor {
     background-color: #56565673;
-    height: calc(100vh - 210px); 
-    overflow-y: auto; 
-    margin-left: 6cm; 
+    height: 100vh;
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    padding-left: 6cm; /* Margen izquierdo */
+    padding-right: 6cm; /* Margen derecho */
+    padding-top: 2cm; /* Margen superior */
+}
+
+.usuario-publicacion {
+    width: 100%; /* Ocupa todo el ancho disponible */
+    max-width: 600px; /* Ancho máximo de la publicación */
+    background-color: #fff; /* Fondo blanco */
+    border: 1px solid #ddd; /* Borde */
+    margin: 20px auto; /* Margen vertical y centrado horizontalmente */
+    padding: 10px; /* Espacio interior de la publicación */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+.foto-usuario img {
+    width: 40px; /* Tamaño de la foto de usuario */
+    height: 40px;
+    border-radius: 50%; /* Para hacer la imagen redonda */
+}
+
+.contenido-publicacion {
+    margin-top: 10px; /* Espacio entre la foto de usuario y el contenido de la publicación */
+}
+
+.info-usuario {
+    display: flex; /* Utiliza flexbox para organizar los elementos en línea */
+    align-items: center; /* Centra verticalmente los elementos */
+}
+
+.nombre-usuario {
+    margin-right: 5px; /* Espacio entre el nombre de usuario y los puntos */
+}
+
+.foto-publicacion img {
+    width: 100%; /* Ancho completo */
+    border-radius: 8px; /* Bordes redondeados */
+    margin-top: 10px; /* Espacio entre la foto de usuario y la publicación */
+}
+
+.interacciones {
+    margin-top: 10px; /* Espacio entre la publicación y las interacciones */
+    color: #888; /* Color para las interacciones */
+}
+
+.mas-opciones {
+    color: white; /* Cambia el color del texto a blanco */
+    font-size: 20px; /* Ajusta el tamaño de la fuente */
 }
