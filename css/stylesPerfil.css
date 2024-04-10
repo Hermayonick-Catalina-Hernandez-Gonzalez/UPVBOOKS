@@ -156,7 +156,7 @@ body {
   
   .borrar-foto {
     position: absolute;
-    bottom: 10px; /* Ajusta la distancia desde la parte inferior según sea necesario */
+    bottom: 10px; 
     left: 50%;
     transform: translateX(-50%);
     background-color: rgba(0, 0, 0, 0.7);
@@ -166,5 +166,3 @@ body {
     border-radius: 5px;
     cursor: pointer;
   }
-  
-  

@@ -71,3 +71,54 @@ body {
     overflow-y: auto; 
     margin-left: 6cm; 
 }
+
+.encabezado {
+    padding: 20px;
+    background-color: #565656;
+    display: flex;
+    align-items: center;
+}
+
+.encabezado input[type="text"] {
+    flex-grow: 1; 
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px; 
+}
+
+.encabezado button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.boton-buscar img {
+    width: 55px; 
+    height: 55px; 
+}
+
+.perfil-usuario {
+    margin-left: 1cm; 
+    margin-bottom: 20px; 
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+
+.foto-usuario {
+    width: 40px; 
+    height: 40px;
+    border-radius: 50%; 
+    overflow: hidden; 
+}
+
+.nombre-usuario {
+    font-size: 20px;
+    font-weight: bold; 
+    color: white;
+    margin-left: 10px;
+}
+
