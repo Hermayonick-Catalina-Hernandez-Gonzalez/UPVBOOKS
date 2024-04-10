@@ -83,31 +83,24 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-
 .foto-usuario img {
     width: 100px;
     height: 100px;
     border-radius: 50%;
     margin-right: 20px;
 }
+
 .info-usuario {
     display: flex;
-    align-items: center; /* Asegura que los elementos estén centrados verticalmente */
-    justify-content: space-between; /* Distribuye el espacio entre los elementos */
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 20px;
 }
 
-.foto-usuario img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-right: 20px; /* Asegura que haya espacio entre la foto y el nombre */
-}
-
 .nombre-usuario {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
-    margin-right: 20px; /* Asegura que haya espacio entre el nombre y el botón de editar */
+    margin-right: 20px;
 }
 
 .editar-perfil {
@@ -121,21 +114,22 @@ body {
 }
 
 .datos-usuario {
-    display: flex; /* Habilita Flexbox */
-    justify-content: space-between; /* Distribuye el espacio entre los elementos */
-    align-items: center; /* Alinea los elementos verticalmente en el centro */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
 }
 
 .informacion-usuario {
-    font-size: 18px;
+    font-size: 25px;
     font-weight: bold;
-    margin-bottom: 20px; /* Aumenta el espacio inferior para separar de los detalles del usuario */
-    white-space: nowrap; /* Evita saltos de línea */
+    margin-bottom: 20px;
+    white-space: nowrap;
 }
 
 .informacion-detallada {
-    margin-bottom: 10px; /* Aumenta el espacio inferior para separar cada detalle del usuario */
+    margin-bottom: 10px; 
+    font-weight: bold;
 }
 
 .galeria {
@@ -148,3 +142,4 @@ body {
     width: 100%;
     border-radius: 10px;
 }
+
