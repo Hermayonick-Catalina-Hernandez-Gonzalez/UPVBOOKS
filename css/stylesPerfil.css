@@ -67,20 +67,25 @@ body {
     height: 60px;
 }
 
+
 .contenedor {
     background-color: #56565673;
-    height: calc(100vh - 210px);
-    overflow-y: auto;
-    margin-left: 6cm;
+    margin-left: 7cm;
 }
 
+.perfil::-webkit-scrollbar {
+    width: 0; 
+} 
 .perfil {
     max-width: 600px;
-    margin: 2cm auto;
+    max-height: calc(100vh - 5cm); 
+    margin: 2cm 6cm; /* 2cm arriba y abajo, 6cm a la izquierda y derecha */
     padding: 20px;
     color: white;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    scrollbar-width: none; 
 }
 
 .foto-usuario img {
@@ -134,12 +139,32 @@ body {
 
 .galeria {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr); /* Crea 3 columnas de igual tamaño */
     gap: 10px;
 }
 
 .galeria img {
-    width: 100%;
+    width: 180px; 
+    height: 180px; 
+    object-fit: cover; 
     border-radius: 10px;
 }
 
+.imagen-container {
+    position: relative;
+  }
+  
+  .borrar-foto {
+    position: absolute;
+    bottom: 10px; /* Ajusta la distancia desde la parte inferior según sea necesario */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  

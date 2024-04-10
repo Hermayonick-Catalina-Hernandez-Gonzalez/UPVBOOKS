@@ -66,26 +66,15 @@ body {
     width: 60px;
     height: 60px; 
 }
-.contenedor {
-    background-color: #56565673;
-    height: 100vh;
-    display: flex;
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center; /* Centra verticalmente */
-    padding-left: 6cm; /* Margen izquierdo */
-    padding-right: 6cm; /* Margen derecho */
-    padding-top: 2cm; /* Margen superior */
-}
 
 .usuario-publicacion {
     width: 100%; /* Ocupa todo el ancho disponible */
     max-width: 600px; /* Ancho máximo de la publicación */
-    background-color: #fff; /* Fondo blanco */
-    border: 1px solid #ddd; /* Borde */
+    color:white; 
     margin: 20px auto; /* Margen vertical y centrado horizontalmente */
     padding: 10px; /* Espacio interior de la publicación */
     border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .foto-usuario img {
