@@ -80,12 +80,13 @@ body {
     justify-content: center;
     overflow-y: auto;
     scrollbar-width: none; 
+    flex-direction: column; /* Mostrar las publicaciones en columna */
 }
 
 .publicacion {
     width: 70%; /* Aumenta el ancho en un 30% */
     max-width: 800px; /* Establece un ancho máximo para evitar que crezca demasiado */
-    max-height: calc(100vh - 2cm); 
+    max-height: calc(100vh - 20px); 
     padding: 10px;
     color: white;
     border-radius: 10px;
@@ -96,6 +97,8 @@ body {
     justify-content: center;
     overflow-y: auto;
     scrollbar-width: none; 
+    margin-bottom: 20px;
+    
 }
 
 .nombre{
@@ -190,5 +193,4 @@ body {
     }
     
 }
-
 
