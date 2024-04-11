@@ -83,47 +83,88 @@ body {
 }
 
 .publicacion {
-    max-width: 800px;
-    max-height: calc(100vh - 5cm); 
-    padding: 20px;
+    width: 70%; /* Aumenta el ancho en un 30% */
+    max-width: 800px; /* Establece un ancho máximo para evitar que crezca demasiado */
+    max-height: calc(100vh - 2cm); 
+    padding: 10px;
     color: white;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    overflow-y: auto;
+    scrollbar-width: none; 
 }
 
-.foto-usuario img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    margin-right: 20px;
-}
-
-.info-usuario {
+.nombre{
+    font-size: 20px; 
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.nombre-usuario {
-    font-size: 28px;
+    margin: 20px 0; 
+    margin-left: 30px;
     font-weight: bold;
-    margin-right: 20px;
 }
 
-.foto-publicacion img {
-    width: 400px; 
-    height: 400px; 
-    align-content: center;
-    border-radius: 8px; /* Bordes redondeados */
-    margin-top: 10px; /* Espacio entre la foto de usuario y la apublicación */
-}
-
-.interacciones {
-    margin-top: 10px; /* Espacio entre la publicación y las interacciones */
-    color: #888; /* Color para las interacciones */
+.nombre img{
+    width: 35px;
+    height: 35px; 
+    border-radius: 50%;
+    margin-right: 10px; 
 }
 
 .mas-opciones {
-    font-size: 20px; /* Ajusta el tamaño de la fuente */
+    font-size: 30px; 
+    font-weight: bold; 
+    color: white; 
+    background: none; 
+    border: none; 
+    cursor: pointer;
+    margin-left: auto; /* Empuja el botón hacia la derecha */
 }
+
+
+.foto-publicacion {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    margin-top: 10px;
+    width: 100%; /* Asegura que la imagen ocupe todo el ancho disponible */
+}
+
+.foto-publicacion img {
+    max-width: 80%; /* Asegura que la imagen no exceda el ancho del contenedor */
+    max-height: 80%; /* Asegura que la imagen no exceda la altura del contenedor */
+    border-radius: 8px;
+}
+
+.reaccion img {
+    width: 30px;
+    height: 30px;
+    margin-right: 20px;
+}
+
+.likes{
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.comentario{
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    margin: 10px 0; 
+    margin-left: 30px;
+}
+
+.comentario img{
+    width: 35px;
+    height: 35px; 
+    margin-right: 10px; 
+    border-radius: 50%;
+}
+
+
+
