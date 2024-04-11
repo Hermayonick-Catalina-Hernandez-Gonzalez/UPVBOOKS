@@ -174,7 +174,10 @@ body {
     cursor: pointer;
   }
 
-  @media (max-width: 768px) {
+/* Estilos existentes */
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
     .opcion span {
         display: none;
     }
@@ -188,7 +191,7 @@ body {
         height: 30px;
     }
 
-    #lydch a img , #perfil img{
+    #lydch a img, #perfil img {
         width: 35px !important; 
         height: 35px !important;
     }
@@ -196,5 +199,42 @@ body {
     .contenedor {
         margin-left: 2cm; 
     }
-    
+
+    .perfil {
+        padding: 10px; 
+    }
+
+    .editar-perfil {
+        margin-top: 10px;
+    }
+
+    .foto-usuario img {
+        width: 80px; 
+        height: 80px;
+    }
+
+    .info-usuario {
+        flex-direction: column; 
+    }
+
+    .nombre-usuario {
+        font-size: 20px; 
+    }
+
+    .datos-usuario {
+        flex-direction: column;
+    }
+
+    .informacion-usuario {
+        font-size: 20px; 
+    }
+
+    .galeria {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+
+    .galeria img {
+        width: 100px; 
+        height: 100px;
+    }
 }
