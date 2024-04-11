@@ -166,5 +166,29 @@ body {
     border-radius: 50%;
 }
 
+@media (max-width: 768px) {
+    .opcion span {
+        display: none;
+    }
+
+    .panel {
+        width: 2cm;
+    }
+
+    .opcion img {
+        width: 30px; 
+        height: 30px;
+    }
+
+    #lydch a img , #perfil img{
+        width: 35px !important; 
+        height: 35px !important;
+    }
+
+    .contenedor {
+        margin-left: 2cm; 
+    }
+    
+}
 
 
