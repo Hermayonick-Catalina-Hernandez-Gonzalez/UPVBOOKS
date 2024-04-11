@@ -196,5 +196,21 @@ body {
     .contenedor {
         margin-left: 2cm; 
     }
+
+    .subir {
+        flex-direction: column;
+    }
+
+    .subir-foto, .usuario-publicacion {
+        width: 100%;
+    }
+
+    .foto-preview {
+        width: 200px;
+        height: 200px;
+    }
     
+    .subir-foto #seleccionar-foto {
+        margin-bottom: 10px;
+    }
 }
