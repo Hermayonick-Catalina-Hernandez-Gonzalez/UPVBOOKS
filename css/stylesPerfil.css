@@ -213,6 +213,10 @@ body {
         height: 80px;
     }
 
+    .foto-usuario{
+        text-align: center;
+    }
+
     .info-usuario {
         flex-direction: column; 
     }
