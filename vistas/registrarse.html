@@ -10,15 +10,20 @@
 <body>
     <div class="card">
         <h1>Registrarse</h1>
-        <div class="ingresos">
+        <form class="ingresos" action="" method="">
             <label>Nombre:</label>
             <input type="text" placeholder="Usuario..." name="nombre">
             <label>Apellido:</label>
             <input type="text" placeholder="Apellido..." name="apellido">
-            <label>Fecha de Nacimiento:</label>
-            <input type="text" placeholder="DD/MM/AAAA" name="fechanac">
+            <label for="fecha-nacimiento">Fecha de Nacimiento:</label>
+            <input type="date" id="fecha-nacimiento" name="fechanac" required>
             <label>Genero:</label>
-            <input type="email" placeholder="Genero..." name="genero">
+            <select id="genero" name="genero">
+                <option value="O">Seleeciona tu genero...</option>
+                <option value="M">Masculino</option>
+                <option value="F">Femenino</option>
+                <option value="X">Prefiero no especificar</option>
+            </select>
             <label>Correo:</label>
             <input type="email" placeholder="Correo..." name="correo">
             <label>Username:</label>
@@ -27,12 +32,13 @@
             <input type="password" placeholder="Contraseña..." name="password">
             <label>Confirmar Contraseña:</label>
             <input type="password" placeholder="Confirmar contraseña..." name="password">
-        </div>
-        <div class="cont-btn">
-            <button class="registrar">Registrar</button>
-            <button class="salir">Salir</button>
-        </div>
+        </form>
+        <form class="cont-btn">
+            <button type="submit" class="registrar">Registrar</button>
+            <button type="submit" class="salir">Salir</button>
+        </form>
     </div>
     
 </body>
 </html>
+
