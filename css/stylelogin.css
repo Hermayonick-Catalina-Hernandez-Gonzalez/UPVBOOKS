@@ -91,14 +91,19 @@ input{
     outline: none; 
 }
 
+.cont-btn{
+    margin: 5px;
+    padding-top: 20px;
+    width: 100%;
+}
+
 button{
     box-sizing: border-box; 
-    width: auto;
+    width: 40%;
     height: 30px; 
     border-radius: 15px;
     font-size: 16px;
     border: 0px;
-    margin: 20px;
     background: rgb(98, 165, 244);
     margin-bottom: 10px;
     font-family: Verdana, sans-serif;

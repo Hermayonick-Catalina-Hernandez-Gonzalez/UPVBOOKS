@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Perfil</title>
     <link rel="icon" href="../img/Logo.png" type="image/x-icon">
-  <link rel="stylesheet" href="../css/stylesditarperfil.css">
+    <link rel="stylesheet" href="../css/stylesditarperfil.css">
 </head>
+
 <body>
     <div class="card">
         <h1>Editar Perfil</h1>
+        <label></label>
         <form class="ingresos" action="" method="">
-            <label>Nombre:</label>
-            <input type="text" placeholder="Usuario..." name="nombre">
-            <label>Apellido:</label>
-            <input type="text" placeholder="Apellido..." name="apellido">
+            <label for="nombre">Nombre:</label>
+            <input type="text" placeholder="Usuario..." name="nombre" id="nombre">
+            <label for="">Apellidos:</label>
+            <input type="text" placeholder="Apellido..." name="apellido" id="apellidos">
             <label for="fecha-nacimiento">Fecha de Nacimiento:</label>
             <input type="date" id="fecha-nacimiento" name="fechanac" required>
             <label>Genero:</label>
@@ -31,12 +34,15 @@
             <label>Contraseña:</label>
             <input type="password" placeholder="Contraseña..." name="password">
             <label>Confirmar Contraseña:</label>
-            <input type="password" placeholder="Confirmar contraseña..." name="password">
-
-            <button type="button" class="salir">Salir</button>
-            <button type="submit" class="guardar">Guardar</button>
+            <input type="password" placeholder="Confirmar contraseña..." id="confirmPass">
+            <div class="mensajeIgual"></div>
+            <div class="cont-btn">
+                <button type="submit" class="salir">Salir</button>
+                <button type="submit" class="guardar">Guardar</button>
+            </div>
         </form>
     </div>
-    
+
 </body>
+
 </html>
