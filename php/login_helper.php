@@ -1,20 +1,26 @@
 <?php
 
 function autentificar($username, $password) {
+    $GLOBALS["password"] = $password;
     include("connection.php");
 
-    if (!$username || !$password) return false;
+    echo "<script type='text/javascript'>console.log('User: ". $username ."')</script>";
+    echo "<script type='text/javascript'>console.log('Pass: ". $GLOBALS["password"] ."')</script>";
+
+    if (!$username || !$GLOBALS["password"]) return false;
 
     $sqlCmd = "SELECT * FROM usuarios WHERE username = ?";
     $sqlParams = [$username]; 
     
     $stmt = $connection->prepare($sqlCmd); 
     $stmt->execute($sqlParams); 
-    $r = $stmt->fetchAll(); 
+    $result = $stmt->fetchAll(); 
 
-    if (!$r) return false;
+    if (!$result) return false;
 
-    if ($usuario["password"] != $password) return false;
+    $usuario = $result[0];
+
+    if ($usuario["password"] != $GLOBALS["password"]) return false;
 
     return [
         "id" => $usuario['id'], 

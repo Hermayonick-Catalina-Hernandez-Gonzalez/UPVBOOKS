@@ -1,23 +1,27 @@
 <?php
-require "../php/connection.php";
 require "../php/login_helper.php";
-require "../php/sesion.php";
 
 session_start();
 
 if($_POST) {
+    echo "<script type='text/javascript'>console.log('Post')</script>";
     $username = filter_input(INPUT_POST, "nombre");
     $password = filter_input(INPUT_POST, "password");
+    echo "<script type='text/javascript'>console.log('User: ". $username ."')</script>";
+    echo "<script type='text/javascript'>console.log('Pass: ". $password ."')</script>";
     
-    $datosUsuario = autentificar($username, $password);
-    
-    if (!$datosUsuario) {
+    $loggear = autentificar($username, $password);
+    if(!$loggear) {
         header('Location: login.php');
         exit();
     } 
-}
-
-
+    $_SESSION["id"] = $loggear["id"];
+    $_SESSION["username"] = $loggear["username"];
+    $_SESSION["email"] = $loggear["email"];
+    $_SESSION["nombre"] = $loggear["nombre"];
+    $_SESSION["apellidos"] = $loggear["apellidos"];
+    header("Location: inicio.html");
+} 
 ?>
 
 <!DOCTYPE html>
