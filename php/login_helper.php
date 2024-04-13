@@ -1,22 +1,20 @@
 <?php
 
 function autentificar($username, $password) {
+    include("connection.php");
+
     if (!$username || !$password) return false;
 
-    $sqlCmd = "SELECT * FROM usuarios WHERE username = ? ORDER BY id DESC";
+    $sqlCmd = "SELECT * FROM usuarios WHERE username = ?";
     $sqlParams = [$username]; 
     
-    $conn = getDbConnection(); 
-    $stmt = $conn->prepare($sqlCmd); 
+    $stmt = $connection->prepare($sqlCmd); 
     $stmt->execute($sqlParams); 
     $r = $stmt->fetchAll(); 
 
     if (!$r) return false;
 
-    $passwordMasSalt = $password . $usuario["password_salt"];
-    $passwordEncrypted = strtoupper(hash("sha512", $passwordMasSalt));
-
-    if ($usuario["password_encrypted"] != $passwordEncrypted) return false;
+    if ($usuario["password"] != $password) return false;
 
     return [
         "id" => $usuario['id'], 

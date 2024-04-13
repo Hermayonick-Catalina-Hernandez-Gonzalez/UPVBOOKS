@@ -44,7 +44,7 @@ if($_POST) {
                 <button type="submit">Iniciar</button>
             </div>
         </form>
-        <p>Aun no tienes cuenta? <a href="registrarse.html">Regístrate</a></p>
+        <p>Aun no tienes cuenta? <a href="registrarse.php">Regístrate</a></p>
     </div>
     
 </body>

@@ -1,3 +1,27 @@
+<?php
+require "../php/registro_helper.php";
+
+session_start();
+
+if($_POST) {
+    $nombre = filter_input(INPUT_POST, "nombre");
+    $apellidos = filter_input(INPUT_POST, "apellido");
+    $fechaNacimiento = filter_input(INPUT_POST, "fecha-nacimiento");
+    $genero = filter_input(INPUT_POST,"genero");
+    $email = filter_input(INPUT_POST, "correo");
+    $username = filter_input(INPUT_POST, "username");
+    $password = filter_input(INPUT_POST, "password");
+
+    $registrar = registrar($nombre, $apellidos, $fechaNacimiento, $genero, $email, $username, $password);
+    if($registrar) {
+        echo "<script type='text/javascript'>console.log('Registro exitoso')</script>";
+    } else {
+        echo "<script type='text/javascript'>console.log('Ocurrió un error')</script>";
+    }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,13 +34,13 @@
 <body>
     <div class="card">
         <h1>Registrarse</h1>
-        <form class="ingresos" action="" method="post">
+        <form class="ingresos" action="registrarse.php" method="post">
             <label>Nombre:</label>
-            <input type="text" placeholder="Usuario..." name="nombre">
+            <input type="text" placeholder="Usuario..." name="nombre" required>
             <label>Apellido:</label>
             <input type="text" placeholder="Apellido..." name="apellido">
-            <label for="fecha-nacimiento">Fecha de Nacimiento:</label>
-            <input type="date" id="fecha-nacimiento" name="fechanac" required>
+            <label>Fecha de Nacimiento:</label>
+            <input type="date" id="fecha-nacimiento" name="fecha-nacimiento" required>
             <label>Genero:</label>
             <select id="genero" name="genero">
                 <option value="O">Seleeciona tu genero...</option>
@@ -34,7 +58,7 @@
             <input type="password" placeholder="Confirmar contraseña..." name="password">
             <div class="cont-btn">
                 <button type="submit" class="registrar">Registrar</button>
-                <button type="submit" class="salir">Salir</button>
+                <button type="button" class="salir" onclick="window.location.href = 'login.php'">Salir</button>
             </div>
         </form>
     </div>
