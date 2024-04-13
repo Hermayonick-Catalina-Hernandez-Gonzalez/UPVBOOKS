@@ -4,9 +4,6 @@ function autentificar($username, $password) {
     $GLOBALS["password"] = $password;
     include("connection.php");
 
-    echo "<script type='text/javascript'>console.log('User: ". $username ."')</script>";
-    echo "<script type='text/javascript'>console.log('Pass: ". $GLOBALS["password"] ."')</script>";
-
     if (!$username || !$GLOBALS["password"]) return false;
 
     $sqlCmd = "SELECT * FROM usuarios WHERE username = ?";
@@ -20,11 +17,9 @@ function autentificar($username, $password) {
 
     $usuario = $result[0];
 
-    $passwordsalt = $GLOBALS["password"] . $usuario["password_salt"];
-	$passwordEncrypted = strtoupper(hash("sha512", $passwordsalt));
-    
-    echo "<script type='text/javascript'>console.log('P: ". $passwordEncrypted ."')</script>";
-    echo "<script type='text/javascript'>console.log('BD: ". $usuario["password_encrypted"] ."')</script>";
+	$passwordMasSalt = $GLOBALS["password"] . $usuario["password_salt"];
+	$passwordEncrypted = strtoupper(hash("sha512", $passwordMasSalt));
+
     if ($usuario["password_encrypted"] != $passwordEncrypted) return false;
 
     return [

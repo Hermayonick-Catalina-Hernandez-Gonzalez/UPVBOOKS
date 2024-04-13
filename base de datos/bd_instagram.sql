@@ -8,7 +8,7 @@ CREATE TABLE `usuarios` (
   `email` varchar(512) NOT NULL,
   `password` varchar(128) NOT NULL,
   `password_encrypted` varchar(128) NOT NULL,
-  `password_salt` varchar(32) NOT NULL,
+  `password_salt` varchar(64) NOT NULL,
   `nombre` varchar(512) NOT NULL,
   `apellidos` varchar(512) DEFAULT NULL,
   `genero` varchar(1) DEFAULT NULL,
