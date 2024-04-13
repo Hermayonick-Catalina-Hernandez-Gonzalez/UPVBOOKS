@@ -2,6 +2,7 @@
 require "../php/registro_helper.php";
 
 session_start();
+$mensaje = "";
 
 if($_POST) {
     $nombre = filter_input(INPUT_POST, "nombre");
@@ -14,9 +15,9 @@ if($_POST) {
 
     $registrar = registrar($nombre, $apellidos, $fechaNacimiento, $genero, $email, $username, $password);
     if($registrar) {
-        echo "<script type='text/javascript'>console.log('Registro exitoso')</script>";
+        $mensaje = "Registro exitoso";
     } else {
-        echo "<script type='text/javascript'>console.log('Ocurrió un error')</script>";
+        $mensaje = "Ocurrió un error";
     }
 }
 
@@ -35,6 +36,7 @@ if($_POST) {
     <div class="card">
         <h1>Registrarse</h1>
         <form class="ingresos" action="registrarse.php" method="post">
+            <label><?php echo $mensaje; ?></label>
             <label>Nombre:</label>
             <input type="text" placeholder="Usuario..." name="nombre" required>
             <label>Apellido:</label>

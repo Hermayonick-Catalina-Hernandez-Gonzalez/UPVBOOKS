@@ -4,23 +4,21 @@ require "../php/login_helper.php";
 session_start();
 
 if($_POST) {
-    echo "<script type='text/javascript'>console.log('Post')</script>";
     $username = filter_input(INPUT_POST, "nombre");
     $password = filter_input(INPUT_POST, "password");
-    echo "<script type='text/javascript'>console.log('User: ". $username ."')</script>";
-    echo "<script type='text/javascript'>console.log('Pass: ". $password ."')</script>";
     
     $loggear = autentificar($username, $password);
     if(!$loggear) {
-        header('Location: login.php');
-        exit();
-    } 
-    $_SESSION["id"] = $loggear["id"];
-    $_SESSION["username"] = $loggear["username"];
-    $_SESSION["email"] = $loggear["email"];
-    $_SESSION["nombre"] = $loggear["nombre"];
-    $_SESSION["apellidos"] = $loggear["apellidos"];
-    header("Location: inicio.html");
+        $mensaje = "Usuario o contraseña incorrectos";
+    } else {
+        $_SESSION["id"] = $loggear["id"];
+        $_SESSION["username"] = $loggear["username"];
+        $_SESSION["email"] = $loggear["email"];
+        $_SESSION["nombre"] = $loggear["nombre"];
+        $_SESSION["apellidos"] = $loggear["apellidos"];
+        header("Location: inicio.html");
+        exit(); 
+    }
 } 
 ?>
 
@@ -31,7 +29,8 @@ if($_POST) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesion</title>
     <link rel="icon" href="../img/Logo.png" type="image/x-icon">
-  <link rel="stylesheet" href="../css/stylelogin.css">
+    <link rel="stylesheet" href="../css/stylelogin.css">
+    <script src="../js/mensajeError.js"></script>
 </head>
 <body>
     <div class="card">
@@ -40,6 +39,7 @@ if($_POST) {
             <img src="../img/Logo.png" />
         </div>
         <form class="ingresos" action="login.php" method="post">
+            <p id="mensaje"><?php if(isset($mensaje)) echo $mensaje; ?></p>
             <label>Usuario:</label>
             <input type="text" placeholder="Usuario..." name="nombre" id="nombre">
             <label>Contraseña:</label>
