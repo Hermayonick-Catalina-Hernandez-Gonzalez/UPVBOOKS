@@ -7,6 +7,7 @@ CREATE TABLE `usuarios` (
   `username` varchar(128) NOT NULL,
   `email` varchar(512) NOT NULL,
   `password` varchar(128) NOT NULL,
+  `password_encrypted` varchar(128) NOT NULL,
   `password_salt` varchar(32) NOT NULL,
   `nombre` varchar(512) NOT NULL,
   `apellidos` varchar(512) DEFAULT NULL,

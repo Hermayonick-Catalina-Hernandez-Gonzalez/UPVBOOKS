@@ -20,7 +20,12 @@ function autentificar($username, $password) {
 
     $usuario = $result[0];
 
-    if ($usuario["password"] != $GLOBALS["password"]) return false;
+    $passwordsalt = $GLOBALS["password"] . $usuario["password_salt"];
+	$passwordEncrypted = strtoupper(hash("sha512", $passwordsalt));
+    
+    echo "<script type='text/javascript'>console.log('P: ". $passwordEncrypted ."')</script>";
+    echo "<script type='text/javascript'>console.log('BD: ". $usuario["password_encrypted"] ."')</script>";
+    if ($usuario["password_encrypted"] != $passwordEncrypted) return false;
 
     return [
         "id" => $usuario['id'], 

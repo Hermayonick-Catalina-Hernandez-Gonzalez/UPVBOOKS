@@ -17,4 +17,7 @@
     - login_helper.php contiene la función de autenticar con los datos en la base de datos 
     - sesion_requerida.php funcionará para revisar en las demás páginas si la sesión ha sido iniciada 
     - sesion.php contiene los datos de sesión que se guardarán cuando se inici sesión 
-    *NOTA: Aún no pruebo el inicio de sesión*
+
+# Cambio Base de Datos 
+    - Agregué el campo de password encrypted
+    - En el registro ya está agregado este campo 
