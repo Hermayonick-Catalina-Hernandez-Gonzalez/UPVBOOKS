@@ -41,6 +41,57 @@ if ($stmt->rowCount() > 0) {
   $stmt_publicaciones_usuario->execute([':usuario_id' => $usuario_id]);
   $publicaciones_usuario = $stmt_publicaciones_usuario->fetchAll(PDO::FETCH_ASSOC);
 }
+
+// Función para verificar si el usuario actual sigue a otro usuario
+function esta_siguiendo_usuario($usuario_id, $usuario_seguir_id)
+{
+  global $connection;
+  $sql = "SELECT COUNT(*) AS num_filas FROM seguidores WHERE usuario_seguidor_id = :usuario_id AND usuario_siguiendo_id = :usuario_seguir_id";
+  $stmt = $connection->prepare($sql);
+  $stmt->execute([':usuario_id' => $usuario_id, ':usuario_seguir_id' => $usuario_seguir_id]);
+  $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+  return $resultado['num_filas'] > 0;
+}
+
+// Manejar la acción de seguir o dejar de seguir a un usuario
+if (isset($_POST['toggle_seguir'])) {
+  $usuario_seguir_id = $usuario['id'];
+  if (esta_siguiendo_usuario($usuario_id, $usuario_seguir_id)) {
+    // Si ya está siguiendo al usuario, dejar de seguirlo
+    $sql_dejar_seguir_usuario = "DELETE FROM seguidores WHERE usuario_seguidor_id = :usuario_id AND usuario_siguiendo_id = :usuario_seguir_id";
+    $stmt_dejar_seguir_usuario = $connection->prepare($sql_dejar_seguir_usuario);
+    $stmt_dejar_seguir_usuario->execute([':usuario_id' => $usuario_id, ':usuario_seguir_id' => $usuario_seguir_id]);
+    // Decrementar el número de seguidores del usuario seguido
+    $sql_actualizar_seguidores = "UPDATE usuarios SET num_seguidores = num_seguidores - 1 WHERE id = :usuario_seguir_id";
+    $stmt_actualizar_seguidores = $connection->prepare($sql_actualizar_seguidores);
+  
+  } else {
+    // Si no está siguiendo al usuario, seguirlo
+    $sql_seguir_usuario = "INSERT INTO seguidores (usuario_seguidor_id, usuario_siguiendo_id, fecha_hora) VALUES (:usuario_id, :usuario_seguir_id, NOW())";
+    $stmt_seguir_usuario = $connection->prepare($sql_seguir_usuario);
+    $stmt_seguir_usuario->execute([':usuario_id' => $usuario_id, ':usuario_seguir_id' => $usuario_seguir_id]);
+    // Incrementar el número de seguidores del usuario seguido
+    $sql_actualizar_seguidores = "UPDATE usuarios SET num_seguidores = num_seguidores + 1 WHERE id = :usuario_seguir_id";
+    $stmt_actualizar_seguidores = $connection->prepare($sql_actualizar_seguidores);
+  }
+  // Redireccionar a la misma página para evitar envíos de formulario duplicados
+  header("Location: {$_SERVER['PHP_SELF']}?usuario_id=$usuario_id");
+  exit;
+}
+// Manejar la acción de eliminar una publicación
+if (isset($_POST['eliminar_publicacion'])) {
+  // Obtener el ID de la publicación a eliminar
+  $publicacion_id = $_POST['publicacion_id'];
+
+  // Consulta para eliminar la publicación
+  $sql_eliminar_publicacion = "UPDATE fotos SET eliminado = 1 WHERE id = :publicacion_id";
+  $stmt_eliminar_publicacion = $connection->prepare($sql_eliminar_publicacion);
+  $stmt_eliminar_publicacion->execute([':publicacion_id' => $publicacion_id]);
+
+  // Redireccionar a la misma página para evitar envíos de formulario duplicados
+  header("Location: {$_SERVER['PHP_SELF']}?usuario_id=$usuario_id");
+  exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -79,7 +130,15 @@ if ($stmt->rowCount() > 0) {
 
       <div class="info-usuario">
         <div class="nombre-usuario"><?php echo $usuario['username']; ?></div>
-        <button class="editar-perfil">Seguir</button>
+        <form method="post">
+            <button class="editar-perfil" type="submit" name="toggle_seguir">
+              <?php if (esta_siguiendo_usuario($usuario_id, $usuario['id'])) : ?>
+                Dejar de seguir
+              <?php else : ?>
+                Seguir
+              <?php endif; ?>
+            </button>
+          </form>
       </div>
 
       <div class="datos-usuario">
@@ -92,10 +151,10 @@ if ($stmt->rowCount() > 0) {
         <div class="galeria">
           <?php foreach ($publicaciones_usuario as $publicacion) : ?>
             <div class="publicacion">
-              <img src="../publicaciones/<?php echo $publicacion['nombre_archivo']; ?>" alt="<?php echo $publicacion['descripcion']; ?>">
+              <img src="../fotos/<?php echo $publicacion['nombre_archivo']; ?>" alt="<?php echo $publicacion['descripcion']; ?>">
               <form method="post" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta publicación?');">
                 <input type="hidden" name="publicacion_id" value="<?php echo $publicacion['id']; ?>">
-                <button type="submit" name="eliminar_publicacion_<?php echo $publicacion['id']; ?>" class="eliminar-publicacion-btn">Eliminar</button>
+                <button class="eliminar-publicacion" type="submit" name="eliminar_publicacion">Eliminar</button>
               </form>
             </div>
           <?php endforeach; ?>
@@ -103,21 +162,7 @@ if ($stmt->rowCount() > 0) {
       <?php endif; ?>
     </div>
   </div>
-  <?php
-  if (isset($_POST['eliminar_publicacion'])) {
-    // Obtener el ID de la publicación a eliminar
-    $publicacion_id = $_POST['publicacion_id'];
-
-    // Consulta para eliminar la publicación
-    $sql_eliminar_publicacion = "UPDATE fotos SET eliminado = 1 WHERE id = :publicacion_id";
-    $stmt_eliminar_publicacion = $connection->prepare($sql_eliminar_publicacion);
-    $stmt_eliminar_publicacion->execute([':publicacion_id' => $publicacion_id]);
-
-    // Redireccionar a la misma página para evitar envíos de formulario duplicados
-    header("Location: {$_SERVER['PHP_SELF']}?usuario_id=$usuario_id");
-    exit;
-  }
-  ?>
+  
 </body>
 
 </html>
