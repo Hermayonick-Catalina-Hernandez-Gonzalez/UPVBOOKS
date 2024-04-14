@@ -23,7 +23,7 @@ if ($stmt->rowCount() > 0) {
         if (file_exists($imagen_usuario)) {
             echo "<img src='$imagen_usuario' alt='Foto de Usuario' class='foto-usuario'>";
         } else {
-            echo "<img src='../fotos_perfil/image.phg' alt='Foto de Usuario' class='foto-usuario'>"; 
+            echo "<img src='../fotos_perfil/image.png' alt='Foto de Usuario' class='foto-usuario'>"; 
         }
         // Enlace para abrir el perfil en la misma ventana
         echo "<a href='perfilBuscado.php?usuario_id=" . $row['id'] . "'>";
