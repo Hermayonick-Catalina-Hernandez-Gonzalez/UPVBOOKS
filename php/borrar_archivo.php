@@ -2,8 +2,8 @@
 
 // Import de los archivos de código necesarios para la ejecución 
 require "../config.php";  // Configuraciones generales de la aplicación
-require APP_PATH . "sesion.php";  // para acceder a las variables de sesión
-require APP_PATH . "data_access/db.php";  // para el acceso a datos
+require "./sesion.php";  // para acceder a las variables de sesión
+require "./connection.php";  // para el acceso a datos
 
 // Indicamos que la respuesta es de tipo JSON, porque la petición a esta ejecución
 // será por AJAX
@@ -31,8 +31,7 @@ if (!$id) {
 // Consulta a DB, tabla de archivos, el registro del archivo por el id
 $sqlCmd = "SELECT * FROM archivos WHERE id = ?";
 $sqlParam = [$id];
-$db = getDbConnection();
-$stmt = $db->prepare($sqlCmd);
+$stmt = $connection->prepare($sqlCmd);
 $stmt->execute($sqlParam);
 $archivo = $stmt->fetch();
 

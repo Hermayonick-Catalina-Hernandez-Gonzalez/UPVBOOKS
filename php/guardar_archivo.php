@@ -81,8 +81,8 @@ $sqlParam = [  // array con los datos a guardar, según los placeholders '?'
     $nombreArchivo, $extension, $nombreArchivoGuardado, $tamaño,
     $hashSha256, $fechaSubido, $USUARIO_ID, $descripcion
 ];
-$db = getDbConnection();  // Obtenemos el PDO Object para la operación a DB
-$stmt = $db->prepare($sqlCmd);  // obtenemos el statement de la ejecución
+
+$stmt = $connection->prepare($sqlCmd);  // obtenemos el statement de la ejecución
 $stmt->execute($sqlParam);  // ejecutamos el statement con los parámetros
 
 // Obtenemos el id del registro que insertamos en tabla archivos, dado que 

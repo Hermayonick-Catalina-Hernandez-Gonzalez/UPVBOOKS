@@ -2,8 +2,8 @@
 
 // Imports de archivos requieridos
 require "config.php";
-require APP_PATH . "sesion_requerida.php";
-require APP_PATH . "data_access/db.php";
+require "./sesion_requerida.php";
+require "./connection.php";
 
 $now = new DateTime();  // fecha hora actual de la ejecución
 
@@ -23,10 +23,9 @@ if (!$id) {
 }
 
 // Consulta del registro del archivo en DB
-$sqlCmd = "SELECT * FROM archivos WHERE id = ?";
+$sqlCmd = "SELECT * FROM fotos WHERE id = ?";
 $sqlParam = [$id]; // Parámetros de la consulta
-$db = getDbConnection();  // conexión a DB por PDF object
-$stmt = $db->prepare($sqlCmd);  // obtención del statement
+$stmt = $connection->prepare($sqlCmd);  // obtención del statement
 $stmt->execute($sqlParam);  // ejecución de la consulta
 $archivo = $stmt->fetch();  // obtenemos el primer registro que nos regresa el query
 
@@ -37,7 +36,7 @@ if (!$archivo) {  // Si no existe el registro del archivo
 }
 
 // Obtenemos la ruta completa del archivo, en la carpeta de archivos subidos.
-$rutaArchivo = DIR_UPLOAD . $archivo["nombre_archivo_guardado"];
+$rutaArchivo = "C:/xpp/htdocs/xampp/InstagramWEB/fotos/" . $archivo["nombre_archivo_guardado"];
 if (!file_exists($rutaArchivo)) {   // Si no exite el archivo.
     http_response_code(404);  // Regresamos error 404 = Not Found.
     exit();  // Fin de la ejecución.
