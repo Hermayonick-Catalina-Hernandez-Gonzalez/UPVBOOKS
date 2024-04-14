@@ -25,8 +25,8 @@ document.getElementById('formCrear').addEventListener("submit", function (e) {
     type: "post",
     url: "../php/guardar_archivo.php",
     data: formData,
-    contentType: false,  // Evita configurar manualmente el tipo de contenido
-    processData: false,  // Evita procesar los datos de FormData automáticamente
+    contentType: false,
+    processData: false,
     success: function (response) {
       window.location.href = "../vistas/perfil.php";
     },
