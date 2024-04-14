@@ -3,7 +3,7 @@
 require "sesion.php";
 
 if(!$usuarioAutenticado) {
-    header("Location: ../vistas/login.html");
+    header("Location: ../vistas/login.php");
     exit();
 }
 
