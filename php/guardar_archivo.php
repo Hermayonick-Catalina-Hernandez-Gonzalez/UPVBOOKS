@@ -77,19 +77,15 @@ $fechaSubido = $now->format("Y-m-d H:i:s");
 $sqlCmd =  // Sentencia SQL del INSERT
     "INSERT INTO fotos (secure_id, usuario_subio_id, nombre_archivo, tamaño, descripcion, fecha_subido) VALUES (?, ?, ?, ?, ?, ?)";
 $sqlParam = [  // array con los datos a guardar, según los placeholders '?'
-    $nombreArchivoGuardado, $USUARIO_ID, $nombreArchivo, $tamaño, $descripcion, $fechaSubido
+    $nombreArchivoGuardado, $usuarioID, $nombreArchivo, $tamaño, $descripcion, $fechaSubido
 ];
 
 $stmt = $connection->prepare($sqlCmd);  // obtenemos el statement de la ejecución
-if (!$stmt->execute($sqlParam)) {
-    $errores[] = "ERROR al añadir la consulta";
-    echo json_encode(["errores" => $errores]);
-    exit();  // fin de la ejecución de este archivo PHP
-}  // ejecutamos el statement con los parámetros
+$stmt->execute($sqlParam);
 
 // Obtenemos el id del registro que insertamos en tabla archivos, dado que 
 // este se calcula en DB al ser autoincrement
-$id = (int)$db->lastInsertId();  // la función regresa string, convertimos a int
+$id = (int)$connection->lastInsertId(); // la función regresa string, convertimos a int
 
 // Regresamos una respuesta como un JSON string, aquí pueden ir los diferentes datos que
 // pudieramos necesitar en el front-end.
@@ -102,8 +98,7 @@ $resObj = [
         "descripcion" => $descripcion,
         "nombreArchivoGuardado" => $nombreArchivoGuardado,
         "fechaSubido" => $fechaSubido,
-        "tamaño" => $tamaño,
-        "hashSha256" => $hashSha256
+        "tamaño" => $tamaño
     ]
 ];
 
