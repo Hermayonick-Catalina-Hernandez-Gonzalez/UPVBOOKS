@@ -13,7 +13,6 @@ $params = [':texto' => "%$texto_busqueda%"]; // Agregar '%' para buscar coincide
 $stmt = $connection->prepare($sql);
 $stmt->execute($params);
 
-// Comprobar si hay resultados
 if ($stmt->rowCount() > 0) {
     // Generar el HTML de los resultados
     echo "<ul>"; // Inicia la lista
@@ -23,11 +22,15 @@ if ($stmt->rowCount() > 0) {
         if (!empty($row['foto_perfil'])) {
             echo "<img src='data:image/jpeg;base64," . base64_encode($row['foto_perfil']) . "' alt='Foto de Usuario' class='foto-usuario'>";
         }
+        // Enlace para abrir el perfil en la misma ventana
+        echo "<a href='perfilBuscado.php?usuario_id=" . $row['id'] . "'>";
         echo "<span class='nombre-usuario'>" . $row['username'] . "</span>";
+        echo "</a>";
         echo "</li>"; // Cierra el elemento de lista
     }
     echo "</ul>"; // Cierra la lista
 } else {
     echo "No se encontraron usuarios.";
 }
+
 ?>

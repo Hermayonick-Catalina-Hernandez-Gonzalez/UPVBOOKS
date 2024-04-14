@@ -77,17 +77,18 @@ body {
 }
 
 .perfil::-webkit-scrollbar {
-    width: 0; 
-} 
+    width: 0;
+}
+
 .perfil {
     max-width: 800px;
-    max-height: calc(100vh - 5cm); 
+    max-height: calc(100vh - 5cm);
     padding: 20px;
     color: white;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
-    scrollbar-width: none; 
+    scrollbar-width: none;
 }
 
 .foto-usuario img {
@@ -120,7 +121,7 @@ body {
     font-size: 16px;
 }
 
-.editar-perfil a{
+.editar-perfil a {
     color: white;
     text-decoration: none;
 }
@@ -140,30 +141,31 @@ body {
 }
 
 .informacion-detallada {
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
     font-weight: bold;
 }
 
 .galeria {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Crea 3 columnas de igual tamaño */
+    grid-template-columns: repeat(3, 1fr);
+    /* Crea 3 columnas de igual tamaño */
     gap: 10px;
 }
 
 .galeria img {
-    width: 250px; 
-    height: 250px; 
-    object-fit: cover; 
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
     border-radius: 10px;
 }
 
 .imagen-container {
     position: relative;
-  }
-  
-  .borrar-foto {
+}
+
+.borrar-foto {
     position: absolute;
-    bottom: 10px; 
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
     background-color: rgba(0, 0, 0, 0.7);
@@ -172,7 +174,31 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
+}
+
+.publicacion {
+    position: relative;
+    display: inline-block;
+}
+
+.eliminar-publicacion {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    /* Centra horizontalmente */
+    background-color: black;
+    /* Fondo negro */
+    color: white;
+    /* Texto blanco */
+    border: none;
+    /* Sin borde */
+    border-radius: 20px;
+    /* Bordes redondos */
+    padding: 10px 20px;
+    /* Espacio interno */
+    cursor: pointer;
+}
 
 /* Estilos existentes */
 
@@ -187,21 +213,22 @@ body {
     }
 
     .opcion img {
-        width: 30px; 
+        width: 30px;
         height: 30px;
     }
 
-    #lydch a img, #perfil img {
-        width: 35px !important; 
+    #lydch a img,
+    #perfil img {
+        width: 35px !important;
         height: 35px !important;
     }
 
     .contenedor {
-        margin-left: 2cm; 
+        margin-left: 2cm;
     }
 
     .perfil {
-        padding: 10px; 
+        padding: 10px;
     }
 
     .editar-perfil {
@@ -209,20 +236,20 @@ body {
     }
 
     .foto-usuario img {
-        width: 80px; 
+        width: 80px;
         height: 80px;
     }
 
-    .foto-usuario{
+    .foto-usuario {
         text-align: center;
     }
 
     .info-usuario {
-        flex-direction: column; 
+        flex-direction: column;
     }
 
     .nombre-usuario {
-        font-size: 20px; 
+        font-size: 20px;
     }
 
     .datos-usuario {
@@ -230,15 +257,15 @@ body {
     }
 
     .informacion-usuario {
-        font-size: 20px; 
+        font-size: 20px;
     }
 
     .galeria {
-        grid-template-columns: repeat(2, 1fr); 
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .galeria img {
-        width: 100px; 
+        width: 100px;
         height: 100px;
     }
 }
