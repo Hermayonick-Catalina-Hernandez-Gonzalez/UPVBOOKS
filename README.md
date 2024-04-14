@@ -21,3 +21,9 @@
 # Cambio Base de Datos 
     - Agregué el campo de password encrypted
     - En el registro ya está agregado este campo 
+
+# Cambio a sesion.php, sesion_requerida.php, editarperfil.php, perfil.html
+    - Agregue un sesion start a sesion.php
+    - editarperfil lo cambie de html a php
+    - perfil cambie la ruta del boton editar
+    - modifique el nombre de un archivo en la carpeta php
