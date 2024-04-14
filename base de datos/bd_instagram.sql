@@ -15,7 +15,6 @@ CREATE TABLE `usuarios` (
   `fecha_nacimiento` date DEFAULT NULL,
   `fecha_hora_registro` datetime NOT NULL,
   `activo` tinyint(4) NOT NULL,
-  `foto_perfil` longblob DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 
 
 CREATE TABLE `fotos` (

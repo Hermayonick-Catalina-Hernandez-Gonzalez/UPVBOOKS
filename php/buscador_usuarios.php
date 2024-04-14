@@ -19,8 +19,11 @@ if ($stmt->rowCount() > 0) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         echo "<li class='perfil-usuario'>"; // Inicia un elemento de lista
         // Mostrar la imagen de perfil si existe
-        if (!empty($row['foto_perfil'])) {
-            echo "<img src='data:image/jpeg;base64," . base64_encode($row['foto_perfil']) . "' alt='Foto de Usuario' class='foto-usuario'>";
+        $imagen_usuario = "../fotos_perfil/" . $row['id'] . "_" . $row['nombre']  . ".jpg"; // Ruta de la imagen del usuario
+        if (file_exists($imagen_usuario)) {
+            echo "<img src='$imagen_usuario' alt='Foto de Usuario' class='foto-usuario'>";
+        } else {
+            echo "<img src='../fotos_perfil/image.phg' alt='Foto de Usuario' class='foto-usuario'>"; 
         }
         // Enlace para abrir el perfil en la misma ventana
         echo "<a href='perfilBuscado.php?usuario_id=" . $row['id'] . "'>";
