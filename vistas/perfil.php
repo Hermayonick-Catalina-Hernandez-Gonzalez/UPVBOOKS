@@ -51,13 +51,13 @@ $body["cantidad_publicaciones"] = $stmt->rowCount();
     <div class="opcion" id="lydch"><a href="#"><img src="../img/Logo.png" alt="LYDCH"
           style="width: 60px; height: 60px;"><span style="font-size: larger; font-weight: bold;">LYDCH</span></a></div>
     <div class="espacio"></div>
-    <div class="opcion"><a href="./inicio.html"><img src="../img/Inicio.png" alt="Inicio"><span>Inicio</span></a></div>
+    <div class="opcion"><a href="./inicio.php"><img src="../img/Inicio.png" alt="Inicio"><span>Inicio</span></a></div>
     <div class="opcion"><a href="./buscador.html"><img src="../img/Buscador.png"
           alt="Buscador"><span>Buscador</span></a></div>
     <div class="opcion"><a href="./crear.html"><img src="../img/Crear.png" alt="Crear"><span>Crear</span></a></div>
     <div class="opcion" id="perfil"><a href="./perfil.php"><img src="../img/usuario.png"
           alt="Perfil"><span>Perfil</span></a></div>
-    <div class="opcion"><a href="#"><img src="../img/Salir.png" alt="Salir"><span>Salir</span></a></div>
+    <div class="opcion"><a href="login.php"><img src="../img/Salir.png" alt="Salir"><span>Salir</span></a></div>
   </div>
 
   <div class="contenedor">

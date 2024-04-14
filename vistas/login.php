@@ -16,7 +16,7 @@ if($_POST) {
         $_SESSION["email"] = $loggear["email"];
         $_SESSION["nombre"] = $loggear["nombre"];
         $_SESSION["apellidos"] = $loggear["apellidos"];
-        header("Location: inicio.html");
+        header("Location: inicio.php");
         exit(); 
     }
 } 
