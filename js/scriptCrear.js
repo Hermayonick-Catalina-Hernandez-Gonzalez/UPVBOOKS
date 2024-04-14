@@ -16,3 +16,7 @@ document.getElementById('foto').addEventListener('change', function(event) {
 document.getElementById('seleccionar-foto').addEventListener('click', function() {
   document.getElementById('foto').click();
 });
+
+document.getElementById('formCrear').addEventListener("submit", function(e){
+  e.preventDefault();
+});

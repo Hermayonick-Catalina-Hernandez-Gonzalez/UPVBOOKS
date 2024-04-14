@@ -14,15 +14,17 @@ $now = new DateTime();  // fecha hora actual de la ejecución
 
 // Se valida que el usuario está autenticado, de lo contrario se regresa un
 // json con el error (usuario no autenticado)
-if (!$USUARIO_AUTENTICADO) {
+if (!$usuarioAutenticado) {
     $errores[] = "Usuario no autenticado";
     echo json_encode(["errores" => $errores]);
     exit();  // fin de la ejecución de este archivo PHP
 }
 
 // Se valida que se haya enviado el archivo en el request
-if (empty($_FILES) || !isset($_FILES["archivo"]) || 
-        empty($_FILES["archivo"]["name"])) {
+if (
+    empty($_FILES) || !isset($_FILES["archivo"]) ||
+    empty($_FILES["archivo"]["name"])
+) {
     $errores[] = "No es especificó el archivo.";
     echo json_encode(["errores" => $errores]);
     exit();  // fin de la ejecución de este archivo PHP
@@ -34,7 +36,7 @@ $archivoSubido = $_FILES["archivo"];
 // Para obtener el dato de la descripción del archivo, si es que se envió
 $descripcion = filter_input(INPUT_POST, "descripcion");
 $descripcion = $descripcion && strlen(trim($descripcion)) ? // valor establecido?
-        trim($descripcion) : NULL;  // SI -> quitamos espacios en blanco : NO -> NULL
+    trim($descripcion) : NULL;  // SI -> quitamos espacios en blanco : NO -> NULL
 
 // Se obtienen los datos del archivo que se subió
 $nombreArchivo = $archivoSubido["name"];  // el nombre de archivo original
@@ -73,10 +75,10 @@ $fechaSubido = $now->format("Y-m-d H:i:s");
 
 // Ejecutamos la operación de insert del registro del archivo en DB
 $sqlCmd =  // Sentencia SQL del INSERT
-        "INSERT INTO archivos " .
-        "    (nombre_archivo, extension, nombre_archivo_guardado, tamaño," .
-        "     hash_sha256, fecha_subido, usuario_subio_id, descripcion)" .
-        "  VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    "INSERT INTO archivos " .
+    "    (nombre_archivo, extension, nombre_archivo_guardado, tamaño," .
+    "     hash_sha256, fecha_subido, usuario_subio_id, descripcion)" .
+    "  VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 $sqlParam = [  // array con los datos a guardar, según los placeholders '?'
     $nombreArchivo, $extension, $nombreArchivoGuardado, $tamaño,
     $hashSha256, $fechaSubido, $USUARIO_ID, $descripcion
@@ -92,10 +94,10 @@ $id = (int)$db->lastInsertId();  // la función regresa string, convertimos a in
 // Se guarda la operación de guardar como un registro en tabla
 // archivos_log_general
 $sqlCmd =  // Sentencia SQL del Insert en archivos_log_general
-        "INSERT INTO archivos_log_general " .
-        "    (archivo_id, usuario_id, fecha_hora, accion_realizada, " .
-        "     ip_realiza_operacion)" .
-        "  VALUES (?, ?, ?, ?, ?)";
+    "INSERT INTO archivos_log_general " .
+    "    (archivo_id, usuario_id, fecha_hora, accion_realizada, " .
+    "     ip_realiza_operacion)" .
+    "  VALUES (?, ?, ?, ?, ?)";
 $accionRealizada = "GUARDAR";
 $sqlParam = [  // array con los datos a guardar, según los placeholders '?'
     $id, $USUARIO_ID, $fechaSubido, $accionRealizada, $REQUEST_IP_ADDRESS
