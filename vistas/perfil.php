@@ -2,38 +2,44 @@
 require "../php/sesion_requerida.php";
 require "../php/connection.php";
 
-$body = [];
+// Obtener el ID del usuario que inició sesión
+$usuario_id = $usuarioID;
 
-$sqlUsuario = "SELECT * FROM usuarios WHERE id = ?";
-$stmt = $connection->prepare($sqlUsuario);
-$stmt->execute([$usuarioID]);
+// Obtener la información del usuario de la base de datos
+$sql = "SELECT * FROM usuarios WHERE id = ?";
+$stmt = $connection->prepare($sql);
+$stmt->execute([$usuario_id]);
+$usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$resultadoUsuario = $stmt->fetch();
-$body["usuario_id"] = $resultadoUsuario["id"];
-$body["username"] = $resultadoUsuario["username"];
-$body["nombreCompleto"] = $nombreCompleto;
-$body["genero"] = $resultadoUsuario["genero"];
-$body["fecha_nacimiento"] = $resultadoUsuario["fecha_nacimiento"];
-$body["foto_perfil"] = $resultadoUsuario["foto_perfil"];
+// Consulta para obtener el número de publicaciones
+$sql_publicaciones = "SELECT COUNT(*) AS num_publicaciones FROM fotos WHERE usuario_subio_id = ? AND eliminado = 0";
+$stmt_publicaciones = $connection->prepare($sql_publicaciones);
+$stmt_publicaciones->execute([$usuario_id]);
+$resultado_publicaciones = $stmt_publicaciones->fetch(PDO::FETCH_ASSOC);
+$num_publicaciones = $resultado_publicaciones['num_publicaciones'];
 
-$sqlSeguidores = "SELECT COUNT(*) FROM seguidores WHERE usuario_siguiendo_id = ?";
-$stmt = $connection->prepare($sqlSeguidores);
-$stmt->execute([$usuarioID]);
+// Consulta para obtener el número de seguidores
+$sql_seguidores = "SELECT COUNT(*) AS num_seguidores FROM seguidores WHERE usuario_siguiendo_id = ? AND eliminado = 0";
+$stmt_seguidores = $connection->prepare($sql_seguidores);
+$stmt_seguidores->execute([$usuario_id]);
+$resultado_seguidores = $stmt_seguidores->fetch(PDO::FETCH_ASSOC);
+$num_seguidores = $resultado_seguidores['num_seguidores'];
 
-$body["cantidad_seguidores"] = $stmt->fetchColumn();
+// Consulta para obtener el número de seguidos
+$sql_seguidos = "SELECT COUNT(*) AS num_seguidos FROM seguidores WHERE usuario_seguidor_id = ? AND eliminado = 0";
+$stmt_seguidos = $connection->prepare($sql_seguidos);
+$stmt_seguidos->execute([$usuario_id]);
+$resultado_seguidos = $stmt_seguidos->fetch(PDO::FETCH_ASSOC);
+$num_seguidos = $resultado_seguidos['num_seguidos'];
 
-$sqlSiguiendo = "SELECT COUNT(*) FROM seguidores WHERE usuario_seguidor_id = ?";
-$stmt = $connection->prepare($sqlSiguiendo);
-$stmt->execute([$usuarioID]);
+// Consulta para obtener las publicaciones del usuario
+$sql_publicaciones_usuario = "SELECT * FROM fotos WHERE usuario_subio_id = ? AND eliminado = 0";
+$stmt_publicaciones_usuario = $connection->prepare($sql_publicaciones_usuario);
+$stmt_publicaciones_usuario->execute([$usuario_id]);
+$publicaciones_usuario = $stmt_publicaciones_usuario->fetchAll(PDO::FETCH_ASSOC);
 
-$body["cantidad_siguiendo"] = $stmt->fetchColumn();
-
-$sqlPublicaciones = "SELECT * FROM fotos WHERE usuario_subio_id = ?";
-$stmt = $connection->prepare($sqlPublicaciones);
-$stmt->execute([$usuarioID]);
-
-$publicaciones = $stmt->fetchAll();
-$body["cantidad_publicaciones"] = $stmt->rowCount();
+// Obtener la ruta de la imagen del usuario
+$imagen_usuario = "../fotos_perfil/" . $usuario['id'] . "_" . $usuario['nombre'] . ".jpg";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,45 +69,39 @@ $body["cantidad_publicaciones"] = $stmt->rowCount();
   <div class="contenedor">
     <div class="perfil">
       <div class="foto-usuario">
-        <img src="../img/fotoUsuario.jpg" alt="Foto de Usuario">
+      <?php if (isset($imagen_usuario) && file_exists($imagen_usuario)) : ?>
+          <img src="<?php echo $imagen_usuario; ?>" alt="Foto de Usuario" class="foto-usuario">
+        <?php else : ?>
+          <img src="../fotos_perfil/image.png" alt="Foto de Usuario" class="foto-usuario">
+        <?php endif; ?>
       </div>
 
       <div class="info-usuario">
-        <div class="nombre-usuario"><?=$body["username"] ?></div>
+        <div class="nombre-usuario"><?php echo $usuario['username']; ?></div>
         <button class="editar-perfil"><a href="./editarperfil.php">Editar</a></button>
       </div>
 
-      <div class="informacion-usuario">
-        Genero y fecha de nacimiento
-      </div>
-      
-      <div class="datos-usuario">
-        <span class="informacion-detallada"><?=$body["cantidad_publicaciones"] ?> publicaciones</span>
-        <span class="informacion-detallada"><?=$body["cantidad_seguidores"] ?> seguidores</span>
-        <span class="informacion-detallada"><?=$body["cantidad_siguiendo"] ?> seguidos</span>
-      </div>
+    <div class="datos-usuario">
+        <span class="informacion-detallada"><?php echo $num_publicaciones; ?> publicaciones</span>
+        <span class="informacion-detallada"><?php echo $num_seguidores; ?> seguidores</span>
+        <span class="informacion-detallada"><?php echo $num_seguidos; ?> seguidos</span>
+    </div>
+
 
       <div class="galeria">
-        <div class="imagen-container">
-          <img src="../fotos/publicacion1.jpg" alt="Publicación 1">
-          <button class="borrar-foto">Borrar foto</button>
+      <?php if (isset($publicaciones_usuario) && !empty($publicaciones_usuario)) : ?>
+        <div class="galeria">
+          <?php foreach ($publicaciones_usuario as $publicacion) : ?>
+            <div class="publicacion">
+              <img src="../fotos/<?php echo $publicacion['nombre_archivo']; ?>" alt="<?php echo $publicacion['descripcion']; ?>">
+              <form method="post" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta publicación?');">
+                <input type="hidden" name="publicacion_id" value="<?php echo $publicacion['id']; ?>">
+                <button class="eliminar-publicacion" type="submit" name="eliminar_publicacion">Eliminar</button>
+              </form>
+            </div>
+          <?php endforeach; ?>
         </div>
-        <div class="imagen-container">
-          <img src="../fotos/publicacion1.jpg" alt="Publicación 1">
-          <button class="borrar-foto">Borrar foto</button>
-        </div>
-        <div class="imagen-container">
-          <img src="../fotos/publicacion1.jpg" alt="Publicación 1">
-          <button class="borrar-foto">Borrar foto</button>
-        </div>
-        <div class="imagen-container">
-          <img src="../fotos/publicacion1.jpg" alt="Publicación 1">
-          <button class="borrar-foto">Borrar foto</button>
-        </div>
-        <div class="imagen-container">
-          <img src="../fotos/publicacion1.jpg" alt="Publicación 1">
-          <button class="borrar-foto">Borrar foto</button>
-        </div>
+      <?php endif; ?>
       </div>
     </div>
   </div>

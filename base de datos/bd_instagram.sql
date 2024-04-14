@@ -3,7 +3,7 @@ CREATE DATABASE `foto_blog`;
 USE `foto_blog`;
 
 CREATE TABLE `usuarios` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   `username` varchar(128) NOT NULL,
   `email` varchar(512) NOT NULL,
   `password` varchar(128) NOT NULL,
@@ -15,7 +15,8 @@ CREATE TABLE `usuarios` (
   `fecha_nacimiento` date DEFAULT NULL,
   `fecha_hora_registro` datetime NOT NULL,
   `activo` tinyint(4) NOT NULL,
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `fotos` (
   `id` int NOT NULL AUTO_INCREMENT,

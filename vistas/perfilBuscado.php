@@ -40,6 +40,9 @@ if ($stmt->rowCount() > 0) {
   $stmt_publicaciones_usuario = $connection->prepare($sql_publicaciones_usuario);
   $stmt_publicaciones_usuario->execute([':usuario_id' => $usuario_id]);
   $publicaciones_usuario = $stmt_publicaciones_usuario->fetchAll(PDO::FETCH_ASSOC);
+
+  // Obtener la ruta de la imagen del usuario
+  $imagen_usuario = "../fotos_perfil/" . $usuario['id'] . "_" . $usuario['nombre'] . ".jpg";
 }
 
 // Función para verificar si el usuario actual sigue a otro usuario
@@ -64,7 +67,6 @@ if (isset($_POST['toggle_seguir'])) {
     // Decrementar el número de seguidores del usuario seguido
     $sql_actualizar_seguidores = "UPDATE usuarios SET num_seguidores = num_seguidores - 1 WHERE id = :usuario_seguir_id";
     $stmt_actualizar_seguidores = $connection->prepare($sql_actualizar_seguidores);
-  
   } else {
     // Si no está siguiendo al usuario, seguirlo
     $sql_seguir_usuario = "INSERT INTO seguidores (usuario_seguidor_id, usuario_siguiendo_id, fecha_hora) VALUES (:usuario_id, :usuario_seguir_id, NOW())";
@@ -119,26 +121,19 @@ if (isset($_POST['eliminar_publicacion'])) {
   <div class="contenedor">
     <div class="perfil">
       <div class="foto-usuario">
-        <?php
-        if (!empty($usuario['foto_perfil'])) {
-          echo "<img src='data:image/jpeg;base64," . base64_encode($usuario['foto_perfil']) . "' alt='Foto de Usuario'>";
-        } else {
-          echo "<img src='../img/fotoUsuario.jpg' alt='Foto de Usuario'>";
-        }
-        ?>
+        <?php if (isset($imagen_usuario) && file_exists($imagen_usuario)) : ?>
+          <img src="<?php echo $imagen_usuario; ?>" alt="Foto de Usuario" class="foto-usuario">
+        <?php else : ?>
+          <img src="../fotos_perfil/image.png" alt="Foto de Usuario" class="foto-usuario">
+        <?php endif; ?>
       </div>
 
       <div class="info-usuario">
         <div class="nombre-usuario"><?php echo $usuario['username']; ?></div>
         <form method="post">
-            <button class="editar-perfil" type="submit" name="toggle_seguir">
-              <?php if (esta_siguiendo_usuario($usuario_id, $usuario['id'])) : ?>
-                Dejar de seguir
-              <?php else : ?>
-                Seguir
-              <?php endif; ?>
-            </button>
-          </form>
+          <button class="editar-perfil" type="submit" name="toggle_seguir">
+          </button>
+        </form>
       </div>
 
       <div class="datos-usuario">
@@ -162,7 +157,7 @@ if (isset($_POST['eliminar_publicacion'])) {
       <?php endif; ?>
     </div>
   </div>
-  
+
 </body>
 
 </html>
