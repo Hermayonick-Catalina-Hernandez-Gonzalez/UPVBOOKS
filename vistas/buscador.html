@@ -7,6 +7,19 @@
   <title>Buscar</title>
   <link rel="icon" href="../img/Logo.png" type="image/x-icon">
   <link rel="stylesheet" href="../css/stylesBuscador.css">
+  <script>
+    function buscarUsuarios(texto) {
+       var xmlhttp = new XMLHttpRequest();
+       xmlhttp.onreadystatechange = function() {
+         if (this.readyState == 4 && this.status == 200) {
+           document.getElementById("perfil-usuario").innerHTML = this.responseText;
+         }
+       };
+       xmlhttp.open("POST", "buscar_usuarios.php", true);
+       xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+       xmlhttp.send("texto=" + encodeURIComponent(texto));
+    }
+   </script>
 </head>
 
 <body>
@@ -26,23 +39,9 @@
 
   <div class="contenedor">
     <header class="encabezado">
-      <input type="text" placeholder="Buscar...">
-      <button class="boton-buscar"><img src="../img/Buscador.png" alt="Buscar"></button>
+      <input type="text" name="texto_busqueda" id="search" placeholder="Buscar..." oninput="buscarUsuarios(this.value)">
     </header>
-    <div class="perfil-usuario">
-      <img src="../img/fotoUsuario.jpg" alt="Foto de Usuario" class="foto-usuario">
-      <span class="nombre-usuario">Luisana Salas</span>
-    </div>
-    <div class="perfil-usuario">
-      <img src="../img/fotoUsuario.jpg" alt="Foto de Usuario" class="foto-usuario">
-      <span class="nombre-usuario">Luisana Salas</span>
-    </div>
-    <div class="perfil-usuario">
-      <img src="../img/fotoUsuario.jpg" alt="Foto de Usuario" class="foto-usuario">
-      <span class="nombre-usuario">Luisana Salas</span>
-    </div>
-    <!-- Aquí va el contenido del resto de la ventana -->
+    <div class="perfil-usuario" id="perfil-usuario"></div>
   </div>
 </body>
-
 </html>
