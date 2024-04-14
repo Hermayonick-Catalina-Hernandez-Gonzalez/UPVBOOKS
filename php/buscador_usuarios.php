@@ -23,7 +23,11 @@ if ($stmt->rowCount() > 0) {
         if (!empty($row['foto_perfil'])) {
             echo "<img src='data:image/jpeg;base64," . base64_encode($row['foto_perfil']) . "' alt='Foto de Usuario' class='foto-usuario'>";
         }
-        echo "<span class='nombre-usuario'>" . $row['username'] . "</span>";
+          // Enlace para abrir el perfil en una nueva ventana
+          echo "<a href='perfilBuscado.html?usuario_id=" . $row['id'] . "' target='_blank'>";
+          echo "<span class='nombre-usuario'>" . $row['username'] . "</span>";
+          echo "</a>";
+          echo "</li>"; // Cierra el elemento de lista
         echo "</li>"; // Cierra el elemento de lista
     }
     echo "</ul>"; // Cierra la lista
