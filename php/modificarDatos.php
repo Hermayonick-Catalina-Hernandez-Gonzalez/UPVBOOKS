@@ -37,7 +37,7 @@ $params[] = $usuarioID;
 
 $stmt = $connection->prepare($sql);
 if($stmt->execute($params)){
-    header("Location: ../vistas/perfil.html");
+    header("Location: ../vistas/perfil.php");
 }else{
     $mensaje = "No se pudo modificar la informacion";
     require "../vistas/editarperfil.php";

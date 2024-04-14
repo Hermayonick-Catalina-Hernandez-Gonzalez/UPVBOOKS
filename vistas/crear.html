@@ -18,26 +18,27 @@
     <div class="opcion"><a href="./buscador.html"><img src="../img/Buscador.png"
           alt="Buscador"><span>Buscador</span></a></div>
     <div class="opcion"><a href="./crear.html"><img src="../img/Crear.png" alt="Crear"><span>Crear</span></a></div>
-    <div class="opcion" id="perfil"><a href="./perfil.html"><img src="../img/usuario.png"
+    <div class="opcion" id="perfil"><a href="./perfil.php"><img src="../img/usuario.png"
           alt="Perfil"><span>Perfil</span></a></div>
           <div class="opcion"><a href="login.php"><img src="../img/Salir.png" alt="Salir"><span>Salir</span></a></div>
   </div>
 
   <div class="contenedor">
-    <div class="subir">
-      <div class="subir-foto">
-        <input type="file" id="foto" accept="image/*" style="display: none;">
-        <div class="foto-preview" onclick="document.getElementById('foto').click();"></div>
-        <button id="seleccionar-foto">Seleccionar foto</button>
-      </div>
+    <form action="#" id="formCrear" enctype="multipart/form-data" method="post">
+      <div class="subir">
+        <div class="subir-foto">
+          <input type="file" id="foto" accept="image/*" style="display: none;">
+          <div class="foto-preview" onclick="document.getElementById('foto').click();"></div>
+          <button id="seleccionar-foto">Seleccionar foto</button>
+        </div>
 
-    
-      <div class="usuario-publicacion">
-        <div class="usuario"><img src="../img/fotoUsuario.jpg" alt="Foto usuario"><span>Luisana Salas</span></div>
-        <textarea class="descripcion" placeholder="Escribe una descripción..."></textarea>
-        <button class="publicar">Publicar</button>
+        <div class="usuario-publicacion">
+          <div class="usuario"><img src="../img/fotoUsuario.jpg" alt="Foto usuario"><span>Luisana Salas</span></div>
+          <textarea class="descripcion" placeholder="Escribe una descripción..."></textarea>
+          <button class="publicar" type="submit">Publicar</button>
+        </div>
       </div>
-    </div>
+    </form>
   </div>
 
   <script src="../js/scriptCrear.js"></script>
