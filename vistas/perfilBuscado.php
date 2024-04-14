@@ -132,11 +132,6 @@ if (isset($_POST['eliminar_publicacion'])) {
         <div class="nombre-usuario"><?php echo $usuario['username']; ?></div>
         <form method="post">
           <button class="editar-perfil" type="submit" name="toggle_seguir">
-            <?php if (esta_siguiendo_usuario($usuario_id, $usuario['id'])) : ?>
-              Dejar de seguir
-            <?php else : ?>
-              Seguir
-            <?php endif; ?>
           </button>
         </form>
       </div>
