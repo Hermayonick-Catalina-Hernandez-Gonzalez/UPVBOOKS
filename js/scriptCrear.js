@@ -21,23 +21,17 @@ document.getElementById('formCrear').addEventListener("submit", function (e) {
   e.preventDefault();
   var formData = new FormData(this);
 
-  fetch('../php/guardar_archivo.php', {
-    method: 'POST',  // Usa el método POST
-    body: formData,  // Envía el objeto FormData como cuerpo de la solicitud
-  }).then(response => {
-    if (!response.ok) {
-      // Si el estado HTTP no es OK, lanza un error con el estado y el texto de la respuesta
-      return response.text().then(text => {
-        throw new Error(`HTTP error ${response.status}: ${text}`);
-      });
-    }
-    return response.json();
-  })
-    .then(data => {
-      // Maneja la respuesta JSON
-    })
-    .catch(error => {
-      // Maneja cualquier error que pueda ocurrir durante la solicitud
-      console.error('Error:', error);
-    });
+  $.ajax({
+    type: "post",
+    url: "../php/guardar_archivo.php",
+    data: formData,
+    contentType: false,  // Evita configurar manualmente el tipo de contenido
+    processData: false,  // Evita procesar los datos de FormData automáticamente
+    success: function (response) {
+      window.location.href = "../vistas/perfil.php";
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      console.error('Error:', textStatus, errorThrown);
+  }
+  });
 });
