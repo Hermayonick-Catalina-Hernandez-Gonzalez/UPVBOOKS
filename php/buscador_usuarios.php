@@ -2,12 +2,18 @@
 require "../php/sesion_requerida.php";
 require "../php/connection.php";
 
+// Obtener el ID del usuario actual
+$usuario_id = $_SESSION['id'];
+
 // Obtener el texto de búsqueda del cuerpo de la solicitud POST
 $texto_busqueda = filter_input(INPUT_POST, "texto");
 
 // Inicializar la consulta SQL y los parámetros de vinculación
-$sql = "SELECT * FROM usuarios WHERE username LIKE :texto OR nombre LIKE :texto";
-$params = [':texto' => "%$texto_busqueda%"]; // Agregar '%' para buscar coincidencias parciales
+$sql = "SELECT * FROM usuarios WHERE (username LIKE :texto OR nombre LIKE :texto) AND id != :usuario_id";
+$params = [
+    ':texto' => "%$texto_busqueda%", // Agregar '%' para buscar coincidencias parciales
+    ':usuario_id' => $usuario_id
+];
 
 // Ejecutar la consulta SQL
 $stmt = $connection->prepare($sql);
@@ -23,7 +29,7 @@ if ($stmt->rowCount() > 0) {
         if (file_exists($imagen_usuario)) {
             echo "<img src='$imagen_usuario' alt='Foto de Usuario' class='foto-usuario'>";
         } else {
-            echo "<img src='../fotos_perfil/image.png' alt='Foto de Usuario' class='foto-usuario'>"; 
+            echo "<img src='../fotos_perfil/image.png' alt='Foto de Usuario' class='foto-usuario'>";
         }
         // Enlace para abrir el perfil en la misma ventana
         echo "<a href='perfilBuscado.php?usuario_id=" . $row['id'] . "'>";
@@ -35,5 +41,3 @@ if ($stmt->rowCount() > 0) {
 } else {
     echo "No se encontraron usuarios.";
 }
-
-?>
