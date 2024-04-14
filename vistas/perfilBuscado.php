@@ -80,20 +80,7 @@ if (isset($_POST['toggle_seguir'])) {
   header("Location: {$_SERVER['PHP_SELF']}?usuario_id=$usuario_id");
   exit;
 }
-// Manejar la acción de eliminar una publicación
-if (isset($_POST['eliminar_publicacion'])) {
-  // Obtener el ID de la publicación a eliminar
-  $publicacion_id = $_POST['publicacion_id'];
 
-  // Consulta para eliminar la publicación
-  $sql_eliminar_publicacion = "UPDATE fotos SET eliminado = 1 WHERE id = :publicacion_id";
-  $stmt_eliminar_publicacion = $connection->prepare($sql_eliminar_publicacion);
-  $stmt_eliminar_publicacion->execute([':publicacion_id' => $publicacion_id]);
-
-  // Redireccionar a la misma página para evitar envíos de formulario duplicados
-  header("Location: {$_SERVER['PHP_SELF']}?usuario_id=$usuario_id");
-  exit;
-}
 ?>
 
 <!DOCTYPE html>
@@ -131,8 +118,6 @@ if (isset($_POST['eliminar_publicacion'])) {
       <div class="info-usuario">
         <div class="nombre-usuario"><?php echo $usuario['username']; ?></div>
         <form method="post">
-          <button class="editar-perfil" type="submit" name="toggle_seguir">
-          </button>
         </form>
       </div>
 
@@ -147,10 +132,6 @@ if (isset($_POST['eliminar_publicacion'])) {
           <?php foreach ($publicaciones_usuario as $publicacion) : ?>
             <div class="publicacion">
               <img src="../fotos/<?php echo $publicacion['nombre_archivo']; ?>" alt="<?php echo $publicacion['descripcion']; ?>">
-              <form method="post" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta publicación?');">
-                <input type="hidden" name="publicacion_id" value="<?php echo $publicacion['id']; ?>">
-                <button class="eliminar-publicacion" type="submit" name="eliminar_publicacion">Eliminar</button>
-              </form>
             </div>
           <?php endforeach; ?>
         </div>
