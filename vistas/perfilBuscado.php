@@ -113,7 +113,7 @@ if (isset($_POST['eliminar_publicacion'])) {
     <div class="espacio"></div>
     <div class="opcion"><a href="./inicio.php"><img src="../img/Inicio.png" alt="Inicio"><span>Inicio</span></a></div>
     <div class="opcion"><a href="./buscador.html"><img src="../img/Buscador.png" alt="Buscador"><span>Buscador</span></a></div>
-    <div class="opcion"><a href="./crear.html"><img src="../img/Crear.png" alt="Crear"><span>Crear</span></a></div>
+    <div class="opcion"><a href="./crear.php"><img src="../img/Crear.png" alt="Crear"><span>Crear</span></a></div>
     <div class="opcion" id="perfil"><a href="./perfil.php"><img src="../img/usuario.png" alt="Perfil"><span>Perfil</span></a></div>
     <div class="opcion"><a href="#"><img src="../img/Salir.png" alt="Salir"><span>Salir</span></a></div>
   </div>

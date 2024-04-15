@@ -17,6 +17,7 @@ if (isset($_SESSION["id"])) {
     $email = $_SESSION["email"];
     $nombre = $_SESSION["nombre"];
     $apellidos = $_SESSION["apellidos"];
+    $fotoPerfil = $_SESSION["fotoPerfil"];
     $nombreCompleto = $apellidos ? "$nombre $apellidos" : $nombre;
 }
 

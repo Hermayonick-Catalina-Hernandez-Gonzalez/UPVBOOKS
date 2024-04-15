@@ -29,7 +29,9 @@ if (!$result) {
     <div class="card">
         <h1>Editar Perfil</h1>
         <p><?php if (isset($mensaje)) echo $mensaje; ?></p>
-        <form class="ingresos" action="../php/modificarDatos.php" method="post">
+        <form class="ingresos" action="../php/modificarDatos.php" method="post" enctype="multipart/form-data">
+            <label for="imagen">Cambia tu foto de perfil:</label>
+            <input type="file" name="imagen" id="imagen">
             <label for="nombre">Nombre:</label>
             <input type="text" placeholder="Usuario..." name="nombre" id="nombre" value="<?php if (!isset($mensaje)) echo $result[0]["nombre"]; ?>" required>
             <label for="">Apellidos:</label>

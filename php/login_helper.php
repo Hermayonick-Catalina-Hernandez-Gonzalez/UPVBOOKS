@@ -28,6 +28,7 @@ function autentificar($username, $password) {
         "email" => $usuario["email"], 
         "nombre" => $usuario["nombre"], 
         "apellidos" => $usuario["apellidos"],
+        "rutaPerfil" => $usuario["foto_perfil"]
     ];
 }
 

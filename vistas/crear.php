@@ -1,3 +1,19 @@
+<?php 
+require "../php/sesion_requerida.php";
+require "../php/connection.php";
+
+// Obtener el ID del usuario que inició sesión
+$usuario_id = $usuarioID;
+
+// Obtener la información del usuario de la base de datos
+$sql = "SELECT * FROM usuarios WHERE id = ?";
+$stmt = $connection->prepare($sql);
+$stmt->execute([$usuario_id]);
+$usuarioResp = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$imagen_usuario = "../fotos_perfil/" . $usuarioResp["foto_perfil"];
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,7 +33,7 @@
     <div class="opcion"><a href="./inicio.php"><img src="../img/Inicio.png" alt="Inicio"><span>Inicio</span></a></div>
     <div class="opcion"><a href="./buscador.html"><img src="../img/Buscador.png"
           alt="Buscador"><span>Buscador</span></a></div>
-    <div class="opcion"><a href="./crear.html"><img src="../img/Crear.png" alt="Crear"><span>Crear</span></a></div>
+    <div class="opcion"><a href="./crear.php"><img src="../img/Crear.png" alt="Crear"><span>Crear</span></a></div>
     <div class="opcion" id="perfil"><a href="./perfil.php"><img src="../img/usuario.png"
           alt="Perfil"><span>Perfil</span></a></div>
           <div class="opcion"><a href="login.php"><img src="../img/Salir.png" alt="Salir"><span>Salir</span></a></div>
@@ -33,7 +49,7 @@
         </div>
 
         <div class="usuario-publicacion">
-          <div class="usuario"><img src="../img/fotoUsuario.jpg" alt="Foto usuario"><span>Luisana Salas</span></div>
+          <div class="usuario"><img src="../fotos_perfil/<?=$imagen_usuario?>" alt="Foto usuario"><span><?=$usuario?></span></div>
           <textarea class="descripcion" placeholder="Escribe una descripción..." id="descripcion" name="descripcion"></textarea>
           <button class="publicar" type="submit">Publicar</button>
         </div>
