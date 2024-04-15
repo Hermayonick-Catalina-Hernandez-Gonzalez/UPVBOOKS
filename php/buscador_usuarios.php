@@ -25,7 +25,7 @@ if ($stmt->rowCount() > 0) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         echo "<li class='perfil-usuario'>"; // Inicia un elemento de lista
         // Mostrar la imagen de perfil si existe
-        $imagen_usuario = "../fotos_perfil/" . $row['id'] . "_" . $row['nombre']  . ".jpg"; // Ruta de la imagen del usuario
+        $imagen_usuario = "../fotos_perfil/" . $row["foto_perfil"]; // Ruta de la imagen del usuario
         if (file_exists($imagen_usuario)) {
             echo "<img src='$imagen_usuario' alt='Foto de Usuario' class='foto-usuario'>";
         } else {

@@ -42,7 +42,7 @@ if ($stmt->rowCount() > 0) {
   $publicaciones_usuario = $stmt_publicaciones_usuario->fetchAll(PDO::FETCH_ASSOC);
 
   // Obtener la ruta de la imagen del usuario
-  $imagen_usuario = "../fotos_perfil/" . $usuario['id'] . "_" . $usuario['nombre'] . ".jpg";
+  $imagen_usuario = "../fotos_perfil/" . $usuario['foto_perfil'];
 }
 
 // Función para verificar si el usuario actual sigue a otro usuario
