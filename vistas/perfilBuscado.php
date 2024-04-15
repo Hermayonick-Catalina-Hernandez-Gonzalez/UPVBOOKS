@@ -115,7 +115,7 @@ if (isset($_POST['eliminar_publicacion'])) {
     <div class="opcion"><a href="./buscador.html"><img src="../img/Buscador.png" alt="Buscador"><span>Buscador</span></a></div>
     <div class="opcion"><a href="./crear.php"><img src="../img/Crear.png" alt="Crear"><span>Crear</span></a></div>
     <div class="opcion" id="perfil"><a href="./perfil.php"><img src="../img/usuario.png" alt="Perfil"><span>Perfil</span></a></div>
-    <div class="opcion"><a href="#"><img src="../img/Salir.png" alt="Salir"><span>Salir</span></a></div>
+    <div class="opcion"><a href="../php/logout.php"><img src="../img/Salir.png" alt="Salir"><span>Salir</span></a></div>
   </div>
 
   <div class="contenedor">
@@ -151,7 +151,7 @@ if (isset($_POST['eliminar_publicacion'])) {
         <div class="galeria">
           <?php foreach ($publicaciones_usuario as $publicacion) : ?>
             <div class="publicacion">
-              <img src="../fotos/<?php echo $publicacion['nombre_archivo']; ?>" alt="<?php echo $publicacion['descripcion']; ?>">
+              <img src="../fotos/<?php echo $publicacion['secure_id'] . "." . $publicacion['extension']; ?>" alt="<?php echo $publicacion['descripcion']; ?>">
               <form method="post" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta publicación?');">
                 <input type="hidden" name="publicacion_id" value="<?php echo $publicacion['id']; ?>">
               </form>

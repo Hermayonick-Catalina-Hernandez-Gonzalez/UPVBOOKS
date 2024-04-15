@@ -36,7 +36,7 @@ $imagen_usuario = "../fotos_perfil/" . $usuarioResp["foto_perfil"];
     <div class="opcion"><a href="./crear.php"><img src="../img/Crear.png" alt="Crear"><span>Crear</span></a></div>
     <div class="opcion" id="perfil"><a href="./perfil.php"><img src="../img/usuario.png"
           alt="Perfil"><span>Perfil</span></a></div>
-          <div class="opcion"><a href="login.php"><img src="../img/Salir.png" alt="Salir"><span>Salir</span></a></div>
+          <div class="opcion"><a href="../php/logout.php"><img src="../img/Salir.png" alt="Salir"><span>Salir</span></a></div>
   </div>
 
   <div class="contenedor">

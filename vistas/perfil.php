@@ -54,22 +54,19 @@ $imagen_usuario = "../fotos_perfil/" . $usuario["foto_perfil"];
 
 <body>
   <div class="panel">
-    <div class="opcion" id="lydch"><a href="#"><img src="../img/Logo.png" alt="LYDCH"
-          style="width: 60px; height: 60px;"><span style="font-size: larger; font-weight: bold;">LYDCH</span></a></div>
+    <div class="opcion" id="lydch"><a href="#"><img src="../img/Logo.png" alt="LYDCH" style="width: 60px; height: 60px;"><span style="font-size: larger; font-weight: bold;">LYDCH</span></a></div>
     <div class="espacio"></div>
     <div class="opcion"><a href="./inicio.php"><img src="../img/Inicio.png" alt="Inicio"><span>Inicio</span></a></div>
-    <div class="opcion"><a href="./buscador.html"><img src="../img/Buscador.png"
-          alt="Buscador"><span>Buscador</span></a></div>
+    <div class="opcion"><a href="./buscador.html"><img src="../img/Buscador.png" alt="Buscador"><span>Buscador</span></a></div>
     <div class="opcion"><a href="./crear.php"><img src="../img/Crear.png" alt="Crear"><span>Crear</span></a></div>
-    <div class="opcion" id="perfil"><a href="./perfil.php"><img src="../img/usuario.png"
-          alt="Perfil"><span>Perfil</span></a></div>
-    <div class="opcion"><a href="login.php"><img src="../img/Salir.png" alt="Salir"><span>Salir</span></a></div>
+    <div class="opcion" id="perfil"><a href="./perfil.php"><img src="../img/usuario.png" alt="Perfil"><span>Perfil</span></a></div>
+    <div class="opcion"><a href="../php/logout.php"><img src="../img/Salir.png" alt="Salir"><span>Salir</span></a></div>
   </div>
 
   <div class="contenedor">
     <div class="perfil">
       <div class="foto-usuario">
-      <?php if (isset($imagen_usuario) && file_exists($imagen_usuario)) : ?>
+        <?php if (isset($imagen_usuario) && file_exists($imagen_usuario)) : ?>
           <img src="<?php echo $imagen_usuario; ?>" alt="Foto de Usuario" class="foto-usuario">
         <?php else : ?>
           <img src="../fotos_perfil/image.png" alt="Foto de Usuario" class="foto-usuario">
@@ -81,27 +78,25 @@ $imagen_usuario = "../fotos_perfil/" . $usuario["foto_perfil"];
         <button class="editar-perfil"><a href="./editarperfil.php">Editar</a></button>
       </div>
 
-    <div class="datos-usuario">
+      <div class="datos-usuario">
         <span class="informacion-detallada"><?php echo $num_publicaciones; ?> publicaciones</span>
         <span class="informacion-detallada"><?php echo $num_seguidores; ?> seguidores</span>
         <span class="informacion-detallada"><?php echo $num_seguidos; ?> seguidos</span>
-    </div>
+      </div>
 
 
       <div class="galeria">
-      <?php if (isset($publicaciones_usuario) && !empty($publicaciones_usuario)) : ?>
-        <div class="galeria">
+        <?php if (isset($publicaciones_usuario) && !empty($publicaciones_usuario)) : ?>
           <?php foreach ($publicaciones_usuario as $publicacion) : ?>
             <div class="publicacion">
-              <img src="../fotos/<?php echo $publicacion['nombre_archivo']; ?>" alt="<?php echo $publicacion['descripcion']; ?>">
-              <form method="post" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta publicación?');">
-                <input type="hidden" name="publicacion_id" value="<?php echo $publicacion['id']; ?>">
+              <img src="../fotos/<?php echo $publicacion['secure_id'] . "." . $publicacion['extension']; ?>" alt="<?php echo $publicacion['descripcion']; ?>">
+              <form method="post" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta publicación?');" action="../php/borrar_archivo.php">
+                <input type="hidden" name="publicacion_id" value="<?php echo $publicacion['id']; ?>" id="publicacion_id">
                 <button class="eliminar-publicacion" type="submit" name="eliminar_publicacion">Eliminar</button>
               </form>
             </div>
           <?php endforeach; ?>
-        </div>
-      <?php endif; ?>
+        <?php endif; ?>
       </div>
     </div>
   </div>

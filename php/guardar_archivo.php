@@ -75,9 +75,9 @@ $fechaSubido = $now->format("Y-m-d H:i:s");
 
 // Ejecutamos la operación de insert del registro del archivo en DB
 $sqlCmd =  // Sentencia SQL del INSERT
-    "INSERT INTO fotos (secure_id, usuario_subio_id, nombre_archivo, tamaño, descripcion, fecha_subido) VALUES (?, ?, ?, ?, ?, ?)";
+    "INSERT INTO fotos (secure_id, extension, usuario_subio_id, nombre_archivo, tamaño, descripcion, fecha_subido) VALUES (?, ?, ?, ?, ?, ?, ?)";
 $sqlParam = [  // array con los datos a guardar, según los placeholders '?'
-    $nombreArchivoGuardado, $usuarioID, $nombreArchivo, $tamaño, $descripcion, $fechaSubido
+    $nombreArchivoGuardado, $extension, $usuarioID, $nombreArchivo, $tamaño, $descripcion, $fechaSubido
 ];
 
 $stmt = $connection->prepare($sqlCmd);  // obtenemos el statement de la ejecución
