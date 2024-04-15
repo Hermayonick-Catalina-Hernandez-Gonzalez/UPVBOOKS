@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-04-2024 a las 06:57:54
+-- Tiempo de generación: 15-04-2024 a las 10:48:15
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -52,7 +52,8 @@ INSERT INTO `fotos` (`id`, `secure_id`, `extension`, `usuario_subio_id`, `nombre
 (8, 'D36D1050E45DDF7BA4D1F6759D56E3409CE6E92ECD457826F57619C3EB7F35B8', 'png', 1, 'Captura de pantalla 2024-02-21 201849.png', 168344, 'fhdrh', '2024-04-15 03:28:57', 1),
 (9, '68B3EE12EC571B5E9FEFAD1BB2D95A455E71980570AB66A75A932677AAC72D56', 'png', 3, 'Captura de pantalla 2024-04-14 211352.png', 191601, 'Un gato', '2024-04-15 06:18:21', 1),
 (10, '87F22631C60A1A54F593DEFCF2C7B88DD7E4EEE287401954FF1C85A3483F2767', 'png', 3, 'Captura de pantalla 2024-04-14 210845.png', 100024, 'Venadito (Her)', '2024-04-15 06:22:57', 1),
-(11, 'CCE5C40118BEF83AC0DCACE7AA984B716DA920DE0997A72BBE77C5F165CCF79A', 'png', 3, 'Captura de pantalla 2024-04-14 210845.png', 100024, 'Who is?', '2024-04-15 06:33:39', 0);
+(11, 'CCE5C40118BEF83AC0DCACE7AA984B716DA920DE0997A72BBE77C5F165CCF79A', 'png', 3, 'Captura de pantalla 2024-04-14 210845.png', 100024, 'Who is?', '2024-04-15 06:33:39', 0),
+(12, '6AB0F5803B2E5C3036115B73308F1BB7DA84C2555C0F6A6BE870B799EC4A4E61', 'png', 1, 'Captura de pantalla 2024-02-29 190758.png', 206003, 'Que vestimenta tan formal', '2024-04-15 09:14:38', 0);
 
 -- --------------------------------------------------------
 
@@ -77,6 +78,7 @@ CREATE TABLE `fotos_likes` (
 CREATE TABLE `fotos_v` (
 `id` int(11)
 ,`secure_id` varchar(64)
+,`extension` varchar(255)
 ,`usuario_subio_id` int(11)
 ,`usuario_subio_username` varchar(128)
 ,`usuario_subio_nombre` varchar(512)
@@ -108,7 +110,8 @@ CREATE TABLE `seguidores` (
 --
 
 INSERT INTO `seguidores` (`id`, `usuario_seguidor_id`, `usuario_siguiendo_id`, `fecha_hora`, `eliminado`) VALUES
-(1, 2, 2, '2024-04-14 22:37:09', 0);
+(9, 4, 3, '2024-04-15 00:44:20', 0),
+(10, 1, 3, '2024-04-15 01:07:13', 0);
 
 -- --------------------------------------------------------
 
@@ -149,7 +152,7 @@ INSERT INTO `usuarios` (`id`, `username`, `email`, `password`, `password_encrypt
 --
 DROP TABLE IF EXISTS `fotos_v`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `fotos_v`  AS SELECT `f`.`id` AS `id`, `f`.`secure_id` AS `secure_id`, `f`.`usuario_subio_id` AS `usuario_subio_id`, `u`.`username` AS `usuario_subio_username`, `u`.`nombre` AS `usuario_subio_nombre`, `u`.`apellidos` AS `usuario_subio_apellidos`, `f`.`nombre_archivo` AS `nombre_archivo`, `f`.`tamaño` AS `tamaño`, `f`.`descripcion` AS `descripcion`, `f`.`fecha_subido` AS `fecha_subido`, `f`.`eliminado` AS `eliminado`, (select count(0) from `fotos_likes` `l` where `l`.`foto_id` = `f`.`id` and `l`.`eliminado` = 0) AS `likes` FROM (`fotos` `f` join `usuarios` `u` on(`f`.`usuario_subio_id` = `u`.`id`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `fotos_v`  AS SELECT `f`.`id` AS `id`, `f`.`secure_id` AS `secure_id`, `f`.`extension` AS `extension`, `f`.`usuario_subio_id` AS `usuario_subio_id`, `u`.`username` AS `usuario_subio_username`, `u`.`nombre` AS `usuario_subio_nombre`, `u`.`apellidos` AS `usuario_subio_apellidos`, `f`.`nombre_archivo` AS `nombre_archivo`, `f`.`tamaño` AS `tamaño`, `f`.`descripcion` AS `descripcion`, `f`.`fecha_subido` AS `fecha_subido`, `f`.`eliminado` AS `eliminado`, (select count(0) from `fotos_likes` `l` where `l`.`foto_id` = `f`.`id` and `l`.`eliminado` = 0) AS `likes` FROM (`fotos` `f` join `usuarios` `u` on(`f`.`usuario_subio_id` = `u`.`id`)) ;
 
 --
 -- Índices para tablas volcadas
@@ -187,7 +190,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `fotos`
 --
 ALTER TABLE `fotos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `fotos_likes`
@@ -199,7 +202,7 @@ ALTER TABLE `fotos_likes`
 -- AUTO_INCREMENT de la tabla `seguidores`
 --
 ALTER TABLE `seguidores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`

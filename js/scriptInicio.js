@@ -1,0 +1,1 @@
+const like = document.getElementById('like');

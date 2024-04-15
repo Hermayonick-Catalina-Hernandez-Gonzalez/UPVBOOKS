@@ -55,7 +55,7 @@ $stmt->execute([$usuarioID, $usuarioID]);
                     <img src="../fotos/<?=$publicacion["secure_id"] . "." . $publicacion["extension"] ?>" alt="<?=$publicacion["nombre_archivo"] ?>">
                 </div>
 
-                <div class="reaccion">
+                <div class="reaccion" id="like">
                     <img src="../img/Like.png" alt="Like">
                 </div>
 
