@@ -51,11 +51,13 @@ $stmt->execute([$usuarioID, $usuarioID]);
                     <!-- <button class="mas-opciones">...</button> -->
                 </div>
 
+                <p><?=$publicacion["descripcion"] ?></p>
+
                 <div class="foto-publicacion">
                     <img src="../fotos/<?=$publicacion["secure_id"] . "." . $publicacion["extension"] ?>" alt="<?=$publicacion["nombre_archivo"] ?>">
                 </div>
 
-                <div class="reaccion" id="like">
+                <div class="reaccion" id="like" data-id="<?= $publicacion["id"]?>">
                     <img src="../img/Like.png" alt="Like">
                 </div>
 
@@ -68,6 +70,7 @@ $stmt->execute([$usuarioID, $usuarioID]);
         } ?>
         
     </div>
+    <script src="../js/scriptInicio.js"></script>
 </body>
 
 </html>
