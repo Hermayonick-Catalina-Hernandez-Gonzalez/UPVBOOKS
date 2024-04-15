@@ -1,3 +1,7 @@
+<?php
+require "../php/sesion_requerida.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

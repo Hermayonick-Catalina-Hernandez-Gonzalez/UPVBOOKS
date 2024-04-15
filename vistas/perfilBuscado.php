@@ -46,8 +46,7 @@ if ($stmt->rowCount() > 0) {
 }
 
 // Función para verificar si el usuario actual sigue a otro usuario
-function esta_siguiendo_usuario($usuario_id, $usuario_seguir_id)
-{
+function esta_siguiendo_usuario($usuario_id, $usuario_seguir_id){
   global $connection;
   $sql = "SELECT COUNT(*) AS num_filas FROM seguidores WHERE usuario_seguidor_id = :usuario_id AND usuario_siguiendo_id = :usuario_seguir_id";
   $stmt = $connection->prepare($sql);
@@ -59,11 +58,12 @@ function esta_siguiendo_usuario($usuario_id, $usuario_seguir_id)
 // Manejar la acción de seguir o dejar de seguir a un usuario
 if (isset($_POST['toggle_seguir'])) {
   $usuario_seguir_id = $usuario['id'];
-  if (esta_siguiendo_usuario($usuario_id, $usuario_seguir_id)) {
+
+  if (esta_siguiendo_usuario($usuarioID, $usuario_seguir_id)) {
     // Si ya está siguiendo al usuario, dejar de seguirlo
     $sql_dejar_seguir_usuario = "DELETE FROM seguidores WHERE usuario_seguidor_id = :usuario_id AND usuario_siguiendo_id = :usuario_seguir_id";
     $stmt_dejar_seguir_usuario = $connection->prepare($sql_dejar_seguir_usuario);
-    $stmt_dejar_seguir_usuario->execute([':usuario_id' => $usuario_id, ':usuario_seguir_id' => $usuario_seguir_id]);
+    $stmt_dejar_seguir_usuario->execute([':usuario_id' => $usuarioID, ':usuario_seguir_id' => $usuario_seguir_id]);
     // Decrementar el número de seguidores del usuario seguido
     $sql_actualizar_seguidores = "UPDATE usuarios SET num_seguidores = num_seguidores - 1 WHERE id = :usuario_seguir_id";
     $stmt_actualizar_seguidores = $connection->prepare($sql_actualizar_seguidores);
@@ -71,13 +71,13 @@ if (isset($_POST['toggle_seguir'])) {
     // Si no está siguiendo al usuario, seguirlo
     $sql_seguir_usuario = "INSERT INTO seguidores (usuario_seguidor_id, usuario_siguiendo_id, fecha_hora) VALUES (:usuario_id, :usuario_seguir_id, NOW())";
     $stmt_seguir_usuario = $connection->prepare($sql_seguir_usuario);
-    $stmt_seguir_usuario->execute([':usuario_id' => $usuario_id, ':usuario_seguir_id' => $usuario_seguir_id]);
+    $stmt_seguir_usuario->execute([':usuario_id' => $usuarioID, ':usuario_seguir_id' => $usuario_seguir_id]);
     // Incrementar el número de seguidores del usuario seguido
     $sql_actualizar_seguidores = "UPDATE usuarios SET num_seguidores = num_seguidores + 1 WHERE id = :usuario_seguir_id";
     $stmt_actualizar_seguidores = $connection->prepare($sql_actualizar_seguidores);
   }
   // Redireccionar a la misma página para evitar envíos de formulario duplicados
-  header("Location: {$_SERVER['PHP_SELF']}?usuario_id=$usuario_id");
+  header("Location: {$_SERVER['PHP_SELF']}?usuario_id=$usuario_seguir_id");
   exit;
 }
 // Manejar la acción de eliminar una publicación
@@ -91,7 +91,7 @@ if (isset($_POST['eliminar_publicacion'])) {
   $stmt_eliminar_publicacion->execute([':publicacion_id' => $publicacion_id]);
 
   // Redireccionar a la misma página para evitar envíos de formulario duplicados
-  header("Location: {$_SERVER['PHP_SELF']}?usuario_id=$usuario_id");
+  header("Location: {$_SERVER['PHP_SELF']}?usuario_id=$usuario_seguir_id");
   exit;
 }
 ?>
@@ -132,7 +132,7 @@ if (isset($_POST['eliminar_publicacion'])) {
         <div class="nombre-usuario"><?php echo $usuario['username']; ?></div>
         <form method="post">
           <button class="editar-perfil" type="submit" name="toggle_seguir">
-            <?php if (esta_siguiendo_usuario($usuario_id, $usuario['id'])) : ?>
+            <?php if (esta_siguiendo_usuario($usuarioID, $usuario['id'])) : ?>
               Dejar de seguir
             <?php else : ?>
               Seguir
