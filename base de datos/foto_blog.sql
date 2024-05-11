@@ -131,8 +131,7 @@ CREATE TABLE `usuarios` (
   `genero` varchar(1) DEFAULT NULL,
   `fecha_nacimiento` date DEFAULT NULL,
   `fecha_hora_registro` datetime NOT NULL,
-  `activo` tinyint(4) NOT NULL,
-  `foto_perfil` varchar(255) DEFAULT NULL
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --

@@ -1,6 +1,6 @@
-CREATE DATABASE `foto_blog`;
+CREATE DATABASE `Sistema1`;
 
-USE `foto_blog`;
+USE `Sistema1`;
 
 CREATE TABLE `usuarios` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -13,7 +13,6 @@ CREATE TABLE `usuarios` (
   `apellidos` varchar(512) DEFAULT NULL,
   `genero` varchar(1) DEFAULT NULL,
   `fecha_nacimiento` date DEFAULT NULL,
-  `fecha_hora_registro` datetime NOT NULL,
   `activo` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
