@@ -1,6 +1,6 @@
-CREATE DATABASE `Sistema1`;
+CREATE DATABASE `foto_blog`;
 
-USE `Sistema1`;
+USE `foto_blog`;
 
 CREATE TABLE `usuarios` (
   `id` int NOT NULL AUTO_INCREMENT,
