@@ -7,15 +7,16 @@ function registrar($nombre, $apellidos, $fechaNacimiento, $genero, $email, $user
     $passwordSalt = strtoupper(bin2hex(random_bytes(32)));
 	$passwordEncrypted = strtoupper(hash("sha512", ($GLOBALS["password"] . $passwordSalt)));
 
-    $sql = "INSERT INTO `usuarios` (`id`, `username`, `email`, `password`, `password_encrypted`, `password_salt`, `nombre`, `apellidos`, `genero`, `fecha_nacimiento`, `fecha_hora_registro`, `activo`, `foto_perfil`) VALUES (default,?,?,?,?,?,?,?,?,?,NOW(),1,?)";
+    $sql = "INSERT INTO `usuarios` (`username`, `email`, `password_encrypted`, `password_salt`, `nombre`, `apellidos`, `genero`, `fecha_nacimiento`, `fecha_hora_registro`, `activo`) VALUES (?,?,?,?,?,?,?,?, NOW(),?)";
 
-    $sqlParams = [$username, $email, $GLOBALS["password"], $passwordEncrypted, $passwordSalt, $nombre, $apellidos, $genero, $fechaNacimiento, "image.png"];
+    $sqlParams = [$username, $email, $passwordEncrypted, $passwordSalt, $nombre, $apellidos, $genero, $fechaNacimiento,1];
 
     try {
         $stmt = $connection->prepare($sql);
 		$stmt->execute($sqlParams);
         return true;
     } catch (Exception $e) {
+        //echo $e;
         return false;
     }
 }

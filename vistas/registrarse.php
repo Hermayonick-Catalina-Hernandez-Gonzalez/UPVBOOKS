@@ -15,7 +15,7 @@ if($_POST) {
 
     $registrar = registrar($nombre, $apellidos, $fechaNacimiento, $genero, $email, $username, $password);
     if($registrar) {
-        $mensaje = "Registro exitoso";
+        header('Location: ./login.php');
     } else {
         $mensaje = "Ocurrió un error";
     }
