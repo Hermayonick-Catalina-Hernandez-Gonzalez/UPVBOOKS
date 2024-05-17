@@ -7,7 +7,7 @@ function autentificar($username, $password) {
     if (!$username || !$GLOBALS["password"]) return false;
 
     $sqlCmd = "SELECT * FROM usuarios WHERE username = ?";
-    $sqlParams = [$username]; 
+    $sqlParams = [$username];
     
     $stmt = $connection->prepare($sqlCmd); 
     $stmt->execute($sqlParams); 

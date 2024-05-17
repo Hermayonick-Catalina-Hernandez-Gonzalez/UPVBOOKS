@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-05-2024 a las 15:46:34
+-- Tiempo de generación: 17-05-2024 a las 22:49:33
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.0.30
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -98,7 +98,7 @@ CREATE TABLE `usuarios` (
   `username` varchar(128) NOT NULL,
   `email` varchar(512) NOT NULL,
   `password_encrypted` varchar(128) NOT NULL,
-  `password_salt` varchar(32) NOT NULL,
+  `password_salt` varchar(64) NOT NULL,
   `nombre` varchar(512) NOT NULL,
   `apellidos` varchar(512) DEFAULT NULL,
   `genero` varchar(1) DEFAULT NULL,
@@ -112,7 +112,8 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `username`, `email`, `password_encrypted`, `password_salt`, `nombre`, `apellidos`, `genero`, `fecha_nacimiento`, `fecha_hora_registro`, `activo`) VALUES
-(1, 'Yatzi', 'yatzarieduve@gmail.com', '456D089F56DAEC2002F674222BB8E4242FE9EFB60334613C820F5A8E106E56EE4048C002A977AFE1C3A47693CE916E810D37BB99DDD4BEC77DC08C0F6E302BB6', 'D5C088759836C5B4C7ED8039F172774C', 'Yatzari Eduve', 'Pecina Vidales', 'F', '2003-08-20', '2024-05-14 13:52:38', 1);
+(2, 'Yatzi', 'yatzarieduve@gmail.com', '501273E775D27B082E0B0C0252AE64007990D3309E032816B84DDAC7B2E9A6F828DFFAF00325EEBB19E918171C977CAE7B95C8435A7EE7E27AA18D2C781F7EDB', 'C07EF685BE15E0BC32C28958F9B19A48', 'Yatzari Eduve', 'Pecina Vidales', 'F', '2003-08-20', '2024-05-17 14:40:53', 1),
+(3, 'fabi', 'fabi@gmail.com', '386B38344A91B957124219A46F1AE946E8658193A2073E0E161BD6D26D962E28DBD29884F7E24DFE6AE808FB2EE37E0B9B05BFB4ABF2532BCC73F1A9BD90F651', '17DB544BA3445F218DCAE032719F5FF73BD08091DFA7AFC378A3F123B6DEA9A7', 'fabi', 'vidales', 'F', '2003-08-20', '2024-05-17 14:48:41', 1);
 
 -- --------------------------------------------------------
 
@@ -177,7 +178,7 @@ ALTER TABLE `seguidores`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
