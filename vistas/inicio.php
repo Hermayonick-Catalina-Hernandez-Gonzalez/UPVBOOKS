@@ -62,7 +62,7 @@ $stmt->execute([$usuarioID, $usuarioID]);
                 </div>
 
                 <div class="interacciones">
-                    <span class="likes"><?=$publicacion["likes"] ?></span>
+                    <span class="likes"></span>
                 </div>
             </div>
         </div>

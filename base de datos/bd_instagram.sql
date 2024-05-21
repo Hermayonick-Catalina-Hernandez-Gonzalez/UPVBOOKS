@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-05-2024 a las 01:53:23
+-- Tiempo de generación: 21-05-2024 a las 07:15:10
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -47,7 +47,8 @@ INSERT INTO `fotos` (`id`, `secure_id`, `extension`, `usuario_subio_id`, `nombre
 (1, 'B50377FF412A13B22C5DED24D42E3867A5D26297F5D9B77201553E27443C661D', 'jpeg', 4, 'Chibi Chewbacca Sticker - 2 inch.jpeg', 126099, 'Chubacaaaa', '2024-05-21 01:34:34', 0),
 (2, 'D1B2BF9965029769AB404D74B0972C7B49FCB00299EB6EBC457D618D68334624', 'png', 3, 'Captura de pantalla 2024-04-14 210845.png', 100024, 'Esta es her segun', '2024-05-21 01:47:42', 0),
 (3, '15AFEB0ACEEF30E4D828C297D382216E10262BC6AB567B76F9A6A99DACDA6B60', 'png', 3, 'Captura de pantalla 2024-02-26 085020.png', 812439, 'Enamorada de esta pareja aunque sean unos mensos', '2024-05-21 01:48:12', 0),
-(4, '10DAD049A91C540109CF60ADCFF29F3D0AB1B19B7F6CBD890AB4988474E6BC3C', 'png', 3, 'Captura de pantalla 2024-03-27 182411.png', 548854, 'Aqui nomas extrañando a mi panda', '2024-05-21 01:48:42', 0);
+(4, '10DAD049A91C540109CF60ADCFF29F3D0AB1B19B7F6CBD890AB4988474E6BC3C', 'png', 3, 'Captura de pantalla 2024-03-27 182411.png', 548854, 'Aqui nomas extrañando a mi panda', '2024-05-21 01:48:42', 0),
+(5, '7ACBC7D395B193F658D08CCE72797F58A8C5F0BE1BB6F0B615D086195B347E7A', 'png', 4, 'Captura de pantalla 2024-05-12 144551.png', 299809, 'El arbol mitico del mango', '2024-05-21 07:10:29', 0);
 
 -- --------------------------------------------------------
 
@@ -62,6 +63,21 @@ CREATE TABLE `fotos_likes` (
   `fecha_hora` datetime NOT NULL,
   `eliminado` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `fotos_likes`
+--
+
+INSERT INTO `fotos_likes` (`id`, `foto_id`, `usuario_dio_like_id`, `fecha_hora`, `eliminado`) VALUES
+(1, 4, 3, '2024-05-20 19:51:56', 1),
+(2, 3, 3, '2024-05-20 19:59:18', 1),
+(3, 1, 3, '2024-05-20 19:59:26', 0),
+(4, 2, 3, '2024-05-20 22:51:31', 1),
+(5, 3, 4, '2024-05-20 22:53:21', 1),
+(6, 2, 4, '2024-05-20 22:53:33', 0),
+(7, 1, 4, '2024-05-20 22:53:35', 0),
+(8, 4, 4, '2024-05-20 22:57:46', 0),
+(9, 5, 3, '2024-05-20 23:10:52', 0);
 
 -- --------------------------------------------------------
 
@@ -184,13 +200,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `fotos`
 --
 ALTER TABLE `fotos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `fotos_likes`
 --
 ALTER TABLE `fotos_likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `seguidores`
