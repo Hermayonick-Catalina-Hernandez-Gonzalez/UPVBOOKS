@@ -17,7 +17,7 @@ if($_POST) {
         $_SESSION["nombre"] = $loggear["nombre"];
         $_SESSION["apellidos"] = $loggear["apellidos"];
         $_SESSION["fotoPerfil"] = $loggear["rutaPerfil"];
-        header("Location: inicio.php");
+        header("Location: ../index.php");
         exit(); 
     }
 } 

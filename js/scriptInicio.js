@@ -22,7 +22,7 @@ handReaction.forEach(hand => {
     };
 
     // Realiza la solicitud fetch
-    fetch('../php/likes.php', config)
+    fetch('php/likes.php', config)
       .then((response) => {
         // Verifica si la respuesta es exitosa (código de estado 200-299)
         if (!response.ok) {
@@ -47,7 +47,7 @@ handReaction.forEach(hand => {
 });
 
 async function actualizarLikes(dataId) {
-  return fetch(`../php/num_likes.php?id=${dataId}`)
+  return fetch(`php/num_likes.php?id=${dataId}`)
     .then(response => response.text())
     .catch(error => console.error('Error fetching likes:', error));
 }

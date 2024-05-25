@@ -76,6 +76,12 @@ h1{
 label, a, p{
     margin: 5px;
 }
+a:visited{
+    color: black;
+}
+a:hover{
+    color: rgb(32, 32, 32);
+}
 
 input{
     box-sizing: border-box; 
