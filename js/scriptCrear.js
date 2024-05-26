@@ -19,6 +19,11 @@ document.getElementById('seleccionar-foto').addEventListener('click', function (
 
 document.getElementById('formCrear').addEventListener("submit", function (e) {
   e.preventDefault();
+
+  if(!confirm("¿Quieres publicar esta foto?")){
+    return false;
+  }
+
   var formData = new FormData(this);
 
   $.ajax({
