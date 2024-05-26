@@ -4,7 +4,7 @@ require "./connection.php";
 $id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
 
 if (!$id) {
-    $errores[] = "Parámetro id no especificado";
+    $errores[] = "el parametro id no fue recibido";
     echo json_encode(["errores" => $errores]);
     exit();  // Fin de la ejecución.
 }

@@ -8,7 +8,7 @@ handReaction.forEach(hand => {
   actualizarLikes(dataId).then(likesText => {
     const likesElement = hand.nextElementSibling.querySelector('.likes'); // Asumiendo que el elemento de likes sigue inmediatamente después del div de reacción
     likesElement.textContent = likesText; // Actualizar el texto del elemento de likes
-  }).catch(error => console.error('Error updating likes count:', error)); 
+  }).catch(error => console.error('No se pudieron actualizar los likes')); 
 
 
   hand.addEventListener("click", function () {
@@ -26,7 +26,7 @@ handReaction.forEach(hand => {
       .then((response) => {
         // Verifica si la respuesta es exitosa (código de estado 200-299)
         if (!response.ok) {
-          throw new Error('Error en la solicitud: ' + response.statusText);
+          throw new Error('Error al consultar los likes');
         }
         // Convierte la respuesta en JSON
         return response.json();
@@ -36,7 +36,7 @@ handReaction.forEach(hand => {
         actualizarLikes(dataId).then(likesText => {
           const likesElement = hand.nextElementSibling.querySelector('.likes'); // Asumiendo que el elemento de likes sigue inmediatamente después del div de reacción
           likesElement.textContent = likesText; // Actualizar el texto del elemento de likes
-        }).catch(error => console.error('Error updating likes count:', error));
+        }).catch(error => console.error('No se pudieron actualizar los likes: ', error));
         // Aquí puedes realizar más acciones según la respuesta del servidor
       })
       .catch((error) => {
@@ -49,5 +49,5 @@ handReaction.forEach(hand => {
 async function actualizarLikes(dataId) {
   return fetch(`./php/num_likes.php?id=${dataId}`)
     .then(response => response.text())
-    .catch(error => console.error('Error fetching likes:', error));
+    .catch(error => console.error('Error al consultar los likes:', error));
 }

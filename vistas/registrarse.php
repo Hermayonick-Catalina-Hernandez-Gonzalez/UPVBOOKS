@@ -17,7 +17,7 @@ if($_POST) {
     if($registrar) {
         header('Location: ./login.php');
     } else {
-        $mensaje = "Ocurrió un error";
+        $mensaje = "Hubo un error al registrar al usuario";
     }
 }
 
@@ -44,27 +44,28 @@ if($_POST) {
             <label>Fecha de Nacimiento:</label>
             <input type="date" id="fecha-nacimiento" name="fecha-nacimiento" required>
             <label>Genero:</label>
-            <select id="genero" name="genero">
+            <select id="genero" name="genero" required>
                 <option value="O">Seleeciona tu genero...</option>
                 <option value="M">Masculino</option>
                 <option value="F">Femenino</option>
                 <option value="X">Prefiero no especificar</option>
             </select>
             <label>Correo:</label>
-            <input type="email" placeholder="Correo..." name="correo">
+            <input type="email" placeholder="Correo..." name="correo" required>
             <label>Username:</label>
-            <input type="text" placeholder="Username..." name="username">
+            <input type="text" placeholder="Username..." name="username" required>
             <label>Contraseña:</label>
-            <input type="password" placeholder="Contraseña..." name="password">
+            <input type="password" placeholder="Contraseña..." id="password" name="password" required>
             <label>Confirmar Contraseña:</label>
-            <input type="password" placeholder="Confirmar contraseña..." name="password">
+            <input type="password" placeholder="Confirmar contraseña..." id="confirmPass" required>
+            <label for="" id="coincidencia"></label>
             <div class="cont-btn">
                 <button type="submit" class="registrar">Registrar</button>
                 <button type="button" class="salir" onclick="window.location.href = 'login.php'">Salir</button>
             </div>
         </form>
     </div>
-    
+    <script src="../js/confirmPass.js"></script>
 </body>
 </html>
 

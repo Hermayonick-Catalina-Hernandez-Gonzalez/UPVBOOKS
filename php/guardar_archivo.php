@@ -15,17 +15,16 @@ $now = new DateTime();  // fecha hora actual de la ejecución
 // Se valida que el usuario está autenticado, de lo contrario se regresa un
 // json con el error (usuario no autenticado)
 if (!$usuarioAutenticado) {
-    $errores[] = "Usuario no autenticado";
+    $errores[] = "El usuario no se ha autenticado";
     echo json_encode(["errores" => $errores]);
     exit();  // fin de la ejecución de este archivo PHP
 }
 
 // Se valida que se haya enviado el archivo en el request
 if (
-    empty($_FILES) || !isset($_FILES["archivo"]) ||
-    empty($_FILES["archivo"]["name"])
+    empty($_FILES) || !isset($_FILES["archivo"]) || empty($_FILES["archivo"]["name"])
 ) {
-    $errores[] = "No es especificó el archivo.";
+    $errores[] = "No se recibio el archivo a publicar.";
     echo json_encode(["errores" => $errores]);
     exit();  // fin de la ejecución de este archivo PHP
 }
@@ -47,7 +46,7 @@ $tamaño = $archivoSubido["size"];  // tamaño del archivo subido
 // Validación del tipo de archivo que se subió, que su extensión corresponda a
 // algún tipo de archivo de imagen
 if (!in_array($extension, $EXT_ARCHIVOS_FOTOS)) {
-    $errores[] = "Tipo de archivo no válido, solo se admiten imágenes";
+    $errores[] = "El tipo de archivo no es el correcto, solo agregue imagenes";
     echo json_encode(["errores" => $errores]);
     exit();  // fin de la ejecución de este archivo PHP
 }
@@ -60,7 +59,7 @@ $seGuardo = move_uploaded_file($archivoSubido["tmp_name"], $ruta);
 
 // Si no se guardo el archivo, regresamos un error
 if (!$seGuardo) {
-    $errores[] = "ERROR de IO al guardar el archivo";
+    $errores[] = "Ocurrio un error al guardar el archivo";
     echo json_encode(["errores" => $errores]);
     exit();  // fin de la ejecución de este archivo PHP
 }

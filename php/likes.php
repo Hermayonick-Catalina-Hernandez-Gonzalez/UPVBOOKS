@@ -8,7 +8,7 @@ $publicacion_id = $data['id'] ?? null;
 
 if (!$publicacion_id) {
     http_response_code(400);
-    $errores[] = "No se encontró el id de publicación";
+    $errores[] = "No se encontro la publicacion";
     echo json_encode(["errores" => $errores]);
     exit();
 }

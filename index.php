@@ -2,6 +2,7 @@
 require "./php/sesion_requerida.php";
 require "./php/connection.php";
 
+
 $sql = "SELECT * FROM fotos_v f WHERE (
     f.usuario_subio_id = ? OR f.usuario_subio_id IN (
     SELECT usuario_siguiendo_id

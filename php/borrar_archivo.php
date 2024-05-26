@@ -14,7 +14,7 @@ $now = new DateTime();  // fecha hora actual de la ejecución
 // Se valida que el usuario está autenticado, de lo contrario se regresa un
 // json con el error (usuario no autenticado)
 if (!$usuarioAutenticado) {
-    $errores[] = "Usuario no autenticado";
+    $errores[] = "El usuario no se ha autenticado";
     echo json_encode(["errores" => $errores]);
     exit();  // Fin de la ejecución.
 }
@@ -22,7 +22,7 @@ if (!$usuarioAutenticado) {
 // Se obtiene el parámetro "id" enviado en la petición post
 $id = filter_input(INPUT_POST, "publicacion_id", FILTER_VALIDATE_INT);
 if (!$id) {
-    $errores[] = "Parámetro id no especificado";
+    $errores[] = "El parámetro id no esta especificado";
     echo json_encode(["errores" => $errores]);
     exit();  // Fin de la ejecución.
 }
@@ -37,7 +37,7 @@ $archivo = $stmt->fetch();
 // Si no existe el registro del archivo según el id proporcionado, se regresa
 // un error indicando esto
 if (!$archivo) {
-    $errores[] = "No existe registro de archivo con Id $id";
+    $errores[] = "En los registros no se ha encontrado el archivo que se desea eliminar";
     echo json_encode(["errores" => $errores]);
     exit();  // Fin de la ejecución.
 }
