@@ -86,19 +86,8 @@ h1{
     height: 80%; 
 }
 
-.ingresos p{
-    text-align: center;
-    width: 100%;
-}
-
-label, a, p{
+label{
     margin: 5px;
-}
-a:visited{
-    color: black;
-}
-a:hover{
-    color: rgb(32, 32, 32);
 }
 
 input{
@@ -116,19 +105,20 @@ input{
 }
 
 .cont-btn{
+    align-items: center;
     margin: 5px;
     padding-top: 20px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box; 
 }
 
 button{
-    box-sizing: border-box; 
-    width: 40%;
-    height: 30px; 
     border-radius: 15px;
     font-size: 16px;
     border: 0px;
-    background: rgb(98, 165, 244);
+    width: 40%;
     margin-bottom: 10px;
     font-family: Verdana, sans-serif;
     font-weight: bolder;
@@ -139,11 +129,19 @@ button:hover {
     transform: scale(1.1)
 }
 
-.registrarse{
-    font-style: italic;
-    font-weight: bolder;
-    color: rgb(38, 50, 226);
-    font-size: auto;
+.cambiar{
+    background: rgb(98, 165, 244);
+}
+.salir{
+    background: rgb(245, 52, 27);
+}
+.cambiar:hover {
+    background-color: rgb(71, 97, 145); /* Nuevo color al pasar el mouse */
+    transform: scale(1.1)
+}
+.salir:hover {
+    background-color: rgb(172, 38, 21); /* Nuevo color al pasar el mouse */
+    transform: scale(1.1)
 }
 
 @media screen and (max-width: 768px) {
@@ -161,9 +159,5 @@ button:hover {
         width: auto;
         height: 30%;
         font-size: auto;
-    }
-
-    .registrarse{
-        font-size: 20px;
     }
 }

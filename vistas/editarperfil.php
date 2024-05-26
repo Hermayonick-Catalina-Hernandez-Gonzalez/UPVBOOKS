@@ -60,8 +60,8 @@ if (!$result) {
             <?php
             }
             ?>
-            <label for="correo">Correo:</label>
-            <input type="email" placeholder="Correo..." id="correo" name="correo" value="<?=(!isset($mensaje)) ? $result[0]["email"] : '' ?>" required>
+            <label for="correo">Correo electrónico</label>
+            <input type="email" placeholder="Correo electrónico..." id="correo" name="correo" value="<?=(!isset($mensaje)) ? $result[0]["email"] : '' ?>" required>
             <div class="cont-btn">
                 <button type="button" class="salir" onclick="window.location.href = './perfil.php'">Salir</button>
                 <button type="submit" class="guardar">Modificar</button>
