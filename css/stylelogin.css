@@ -94,7 +94,7 @@ h1{
 label, a, p{
     margin: 5px;
 }
-a:visited{
+a, a:visited{
     color: black;
 }
 a:hover{

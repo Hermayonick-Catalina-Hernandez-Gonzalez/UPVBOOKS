@@ -4,7 +4,7 @@ require "../php/registro_helper.php";
 session_start();
 $mensaje = "";
 
-if ($_POST) {
+if($_POST) {
     $nombre = filter_input(INPUT_POST, "nombre", FILTER_SANITIZE_STRING);
     $apellidos = filter_input(INPUT_POST, "apellido", FILTER_SANITIZE_STRING);
     $fechaNacimiento = filter_input(INPUT_POST, "fecha-nacimiento", FILTER_SANITIZE_STRING);
@@ -14,21 +14,11 @@ if ($_POST) {
     $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_STRING);
     $confirm_password = filter_input(INPUT_POST, "confirm_password", FILTER_SANITIZE_STRING);
 
-    // Validación de edad
-    if (!esMayorDeEdad($fechaNacimiento)) {
-        $mensaje = "Debes tener al menos 18 años para registrarte.";
-    } elseif ($password !== $confirm_password) {
-        $mensaje = "Las contraseñas no coinciden.";
-    } elseif (!$email) {
-        $mensaje = "Correo electrónico no válido.";
+    $registrar = registrar($nombre, $apellidos, $fechaNacimiento, $genero, $email, $username, $password);
+    if($registrar) {
+        header('Location: ./login.php');
     } else {
-        $registrar = registrar($nombre, $apellidos, $fechaNacimiento, $genero, $email, $username, $password);
-        if ($registrar) {
-            header('Location: ./login.php');
-            exit();
-        } else {
-            $mensaje = "Ocurrió un error";
-        }
+        $mensaje = "Ocurrió un error";
     }
 }
 
@@ -61,9 +51,9 @@ function esMayorDeEdad($fechaNacimiento) {
             <input type="text" placeholder="Apellido..." name="apellido">
             <label>Fecha de Nacimiento:</label>
             <input type="date" id="fecha-nacimiento" name="fecha-nacimiento" required>
-            <label>Género:</label>
-            <select id="genero" name="genero">
-                <option value="O">Selecciona tu género...</option>
+            <label>Genero:</label>
+            <select id="genero" name="genero" required>
+                <option value="O">Seleeciona tu genero...</option>
                 <option value="M">Masculino</option>
                 <option value="F">Femenino</option>
                 <option value="X">Prefiero no especificar</option>
@@ -75,7 +65,7 @@ function esMayorDeEdad($fechaNacimiento) {
             <label>Contraseña:</label>
             <input type="password" placeholder="Contraseña..." name="password" required>
             <label>Confirmar Contraseña:</label>
-            <input type="password" placeholder="Confirmar contraseña..." name="confirm_password" required>
+            <input type="password" placeholder="Confirmar contraseña..." name="password" required>
             <div class="cont-btn">
                 <button type="submit" class="registrar">Registrar</button>
                 <button type="button" class="salir" onclick="window.location.href = 'login.php'">Salir</button>

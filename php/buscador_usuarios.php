@@ -39,5 +39,5 @@ if ($stmt->rowCount() > 0) {
     }
     echo "</ul>"; // Cierra la lista
 } else {
-    echo "No se encontraron usuarios.";
+    echo "Perfil no encontrado.";
 }
