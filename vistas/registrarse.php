@@ -50,8 +50,8 @@ if($_POST) {
                 <option value="F">Femenino</option>
                 <option value="X">Prefiero no especificar</option>
             </select>
-            <label>Correo:</label>
-            <input type="email" placeholder="Correo..." name="correo">
+            <label>Correo electrónico:</label>
+            <input type="email" placeholder="Correo electrónico..." name="correo">
             <label>Username:</label>
             <input type="text" placeholder="Username..." name="username">
             <label>Contraseña:</label>

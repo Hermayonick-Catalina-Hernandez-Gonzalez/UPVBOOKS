@@ -86,19 +86,8 @@ h1{
     height: 80%; 
 }
 
-.ingresos p{
-    text-align: center;
-    width: 100%;
-}
-
-label, a, p{
+label{
     margin: 5px;
-}
-a:visited{
-    color: black;
-}
-a:hover{
-    color: rgb(32, 32, 32);
 }
 
 input{
@@ -128,7 +117,7 @@ button{
     border-radius: 15px;
     font-size: 16px;
     border: 0px;
-    background: rgb(98, 165, 244);
+    background: #62a5f4;
     margin-bottom: 10px;
     font-family: Verdana, sans-serif;
     font-weight: bolder;
@@ -137,13 +126,6 @@ button{
 button:hover {
     background-color: rgb(71, 97, 145); /* Nuevo color al pasar el mouse */
     transform: scale(1.1)
-}
-
-.registrarse{
-    font-style: italic;
-    font-weight: bolder;
-    color: rgb(38, 50, 226);
-    font-size: auto;
 }
 
 @media screen and (max-width: 768px) {
@@ -161,9 +143,5 @@ button:hover {
         width: auto;
         height: 30%;
         font-size: auto;
-    }
-
-    .registrarse{
-        font-size: 20px;
     }
 }
