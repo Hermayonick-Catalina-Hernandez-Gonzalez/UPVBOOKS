@@ -1,7 +1,7 @@
 <?php
 require "./config.php";
-require "sesion_requerida.php";
-require "connection.php";
+require "../php/sesion.php";
+require "../php/connection.php";
 
 $nombre = filter_input(INPUT_POST, "nombre");
 $apellidos = filter_input(INPUT_POST, "apellidos");
@@ -11,7 +11,7 @@ $email = filter_input(INPUT_POST, "correo");
 
 if (!$nombre && !$email) {
     $mensaje = "No se enviaron los datos requeridos";
-    require "../vistas/editarperfil.php";
+    //require "../vistas/editarperfil.php";
     exit();
 }
 
@@ -33,7 +33,7 @@ if ($fecha_Nac) {
     $params[] = $fecha_Nac;
 }
 
-if ($_FILES || isset($_FILES["imagen"]) || $_FILES["imagen"]["name"]) {
+if (!empty($_FILES) && isset($_FILES["imagen"]) && !empty($_FILES["imagen"]["name"])) {
     $archivoSubido = $_FILES["imagen"];
 
     $nombreArchivo = $archivoSubido["name"];  // el nombre de archivo original

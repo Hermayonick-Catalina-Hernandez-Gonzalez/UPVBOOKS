@@ -66,11 +66,7 @@ $imagen_usuario = "../fotos_perfil/" . $usuario["foto_perfil"];
   <div class="contenedor">
     <div class="perfil">
       <div class="foto-usuario">
-        <?php if (isset($imagen_usuario) && file_exists($imagen_usuario)) : ?>
-          <img src="<?php echo $imagen_usuario; ?>" alt="Foto de Usuario" class="foto-usuario">
-        <?php else : ?>
-          <img src="../fotos_perfil/image.png" alt="Foto de Usuario" class="foto-usuario">
-        <?php endif; ?>
+        <img src="<?php echo $imagen_usuario; ?>" alt="Foto de Usuario" class="foto-usuario">
       </div>
 
       <div class="info-usuario">
