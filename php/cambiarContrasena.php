@@ -1,20 +1,20 @@
 <?php
-require "../php/connection.php";
 
-$usuario = filter_input(INPUT_POST, "usuario");
-$password = filter_input(INPUT_POST, "password");
+function cambiarContrasena($usuario, $password){
+    $GLOBALS["password"] = $password;
+    include ("connection.php");
 
-$passwordSalt = strtoupper(bin2hex(random_bytes(32)));
-$passwordEncrypted = strtoupper(hash("sha512", ($password . $passwordSalt)));
+    $passwordSalt = strtoupper(bin2hex(random_bytes(32)));
+    $passwordEncrypted = strtoupper(hash("sha512", ($GLOBALS["password"] . $passwordSalt)));
 
-$sql = "UPDATE usuarios SET password_salt = ?, password_encrypted = ? WHERE username = ?";
-$params = [$passwordSalt, $passwordEncrypted, $usuario];
+    $sqlUpdate = "UPDATE usuarios SET password_salt = ?, password_encrypted = ? WHERE username = ?";
+    $paramsUpdate = [$passwordSalt, $passwordEncrypted, $usuario];
 
-$stmt = $connection->prepare($sql);
-if ($stmt->execute($params)) {
-    header("Location: ../vistas/login.php");
-} else {
-    echo "Ocurrió un error";
+    $stmtUpdate = $connection->prepare($sqlUpdate);
+    if ($stmtUpdate->execute($paramsUpdate)) {
+        header("Location: ../vistas/login.php");
+    } else {
+        $mensaje = "Ocurrió un error al actualizar la contraseña";
+    }
 }
-
 ?>

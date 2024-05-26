@@ -1,3 +1,27 @@
+<?php
+
+require "../php/connection.php";
+require "../php/cambiarContrasena.php";
+
+$mensaje = "";
+
+if($_POST){
+    $usuario = filter_input(INPUT_POST, "usuario");
+    $password = filter_input(INPUT_POST, "password");
+
+    $sqlCheckUser = "SELECT COUNT(*) FROM usuarios WHERE username = ?";
+    $stmtCheckUser = $connection->prepare($sqlCheckUser);
+    $stmtCheckUser->execute([$usuario]);
+    
+    $userExists = $stmtCheckUser->fetchColumn();
+    if($userExists){
+        $datos = cambiarContrasena($usuario, $password);
+    } else {
+        $mensaje = "El usuario no existe";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,7 +38,8 @@
         <div class="circ-img">
             <img src="../img/Logo.png" />
         </div>
-        <form class="ingresos" action="../php/cambiarContrasena.php" method="post">
+        <form class="ingresos" action="cambiarContrasena.php" method="post">
+            <p> <?php echo $mensaje; ?> </p>
             <label>Usuario</label>
             <input type="text" placeholder="Usuario..." name="usuario" id="usuario">
             <label>Contraseña:</label>
