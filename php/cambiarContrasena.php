@@ -1,6 +1,7 @@
 <?php
 
 function cambiarContrasena($usuario, $password){
+
     $GLOBALS["password"] = $password;
     include ("connection.php");
 

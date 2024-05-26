@@ -12,7 +12,7 @@ if($_POST){
     $sqlCheckUser = "SELECT COUNT(*) FROM usuarios WHERE username = ?";
     $stmtCheckUser = $connection->prepare($sqlCheckUser);
     $stmtCheckUser->execute([$usuario]);
-    
+        
     $userExists = $stmtCheckUser->fetchColumn();
     if($userExists){
         $datos = cambiarContrasena($usuario, $password);
@@ -41,13 +41,14 @@ if($_POST){
         <form class="ingresos" action="cambiarContrasena.php" method="post">
             <p> <?php echo $mensaje; ?> </p>
             <label>Usuario</label>
-            <input type="text" placeholder="Usuario..." name="usuario" id="usuario">
+            <input type="text" placeholder="Usuario..." name="usuario" id="usuario" required>
             <label>Contraseña:</label>
-            <input type="password" placeholder="Contraseña..." name="password" id="password">
+            <input type="password" placeholder="Contraseña..." name="password" id="password" required>
             <label>Confirmar contraseña:</label>
-            <input type="password" placeholder="Contraseña..." onkeyup="verificar();" name="conf_password" id="conf_password">
+            <input type="password" placeholder="Contraseña..." onkeyup="verificar();" name="conf_password" id="conf_password" required>
             <div class="cont-btn">
-                <button type="submit">Cambiar</button>
+                <button type="submit" class="cambiar">Cambiar</button>
+                <button type="button" class="salir" onclick="window.location.href = 'login.php'">Salir</button>
             </div>
         </form>
     </div>
