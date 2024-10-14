@@ -3,18 +3,24 @@ function autentificar($username, $password) {
     include("connection.php");  // Conexión a la base de datos
 
     // Verificar que se hayan recibido los datos
-    if (!$username || !$password) return false;
+    if (!$username || !$password) {
+        error_log("Faltan datos de usuario o contraseña.");
+        return false;
+    }
 
     // Consulta para obtener los datos del usuario
     $sqlCmd = "SELECT * FROM usuarios WHERE username = ?";
     $sqlParams = [$username];
 
-    $stmt = $connection->prepare($sqlCmd); 
+    $stmt = $connection->prepare($sqlCmd);
     $stmt->execute($sqlParams);
     $result = $stmt->fetchAll();  // Obtener el resultado de la consulta
 
     // Si no existe el usuario, retorna false
-    if (!$result) return false;
+    if (!$result) {
+        error_log("No se encontró el usuario con username: $username");
+        return false;
+    }
 
     $usuario = $result[0];  // Tomar el primer resultado (usuario)
 
@@ -22,14 +28,12 @@ function autentificar($username, $password) {
     $passwordMasSalt = $password . $usuario["password_salt"];  // Concatenar el salt con la contraseña
     $passwordEncrypted = strtoupper(hash("sha512", $passwordMasSalt));  // Generar el hash de la contraseña
 
-    // Debugging: Verifica los valores de las contraseñas
-    error_log("Password ingresada: " . $password);
-    error_log("Password del usuario (con salt): " . $usuario["password"]);
-    error_log("Password cifrada: " . $passwordEncrypted);
+    // Debugging: Verificar el hash generado
+    error_log("Hash generado: " . $passwordEncrypted);
+    error_log("Hash almacenado en la base de datos: " . $usuario["password"]);
 
     // Compara la contraseña ingresada con la almacenada
     if ($usuario["password"] !== $passwordEncrypted) {
-        // Si no coinciden, registrar un error en el log
         error_log("Contraseña no coincide.");
         return false;
     }
@@ -43,5 +47,4 @@ function autentificar($username, $password) {
         "apellidos" => $usuario["apellidos"],
     ];
 }
-
 ?>
