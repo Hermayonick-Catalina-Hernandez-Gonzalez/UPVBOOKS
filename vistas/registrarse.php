@@ -14,11 +14,20 @@ if($_POST) {
     $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_STRING);
     $confirm_password = filter_input(INPUT_POST, "confirm_password", FILTER_SANITIZE_STRING);
 
-    $registrar = registrar($nombre, $apellidos, $fechaNacimiento, $genero, $email, $username, $password);
-    if($registrar) {
-        header('Location: ./login.php');
+    if ($email === false) {
+        $mensaje = "Correo electrónico no válido.";
+    } elseif ($password !== $confirm_password) {
+        $mensaje = "Las contraseñas no coinciden.";
+    } elseif (!esMayorDeEdad($fechaNacimiento)) {
+        $mensaje = "Debes ser mayor de edad para registrarte.";
     } else {
-        $mensaje = "Ocurrió un error";
+        $registrar = registrar($nombre, $apellidos, $fechaNacimiento, $genero, $email, $username, $password);
+        if ($registrar) {
+            header('Location: ./login.php');
+            exit;
+        } else {
+            $mensaje = "Ocurrió un error al registrar el usuario.";
+        }
     }
 }
 
@@ -29,6 +38,7 @@ function esMayorDeEdad($fechaNacimiento) {
     return $edad >= 18;
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -63,9 +73,9 @@ function esMayorDeEdad($fechaNacimiento) {
             <label>Username:</label>
             <input type="text" placeholder="Username..." name="username" required>
             <label>Contraseña:</label>
-            <input type="password" placeholder="Contraseña..." name="password" required>
-            <label>Confirmar Contraseña:</label>
-            <input type="password" placeholder="Confirmar contraseña..." name="password" required>
+    <input type="password" placeholder="Contraseña..." name="password" required>
+    <label>Confirmar Contraseña:</label>
+    <input type="password" placeholder="Confirmar contraseña..." name="confirm_password" required>
             <div class="cont-btn">
                 <button type="submit" class="registrar">Registrar</button>
                 <button type="button" class="salir" onclick="window.location.href = 'login.php'">Salir</button>

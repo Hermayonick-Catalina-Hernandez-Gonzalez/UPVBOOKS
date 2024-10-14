@@ -35,7 +35,7 @@ if($_POST) {
 </head>
 <body>
     <div class="card">
-        <h1>LYDCH</h1>
+        <h1>UPVBOOKS</h1>
         <div class="circ-img">
             <img src="../img/Logo.png" />
         </div>

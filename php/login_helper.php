@@ -8,7 +8,7 @@ function autentificar($username, $password) {
 
     $sqlCmd = "SELECT * FROM usuarios WHERE username = ?";
     $sqlParams = [$username];
-    
+
     $stmt = $connection->prepare($sqlCmd); 
     $stmt->execute($sqlParams); 
     $result = $stmt->fetchAll(); 
@@ -17,10 +17,10 @@ function autentificar($username, $password) {
 
     $usuario = $result[0];
 
-	$passwordMasSalt = $GLOBALS["password"] . $usuario["password_salt"];
-	$passwordEncrypted = strtoupper(hash("sha512", $passwordMasSalt));
+    $passwordMasSalt = $GLOBALS["password"] . $usuario["password_salt"];
+    $passwordEncrypted = strtoupper(hash("sha512", $passwordMasSalt));
 
-    if ($usuario["password_encrypted"] != $passwordEncrypted) return false;
+    if ($usuario["password"] != $passwordEncrypted) return false;
 
     return [
         "id" => $usuario['id'], 
@@ -31,5 +31,4 @@ function autentificar($username, $password) {
         "rutaPerfil" => $usuario["foto_perfil"]
     ];
 }
-
 ?>
