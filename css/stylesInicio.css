@@ -9,7 +9,7 @@ body {
 .panel {
     width: 6cm;
     height: 100vh;
-    background: linear-gradient(#3B0A42, #89006B);
+    background: linear-gradient(#C989BB, #7859A6);
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
