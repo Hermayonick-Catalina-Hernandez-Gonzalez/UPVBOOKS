@@ -4,7 +4,8 @@ require "../php/registro_helper.php";
 session_start();
 $mensaje = "";
 
-if($_POST) {
+if ($_POST) {
+    // Limpiar y validar los campos de entrada
     $nombre = filter_input(INPUT_POST, "nombre", FILTER_SANITIZE_STRING);
     $apellidos = filter_input(INPUT_POST, "apellido", FILTER_SANITIZE_STRING);
     $fechaNacimiento = filter_input(INPUT_POST, "fecha-nacimiento", FILTER_SANITIZE_STRING);
@@ -14,6 +15,7 @@ if($_POST) {
     $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_STRING);
     $confirm_password = filter_input(INPUT_POST, "confirm_password", FILTER_SANITIZE_STRING);
 
+    // Validaciones
     if ($email === false) {
         $mensaje = "Correo electrónico no válido.";
     } elseif ($password !== $confirm_password) {
@@ -21,6 +23,7 @@ if($_POST) {
     } elseif (!esMayorDeEdad($fechaNacimiento)) {
         $mensaje = "Debes ser mayor de edad para registrarte.";
     } else {
+        // Registrar el usuario
         $registrar = registrar($nombre, $apellidos, $fechaNacimiento, $genero, $email, $username, $password);
         if ($registrar) {
             header('Location: ./login.php');
@@ -31,17 +34,24 @@ if($_POST) {
     }
 }
 
+// Función para verificar la edad
 function esMayorDeEdad($fechaNacimiento) {
-    $fechaNacimiento = new DateTime($fechaNacimiento);
-    $hoy = new DateTime();
-    $edad = $hoy->diff($fechaNacimiento)->y;
-    return $edad >= 18;
+    try {
+        $fechaNacimiento = new DateTime($fechaNacimiento);
+        $hoy = new DateTime();
+        $edad = $hoy->diff($fechaNacimiento)->y;
+        return $edad >= 18;
+    } catch (Exception $e) {
+        return false; // Si hay un error en la fecha, no dejar continuar
+    }
 }
 ?>
 
 
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -50,6 +60,7 @@ function esMayorDeEdad($fechaNacimiento) {
     <link rel="stylesheet" href="../css/styleregister.css">
     <script src="../js/validarEdad.js"></script>
 </head>
+
 <body>
     <div class="card">
         <h1>Registrarse</h1>
@@ -63,19 +74,20 @@ function esMayorDeEdad($fechaNacimiento) {
             <input type="date" id="fecha-nacimiento" name="fecha-nacimiento" required>
             <label>Genero:</label>
             <select id="genero" name="genero" required>
-                <option value="O">Seleeciona tu genero...</option>
+                <option value="" disabled selected>Selecciona tu género...</option>
                 <option value="M">Masculino</option>
                 <option value="F">Femenino</option>
                 <option value="X">Prefiero no especificar</option>
             </select>
+
             <label>Correo electrónico:</label>
             <input type="email" placeholder="Correo electrónico..." name="correo" required>
             <label>Username:</label>
             <input type="text" placeholder="Username..." name="username" required>
             <label>Contraseña:</label>
-    <input type="password" placeholder="Contraseña..." name="password" required>
-    <label>Confirmar Contraseña:</label>
-    <input type="password" placeholder="Confirmar contraseña..." name="confirm_password" required>
+            <input type="password" placeholder="Contraseña..." name="password" required>
+            <label>Confirmar Contraseña:</label>
+            <input type="password" placeholder="Confirmar contraseña..." name="confirm_password" required>
             <div class="cont-btn">
                 <button type="submit" class="registrar">Registrar</button>
                 <button type="button" class="salir" onclick="window.location.href = 'login.php'">Salir</button>
@@ -84,5 +96,5 @@ function esMayorDeEdad($fechaNacimiento) {
     </div>
 
 </body>
-</html>
 
+</html>
