@@ -3,9 +3,14 @@ function autentificar($username, $password) {
     include("connection.php");  // Conexión a la base de datos
 
     // Verificar que se hayan recibido los datos
-    if (!$username || !$password) {
-        error_log("Faltan datos de usuario o contraseña.");
-        return false;
+    if (!$username) {
+        if(!$password){
+            error_log("Falta usuario y contraseña.");
+            return false;
+        }else{
+            error_log("Faltan datos de usuario.");
+            return false;
+        }
     }
 
     // Consulta para obtener los datos del usuario
@@ -26,7 +31,7 @@ function autentificar($username, $password) {
 
     // Verificar la contraseña con el salt
     $passwordMasSalt = $password . $usuario["password_salt"];  // Concatenar el salt con la contraseña
-    $passwordEncrypted = strtoupper(hash("sha512", $passwordMasSalt));  // Generar el hash de la contraseña
+    $passwordEncrypted = hash("sha512", $passwordMasSalt);  // Generar el hash de la contraseña
 
     // Debugging: Verificar el hash generado
     error_log("Hash generado: " . $passwordEncrypted);
@@ -47,4 +52,3 @@ function autentificar($username, $password) {
         "apellidos" => $usuario["apellidos"],
     ];
 }
-?>
