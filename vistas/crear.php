@@ -54,7 +54,7 @@ $usuario_nombre = htmlspecialchars($usuarioResp['nombre']); // Asegúrate de que
     <form action="#" id="formCrear" enctype="multipart/form-data" method="post">
       <div class="subir">
         <div class="subir-foto">
-          <input type="file" id="foto" accept="image/*" style="display: none;" name="archivo">
+          <input type="file" id="foto" accept="image/*" style="display: none;" >
           <div class="foto-preview" onclick="document.getElementById('foto').click();"></div>
           <button type="button" id="seleccionar-foto">Seleccionar foto</button>
         </div>

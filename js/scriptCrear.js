@@ -36,7 +36,7 @@ document.getElementById('formCrear').addEventListener("submit", function (e) {
       window.location.href = "../vistas/perfil.php";
     },
     error: function(jqXHR, textStatus, errorThrown) {
-      console.error('Error:', textStatus, errorThrown);
+      console.error('Error:', textStatus);
   }
   });
 });

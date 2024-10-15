@@ -1,8 +1,8 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #ffffff; 
     font-family: "Times New Roman", serif;
+    background-color: #f5f5f5;
     overflow: hidden;
 }
 
@@ -69,13 +69,119 @@ body {
     height: 60px; 
 }
 
-@media (max-width: 768px) {
-    .opcion span {
-        display: none;
-    }
+.usuario-publicacion {
+    background-color: #ffffff;
+    margin-left: 8cm; /* Ajuste mayor para dar espacio al panel */
+    width: calc(100% - 8cm); /* Ocupar el resto del ancho disponible */
+    height: calc(100vh - 40px); 
+    display: flex;
+    flex-direction: column; 
+    align-items: center; /* Centrará las publicaciones horizontalmente */
+    justify-content: flex-start; 
+    overflow-y: auto; 
+    scrollbar-width: none; 
+}
 
+.publicacion {
+    width: 50%; /* Ajusta el tamaño para que las publicaciones sean más pequeñas y estén centradas */
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Asegura que el contenido de la publicación esté centrado */
+    margin-top: 20px;
+}
+
+.foto-publicacion {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    margin-top: 10px;
+    width: 100%;
+}
+
+.foto-publicacion img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 8px;
+}
+
+
+
+.nombre{
+    font-size: 20px; 
+    display: flex;
+    align-items: center;
+    margin: 20px 0; 
+    margin-left: 30px;
+    font-weight: bold;
+}
+
+.nombre img{
+    width: 35px;
+    height: 35px; 
+    border-radius: 50%;
+    margin-right: 10px; 
+}
+
+.mas-opciones {
+    font-size: 30px; 
+    font-weight: bold; 
+    color: white; 
+    background: none; 
+    border: none; 
+    cursor: pointer;
+    margin-left: auto; 
+}
+
+
+.foto-publicacion img {
+    max-width: 80%;
+    max-height: 80%;
+    border-radius: 8px;
+}
+
+.reaccion img {
+    width: 30px;
+    height: 30px;
+    margin-right: 20px;
+}
+
+.likes{
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.comentario{
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    margin: 10px 0; 
+    margin-left: 30px;
+}
+
+.comentario img{
+    width: 35px;
+    height: 35px; 
+    margin-right: 10px; 
+    border-radius: 50%;
+}
+
+
+@media (max-width: 768px) {
     .panel {
         width: 3cm; 
+    }
+
+    .usuario-publicacion {
+        margin-left: 3.5cm;
+    }
+
+    .opcion span {
+        display: none;
     }
 
     .opcion img {
