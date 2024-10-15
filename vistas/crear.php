@@ -1,4 +1,4 @@
-<?php 
+<?php  
 require "../php/sesion_requerida.php";
 require "../php/connection.php";
 
@@ -11,8 +11,16 @@ $stmt = $connection->prepare($sql);
 $stmt->execute([$usuario_id]);
 $usuarioResp = $stmt->fetch(PDO::FETCH_ASSOC);
 
-$imagen_usuario = "../fotos_perfil/" . $usuarioResp["foto_perfil"];
-
+// Verificar si el usuario tiene una foto de perfil en formato BLOB
+if (isset($usuario['foto_perfil']) && !empty($usuario['foto_perfil'])) {
+  // Convertir el BLOB a base64
+  $imagen_base64 = base64_encode($usuario['foto_perfil']);
+  // Crear el formato adecuado para la etiqueta <img>
+  $imagen_usuario = "data:image/jpeg;base64," . $imagen_base64;
+} else {
+  // Imagen predeterminada si no hay foto de perfil
+  $imagen_usuario = "../img/default_perfil.png"; 
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +36,7 @@ $imagen_usuario = "../fotos_perfil/" . $usuarioResp["foto_perfil"];
 <body>
   <div class="panel">
     <div class="opcion" id="lydch"><a href="#"><img src="../img/Logo.png" alt="LYDCH"
-          style="width: 60px; height: 60px;"><span style="font-size: larger; font-weight: bold;">LYDCH</span></a></div>
+          style="width: 60px; height: 60px;"><span style="font-size: larger; font-weight: bold;">UPVBOOKS</span></a></div>
     <div class="espacio"></div>
     <div class="opcion"><a href="../index.php"><img src="../img/Inicio.png" alt="Inicio"><span>Inicio</span></a></div>
     <div class="opcion"><a href="./buscador.html"><img src="../img/Buscador.png"
@@ -36,7 +44,7 @@ $imagen_usuario = "../fotos_perfil/" . $usuarioResp["foto_perfil"];
     <div class="opcion"><a href="./crear.php"><img src="../img/Crear.png" alt="Crear"><span>Crear</span></a></div>
     <div class="opcion" id="perfil"><a href="./perfil.php"><img src="../img/usuario.png"
           alt="Perfil"><span>Perfil</span></a></div>
-          <div class="opcion"><a href="../php/logout.php"><img src="../img/Salir.png" alt="Salir"><span>Salir</span></a></div>
+    <div class="opcion"><a href="../php/logout.php"><img src="../img/Salir.png" alt="Salir"><span>Salir</span></a></div>
   </div>
 
   <div class="contenedor">
@@ -49,7 +57,7 @@ $imagen_usuario = "../fotos_perfil/" . $usuarioResp["foto_perfil"];
         </div>
 
         <div class="usuario-publicacion">
-          <div class="usuario"><img src="../fotos_perfil/<?=$imagen_usuario?>" alt="Foto usuario"><span><?=$usuario?></span></div>
+          <div class="usuario"><img src="<?=$imagen_usuario?>" alt="Foto usuario"><span><?=$usuarioResp['username']?></span></div>
           <textarea class="descripcion" placeholder="Escribe una descripción..." id="descripcion" name="descripcion"></textarea>
           <button class="publicar" type="submit">Publicar</button>
         </div>

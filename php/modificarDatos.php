@@ -43,7 +43,7 @@ if (!empty($_FILES) && isset($_FILES["imagen"]) && !empty($_FILES["imagen"]["nam
     if (in_array($extension, $EXT_ARCHIVOS_FOTOS)) {
         $ruta = "C:/xampp/htdocs/InstagramWEB/fotos_perfil/" . $usuarioID . "_" . $nombre . "." . $extension;  // ruta donde se guardará el archivo
 
-        //Revisar si existe algun archivo con ese nombre y borrarlo para reemplazarlo
+        // Revisar si existe algún archivo con ese nombre y borrarlo para reemplazarlo
         if (file_exists($ruta)) {
             $seBorro = unlink($ruta);
             if (!$seBorro) {
@@ -52,11 +52,19 @@ if (!empty($_FILES) && isset($_FILES["imagen"]) && !empty($_FILES["imagen"]["nam
                 exit();
             }
         }
+
+        // Verificar si el directorio existe
+        if (!file_exists("C:/xampp/htdocs/InstagramWEB/fotos_perfil/")) {
+            $mensaje = "El directorio de fotos no existe.";
+            require "../vistas/editarperfil.php";
+            exit();
+        }
+
         $seGuardo = move_uploaded_file($archivoSubido["tmp_name"], $ruta);
 
-        // Si no se guardo el archivo, regresamos un error
+        // Si no se guardó el archivo, regresamos un error
         if (!$seGuardo) {
-            $mensaje = "No se logro guardar el mensaje";
+            $mensaje = "No se logró guardar el archivo";
             require "../vistas/editarperfil.php";
             exit();
         } else {
@@ -77,7 +85,8 @@ $stmt = $connection->prepare($sql);
 if ($stmt->execute($params)) {
     header("Location: ../vistas/perfil.php");
 } else {
-    $mensaje = "No se pudo modificar la informacion";
+    $mensaje = "No se pudo modificar la información";
     require "../vistas/editarperfil.php";
     exit();
 }
+

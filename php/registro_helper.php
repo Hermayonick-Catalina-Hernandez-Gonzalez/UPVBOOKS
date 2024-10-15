@@ -1,5 +1,5 @@
 <?php
-function registrar($nombre, $apellidos, $fechaNacimiento, $genero, $email, $username, $password) {
+function registrar($nombre, $apellidos, $fechaNacimiento, $genero, $email, $username, $password, $foto_perfil) {
     include("connection.php"); // Incluir la conexión a la base de datos
 
     try {
@@ -7,10 +7,17 @@ function registrar($nombre, $apellidos, $fechaNacimiento, $genero, $email, $user
         $passwordSalt = bin2hex(random_bytes(32));  // Genera un salt seguro
         $passwordEncrypted = hash("sha512", $password . $passwordSalt);  // Hashea la contraseña con el salt
 
+        // Verificar si la foto es un archivo BLOB
+        $fotoBlob = null;
+        if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] == 0) {
+            // Leer la imagen en formato binario
+            $fotoBlob = file_get_contents($_FILES['foto_perfil']['tmp_name']);
+        }
+
         // Prepara la consulta de inserción con todos los campos mencionados
         $sql = "INSERT INTO `usuarios` 
-            (`username`, `email`, `password`, `password_salt`, `nombre`, `apellidos`, `genero`, `fecha_nacimiento`, `fecha_hora_registro`, `activo`) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?)";
+            (`username`, `email`, `password_encrypted`, `password_salt`, `nombre`, `apellidos`, `genero`, `fecha_nacimiento`, `fecha_hora_registro`, `activo`, `foto_perfil`) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?)";
 
         // Parámetros a insertar en la tabla
         $sqlParams = [
@@ -22,7 +29,8 @@ function registrar($nombre, $apellidos, $fechaNacimiento, $genero, $email, $user
             $apellidos,            // apellidos
             $genero,               // genero
             $fechaNacimiento,      // fecha_nacimiento
-            1                      // activo (indica si la cuenta está activa)
+            1,                     // activo (indica si la cuenta está activa)
+            $fotoBlob              // imagen en formato BLOB (o NULL si no hay foto)
         ];
 
         // Preparar y ejecutar la consulta
@@ -40,4 +48,5 @@ function registrar($nombre, $apellidos, $fechaNacimiento, $genero, $email, $user
         $connection = null;
     }
 }
+
 ?>

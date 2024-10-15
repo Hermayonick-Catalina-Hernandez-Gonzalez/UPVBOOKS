@@ -1,4 +1,4 @@
-<?php
+<?php 
 require "../php/sesion_requerida.php";
 require "../php/connection.php";
 
@@ -38,8 +38,17 @@ $stmt_publicaciones_usuario = $connection->prepare($sql_publicaciones_usuario);
 $stmt_publicaciones_usuario->execute([$usuario_id]);
 $publicaciones_usuario = $stmt_publicaciones_usuario->fetchAll(PDO::FETCH_ASSOC);
 
-// Obtener la ruta de la imagen del usuario
-$imagen_usuario = "../fotos_perfil/" . $usuario["foto_perfil"];
+// Verificar si el usuario tiene una foto de perfil en formato BLOB
+if (isset($usuario['foto_perfil']) && !empty($usuario['foto_perfil'])) {
+  // Convertir el BLOB a base64
+  $imagen_base64 = base64_encode($usuario['foto_perfil']);
+  // Crear el formato adecuado para la etiqueta <img>
+  $imagen_usuario = "data:image/jpeg;base64," . $imagen_base64;
+} else {
+  // Imagen predeterminada si no hay foto de perfil
+  $imagen_usuario = "../img/default_perfil.png"; 
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,7 +63,7 @@ $imagen_usuario = "../fotos_perfil/" . $usuario["foto_perfil"];
 
 <body>
   <div class="panel">
-    <div class="opcion" id="lydch"><a href="#"><img src="../img/Logo.png" alt="LYDCH" style="width: 60px; height: 60px;"><span style="font-size: larger; font-weight: bold;">LYDCH</span></a></div>
+    <div class="opcion" id="lydch"><a href="#"><img src="../img/Logo.png" alt="LYDCH" style="width: 60px; height: 60px;"><span style="font-size: larger; font-weight: bold;">UPVBOOKS</span></a></div>
     <div class="espacio"></div>
     <div class="opcion"><a href="../index.php"><img src="../img/Inicio.png" alt="Inicio"><span>Inicio</span></a></div>
     <div class="opcion"><a href="./buscador.html"><img src="../img/Buscador.png" alt="Buscador"><span>Buscador</span></a></div>
@@ -79,7 +88,6 @@ $imagen_usuario = "../fotos_perfil/" . $usuario["foto_perfil"];
         <span class="informacion-detallada"><?php echo $num_seguidores; ?> seguidores</span>
         <span class="informacion-detallada"><?php echo $num_seguidos; ?> seguidos</span>
       </div>
-
 
       <div class="galeria">
         <?php if (isset($publicaciones_usuario) && !empty($publicaciones_usuario)) : ?>

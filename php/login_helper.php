@@ -35,10 +35,10 @@ function autentificar($username, $password) {
 
     // Debugging: Verificar el hash generado
     error_log("Hash generado: " . $passwordEncrypted);
-    error_log("Hash almacenado en la base de datos: " . $usuario["password"]);
+    error_log("Hash almacenado en la base de datos: " . $usuario["password_encrypted"]);
 
     // Compara la contraseña ingresada con la almacenada
-    if ($usuario["password"] !== $passwordEncrypted) {
+    if ($usuario["password_encrypted"] !== $passwordEncrypted) {
         error_log("Contraseña no coincide.");
         return false;
     }
@@ -52,3 +52,4 @@ function autentificar($username, $password) {
         "apellidos" => $usuario["apellidos"],
     ];
 }
+

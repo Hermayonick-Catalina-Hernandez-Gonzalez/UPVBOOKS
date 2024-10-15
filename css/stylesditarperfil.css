@@ -24,7 +24,7 @@ body:before {
     position: fixed;
     top: 0;
     left: 0;
-    background-image: linear-gradient(#ff9100,#ca049f, #d591fdbd);
+    background-image: linear-gradient(#C989BB, #7859A6);
     opacity: 0.25;
     z-index: -1;
 }

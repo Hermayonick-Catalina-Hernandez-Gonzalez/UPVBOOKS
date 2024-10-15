@@ -45,8 +45,7 @@ if($_POST) {
             <input type="text" placeholder="Usuario..." name="nombre" id="nombre">
             <label>Contraseña:</label>
             <input type="password" placeholder="Contraseña..." name="password" id="password">
-            <p><a href="cambiarContrasena.php">¿Olvidaste tu contraseña?</a></p>
-
+            
             <div class="cont-btn">
                 <button type="submit">Iniciar</button>
             </div>
