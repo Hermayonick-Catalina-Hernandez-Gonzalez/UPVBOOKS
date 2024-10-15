@@ -3,34 +3,24 @@ require "../php/login_helper.php";
 
 session_start();
 
-if ($_POST) {
-    $username = filter_input(INPUT_POST, "username");  // Obtener el valor del username
-    $password = filter_input(INPUT_POST, "password");  // Obtener el valor de la contraseña
-
-    // Verificar que se recibieron ambos campos
-    if (!$username || !$password) {
-        $mensaje = "Por favor, ingresa ambos campos.";
+if($_POST) {
+    $username = filter_input(INPUT_POST, "nombre");
+    $password = filter_input(INPUT_POST, "password");
+    
+    $loggear = autentificar($username, $password);
+    if(!$loggear) {
+        $mensaje = "Usuario o contraseña incorrectos";
     } else {
-        // Llamar a la función de autentificación
-        $loggear = autentificar($username, $password);
-
-        // Si no se pudo autenticar, mostrar mensaje de error
-        if (!$loggear) {
-            $mensaje = "Usuario o contraseña incorrectos";
-        } else {
-            // Si se autentica correctamente, guardar la información en la sesión
-            $_SESSION["id"] = $loggear["id"];
-            $_SESSION["username"] = $loggear["username"];
-            $_SESSION["email"] = $loggear["email"];
-            $_SESSION["nombre"] = $loggear["nombre"];
-            $_SESSION["apellidos"] = $loggear["apellidos"];
-
-            // Redirigir a la página principal (index.php)
-            header("Location: ../index.php");
-            exit();  // Asegurarse de que no se ejecute más código después de la redirección
-        }
+        $_SESSION["id"] = $loggear["id"];
+        $_SESSION["username"] = $loggear["username"];
+        $_SESSION["email"] = $loggear["email"];
+        $_SESSION["nombre"] = $loggear["nombre"];
+        $_SESSION["apellidos"] = $loggear["apellidos"];
+        $_SESSION["fotoPerfil"] = $loggear["rutaPerfil"];
+        header("Location: ../index.php");
+        exit(); 
     }
-}
+} 
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +28,7 @@ if ($_POST) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión</title>
+    <title>Iniciar Sesion</title>
     <link rel="icon" href="../img/Logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../css/stylelogin.css">
     <script src="../js/mensajeError.js"></script>
@@ -50,22 +40,19 @@ if ($_POST) {
             <img src="../img/Logo.png" />
         </div>
         <form class="ingresos" action="login.php" method="post">
-            <!-- Mostrar mensaje de error en caso de login fallido -->
-            <p id="mensaje"><?php if (isset($mensaje)) echo $mensaje; ?></p>
-
+            <p id="mensaje"><?php if(isset($mensaje)) echo $mensaje; ?></p>
             <label>Usuario:</label>
-            <input type="text" placeholder="Usuario..." name="username" id="username" required>
-
+            <input type="text" placeholder="Usuario..." name="nombre" id="nombre">
             <label>Contraseña:</label>
-            <input type="password" placeholder="Contraseña..." name="password" id="password" required>
-
+            <input type="password" placeholder="Contraseña..." name="password" id="password">
             <p><a href="cambiarContrasena.php">¿Olvidaste tu contraseña?</a></p>
 
             <div class="cont-btn">
                 <button type="submit">Iniciar</button>
             </div>
         </form>
-        <p>Aún no tienes cuenta? <a href="registrarse.php">Regístrate</a></p>
+        <p>Aun no tienes cuenta? <a href="registrarse.php">Regístrate</a></p>
     </div>
+    
 </body>
 </html>
