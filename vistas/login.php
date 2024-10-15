@@ -17,6 +17,7 @@ if($_POST) {
         $_SESSION["nombre"] = $loggear["nombre"];
         $_SESSION["apellidos"] = $loggear["apellidos"];
         $_SESSION["fotoPerfil"] = $loggear["rutaPerfil"];
+        $_SESSION["rol"] = $loggear["rol"]; // Guardar el rol del usuario en la sesión
         header("Location: ../index.php");
         exit(); 
     }
@@ -52,6 +53,5 @@ if($_POST) {
         </form>
         <p>Aun no tienes cuenta? <a href="registrarse.php">Regístrate</a></p>
     </div>
-    
 </body>
 </html>

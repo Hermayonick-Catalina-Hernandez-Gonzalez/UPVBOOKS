@@ -38,16 +38,20 @@ $stmt_publicaciones_usuario = $connection->prepare($sql_publicaciones_usuario);
 $stmt_publicaciones_usuario->execute([$usuario_id]);
 $publicaciones_usuario = $stmt_publicaciones_usuario->fetchAll(PDO::FETCH_ASSOC);
 
-// Verificar si el usuario tiene una foto de perfil en formato BLOB
 if (isset($usuario['foto_perfil']) && !empty($usuario['foto_perfil'])) {
-  // Convertir el BLOB a base64
-  $imagen_base64 = base64_encode($usuario['foto_perfil']);
-  // Crear el formato adecuado para la etiqueta <img>
-  $imagen_usuario = "data:image/jpeg;base64," . $imagen_base64;
+  // Verificar si hay datos en la imagen
+  if (strlen($usuario['foto_perfil']) > 0) {
+      $imagen_base64 = base64_encode($usuario['foto_perfil']);
+      $imagen_usuario = "data:image/jpeg;base64," . $imagen_base64;
+  } else {
+      // Imagen predeterminada si no hay foto de perfil
+      $imagen_usuario = "../img/default_perfil.png"; 
+  }
 } else {
   // Imagen predeterminada si no hay foto de perfil
   $imagen_usuario = "../img/default_perfil.png"; 
 }
+
 
 ?>
 <!DOCTYPE html>

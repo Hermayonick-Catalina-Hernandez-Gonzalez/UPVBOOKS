@@ -5,7 +5,6 @@ session_start();
 $mensaje = "";
 
 if ($_POST) {
-    // Limpiar y validar los campos de entrada
     $nombre = filter_input(INPUT_POST, "nombre", FILTER_SANITIZE_STRING);
     $apellidos = filter_input(INPUT_POST, "apellido", FILTER_SANITIZE_STRING);
     $fechaNacimiento = filter_input(INPUT_POST, "fecha-nacimiento", FILTER_SANITIZE_STRING);
@@ -15,52 +14,27 @@ if ($_POST) {
     $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_STRING);
     $confirm_password = filter_input(INPUT_POST, "confirm_password", FILTER_SANITIZE_STRING);
     
-    // Foto por defecto
-    $foto_perfil = "default_profile.png";  // Foto por defecto si no se sube una
-
-    if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] == 0) {
-        // Procesar la foto de perfil subida
-        $foto_tmp = $_FILES['foto_perfil']['tmp_name'];
-        $foto_extension = pathinfo($_FILES['foto_perfil']['name'], PATHINFO_EXTENSION);
-        $foto_nombre = "profile_" . uniqid() . "." . $foto_extension;
-
-        // Subir la foto de perfil al servidor (directorio 'uploads/')
-        $foto_destino = "../fotos_perfil/" . $foto_nombre;
-        move_uploaded_file($foto_tmp, $foto_destino);
-
-        // Asignar el nombre de la foto subida
-        $foto_perfil = $foto_nombre;
-    }
-
-    // Validaciones
-    if ($email === false) {
-        $mensaje = "Correo electrónico no válido.";
-    } elseif ($password !== $confirm_password) {
+    // Ruta de la foto de perfil predeterminada
+    $fotoPerfil = '../img/default_perfil.jpg'; 
+    // Asegúrate de que las contraseñas coincidan
+    if ($password != $confirm_password) {
         $mensaje = "Las contraseñas no coinciden.";
-    } elseif (!esMayorDeEdad($fechaNacimiento)) {
-        $mensaje = "Debes ser mayor de edad para registrarte.";
     } else {
-        // Registrar el usuario con la foto de perfil
-        $registrar = registrar($nombre, $apellidos, $fechaNacimiento, $genero, $email, $username, $password, $foto_perfil);
+        $registrar = registrar($nombre, $apellidos, $fechaNacimiento, $genero, $email, $username, $password, $fotoPerfil);
         if ($registrar) {
             header('Location: ./login.php');
-            exit;
+            exit();
         } else {
-            $mensaje = "Ocurrió un error al registrar el usuario.";
+            $mensaje = "Ocurrió un error";
         }
     }
 }
 
-// Función para verificar la edad
 function esMayorDeEdad($fechaNacimiento) {
-    try {
-        $fechaNacimiento = new DateTime($fechaNacimiento);
-        $hoy = new DateTime();
-        $edad = $hoy->diff($fechaNacimiento)->y;
-        return $edad >= 18;
-    } catch (Exception $e) {
-        return false; // Si hay un error en la fecha, no dejar continuar
-    }
+    $fechaNacimiento = new DateTime($fechaNacimiento);
+    $hoy = new DateTime();
+    $edad = $hoy->diff($fechaNacimiento)->y;
+    return $edad >= 18;
 }
 ?>
 
@@ -77,7 +51,7 @@ function esMayorDeEdad($fechaNacimiento) {
 <body>
     <div class="card">
         <h1>Registrarse</h1>
-        <form class="ingresos" action="registrarse.php" method="post" enctype="multipart/form-data">
+        <form class="ingresos" action="registrarse.php" method="post">
             <label id="error-label"><?php echo htmlspecialchars($mensaje); ?></label>
             <label>Nombre:</label>
             <input type="text" placeholder="Usuario..." name="nombre" required>
@@ -87,12 +61,11 @@ function esMayorDeEdad($fechaNacimiento) {
             <input type="date" id="fecha-nacimiento" name="fecha-nacimiento" required>
             <label>Genero:</label>
             <select id="genero" name="genero" required>
-                <option value="" disabled selected>Selecciona tu género...</option>
+                <option value="O">Selecciona tu genero...</option>
                 <option value="M">Masculino</option>
                 <option value="F">Femenino</option>
                 <option value="X">Prefiero no especificar</option>
             </select>
-
             <label>Correo electrónico:</label>
             <input type="email" placeholder="Correo electrónico..." name="correo" required>
             <label>Username:</label>
@@ -100,16 +73,13 @@ function esMayorDeEdad($fechaNacimiento) {
             <label>Contraseña:</label>
             <input type="password" placeholder="Contraseña..." name="password" required>
             <label>Confirmar Contraseña:</label>
-            <input type="password" placeholder="Confirmar contraseña..." name="confirm_password" required>
-            
-            <label>Foto de perfil:</label>
-            <input type="file" name="foto_perfil" accept="image/*">
-            
+            <input type="password" placeholder="Confirmar contraseña..." name="confirm_password" required> <!-- Cambiado aquí -->
             <div class="cont-btn">
                 <button type="submit" class="registrar">Registrar</button>
                 <button type="button" class="salir" onclick="window.location.href = 'login.php'">Salir</button>
             </div>
         </form>
     </div>
+
 </body>
 </html>

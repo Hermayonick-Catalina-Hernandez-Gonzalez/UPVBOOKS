@@ -24,16 +24,22 @@ if ($stmt->rowCount() > 0) {
     echo "<ul>"; // Inicia la lista
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         echo "<li class='perfil-usuario'>"; // Inicia un elemento de lista
-        // Mostrar la imagen de perfil si existe
-        $imagen_usuario = "../fotos_perfil/" . $row["foto_perfil"]; // Ruta de la imagen del usuario
-        if (file_exists($imagen_usuario)) {
+
+        // Mostrar la imagen de perfil si existe en formato BLOB
+        if (!empty($row["foto_perfil"])) {
+            // Convertir el BLOB a base64
+            $imagen_base64 = base64_encode($row['foto_perfil']); // Cambia usuarioResp a row
+            // Crear el formato adecuado para la etiqueta <img>
+            $imagen_usuario = "data:image/jpeg;base64," . $imagen_base64;
             echo "<img src='$imagen_usuario' alt='Foto de Usuario' class='foto-usuario'>";
         } else {
-            echo "<img src='../fotos_perfil/image.png' alt='Foto de Usuario' class='foto-usuario'>";
+            // Imagen predeterminada si no hay foto de perfil
+            echo "<img src='../img/default_perfil.jpg' alt='Foto de Usuario' class='foto-usuario'>";
         }
+
         // Enlace para abrir el perfil en la misma ventana
         echo "<a href='perfilBuscado.php?usuario_id=" . $row['id'] . "'>";
-        echo "<span class='nombre-usuario'>" . $row['username'] . "</span>";
+        echo "<span class='nombre-usuario'>" . htmlspecialchars($row['username']) . "</span>";
         echo "</a>";
         echo "</li>"; // Cierra el elemento de lista
     }
@@ -41,3 +47,4 @@ if ($stmt->rowCount() > 0) {
 } else {
     echo "Perfil no encontrado.";
 }
+?>

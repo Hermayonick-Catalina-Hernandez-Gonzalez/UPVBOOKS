@@ -7,11 +7,14 @@ function registrar($nombre, $apellidos, $fechaNacimiento, $genero, $email, $user
         $passwordSalt = bin2hex(random_bytes(32));  // Genera un salt seguro
         $passwordEncrypted = hash("sha512", $password . $passwordSalt);  // Hashea la contraseña con el salt
 
-        // Verificar si la foto es un archivo BLOB
+        // Verificar si se ha subido una foto de perfil
         $fotoBlob = null;
         if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] == 0) {
             // Leer la imagen en formato binario
             $fotoBlob = file_get_contents($_FILES['foto_perfil']['tmp_name']);
+        } else {
+            // Si no hay foto, se asigna una foto predeterminada
+            $fotoBlob = file_get_contents($foto_perfil); // Suponiendo que $foto_perfil es una ruta válida
         }
 
         // Prepara la consulta de inserción con todos los campos mencionados
@@ -30,7 +33,7 @@ function registrar($nombre, $apellidos, $fechaNacimiento, $genero, $email, $user
             $genero,               // genero
             $fechaNacimiento,      // fecha_nacimiento
             1,                     // activo (indica si la cuenta está activa)
-            $fotoBlob              // imagen en formato BLOB (o NULL si no hay foto)
+            $fotoBlob              // imagen en formato BLOB (o la imagen predeterminada)
         ];
 
         // Preparar y ejecutar la consulta
@@ -48,5 +51,4 @@ function registrar($nombre, $apellidos, $fechaNacimiento, $genero, $email, $user
         $connection = null;
     }
 }
-
 ?>

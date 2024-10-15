@@ -1,23 +1,27 @@
 <?php
 require "./config.php";
-require "../php/sesion.php";
+require "../php/sesion.php";  // Asegúrate que esta línea esté primero
 require "../php/connection.php";
 
+// Manejo de los datos del formulario
 $nombre = filter_input(INPUT_POST, "nombre");
 $apellidos = filter_input(INPUT_POST, "apellidos");
 $genero = filter_input(INPUT_POST, "genero");
 $fecha_Nac = filter_input(INPUT_POST, "fecha-nacimiento");
 $email = filter_input(INPUT_POST, "correo");
 
+// Verifica que se haya enviado el nombre o el email
 if (!$nombre && !$email) {
     $mensaje = "No se enviaron los datos requeridos";
-    //require "../vistas/editarperfil.php";
+    require "../vistas/editarperfil.php";
     exit();
 }
 
+// Preparación de la consulta SQL para actualizar datos
 $sql = "UPDATE usuarios SET nombre = ?, email = ?";
 $params = [$nombre, $email];
 
+// Agregar otros campos si están presentes
 if ($apellidos) {
     $sql .= ", apellidos = ?";
     $params[] = $apellidos;
@@ -33,17 +37,27 @@ if ($fecha_Nac) {
     $params[] = $fecha_Nac;
 }
 
+// Manejo de la imagen de perfil
 if (!empty($_FILES) && isset($_FILES["imagen"]) && !empty($_FILES["imagen"]["name"])) {
     $archivoSubido = $_FILES["imagen"];
-
-    $nombreArchivo = $archivoSubido["name"];  // el nombre de archivo original
-    $nombreArchivoParts = explode(".", $nombreArchivo);  // obtenemos array por "."
-    $extension = strtolower($nombreArchivoParts[count($nombreArchivoParts) - 1]);
+    $nombreArchivo = $archivoSubido["name"];  
+    $nombreArchivoParts = explode(".", $nombreArchivo);
+    $extension = strtolower(end($nombreArchivoParts));
 
     if (in_array($extension, $EXT_ARCHIVOS_FOTOS)) {
-        $ruta = "C:/xampp/htdocs/InstagramWEB/fotos_perfil/" . $usuarioID . "_" . $nombre . "." . $extension;  // ruta donde se guardará el archivo
+        $ruta = "C:/xampp/htdocs/UPVBOOKS/fotos_perfil/" . $usuarioID . "_" . $nombre . "." . $extension;
 
-        // Revisar si existe algún archivo con ese nombre y borrarlo para reemplazarlo
+        // Verificar si el directorio existe
+        if (!file_exists("C:/xampp/htdocs/UPVBOOKS/fotos_perfil/")) {
+            // Crear el directorio si no existe
+            if (!mkdir("C:/xampp/htdocs/UPVBOOKS/fotos_perfil/", 0777, true)) {
+                $mensaje = "El directorio de fotos no existe y no se pudo crear.";
+                require "../vistas/editarperfil.php";
+                exit();
+            }
+        }
+
+        // Borrar archivo existente si es necesario
         if (file_exists($ruta)) {
             $seBorro = unlink($ruta);
             if (!$seBorro) {
@@ -53,16 +67,8 @@ if (!empty($_FILES) && isset($_FILES["imagen"]) && !empty($_FILES["imagen"]["nam
             }
         }
 
-        // Verificar si el directorio existe
-        if (!file_exists("C:/xampp/htdocs/InstagramWEB/fotos_perfil/")) {
-            $mensaje = "El directorio de fotos no existe.";
-            require "../vistas/editarperfil.php";
-            exit();
-        }
-
+        // Mover el archivo subido
         $seGuardo = move_uploaded_file($archivoSubido["tmp_name"], $ruta);
-
-        // Si no se guardó el archivo, regresamos un error
         if (!$seGuardo) {
             $mensaje = "No se logró guardar el archivo";
             require "../vistas/editarperfil.php";
@@ -78,7 +84,7 @@ if (!empty($_FILES) && isset($_FILES["imagen"]) && !empty($_FILES["imagen"]["nam
     }
 }
 
-$sql .= "WHERE id = ?";
+$sql .= " WHERE id = ?";
 $params[] = $usuarioID;
 
 $stmt = $connection->prepare($sql);
@@ -89,4 +95,4 @@ if ($stmt->execute($params)) {
     require "../vistas/editarperfil.php";
     exit();
 }
-
+?>

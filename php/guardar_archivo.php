@@ -1,93 +1,85 @@
 <?php
 
-// import de los archivos de código necesarios para la ejecución de este PHP file
+// Importar los archivos necesarios para la ejecución
 require "./config.php";  // Configuraciones generales de la aplicación
-require "./sesion_requerida.php";  // para acceder a las variables de sesión
-require "./connection.php";  // para el acceso a datos
+require "./sesion_requerida.php";  // Para acceder a las variables de sesión
+require "./connection.php";  // Para el acceso a datos
 
-// Indicamos que la respuesta es de tipo JSON, porque la petición a esta ejecución
-// será por AJAX
+// Indicamos que la respuesta es de tipo JSON, porque la petición será por AJAX
 header("Content-Type: application/json");
 
 $errores = [];  // Array para guardar los errores obtenidos.
-$now = new DateTime();  // fecha hora actual de la ejecución
+$now = new DateTime();  // Fecha y hora actual de la ejecución
 
-// Se valida que el usuario está autenticado, de lo contrario se regresa un
-// json con el error (usuario no autenticado)
+// Validar que el usuario está autenticado
 if (!$usuarioAutenticado) {
     $errores[] = "El usuario no se ha autenticado";
     echo json_encode(["errores" => $errores]);
-    exit();  // fin de la ejecución de este archivo PHP
+    exit();  // Fin de la ejecución de este archivo PHP
 }
 
-// Se valida que se haya enviado el archivo en el request
+// Validar que se haya enviado el archivo en el request
 if (
     empty($_FILES) || !isset($_FILES["archivo"]) || empty($_FILES["archivo"]["name"])
 ) {
-    $errores[] = "No se recibio el archivo a publicar.";
+    $errores[] = "No se recibió el archivo a publicar.";
     echo json_encode(["errores" => $errores]);
-    exit();  // fin de la ejecución de este archivo PHP
+    exit();  // Fin de la ejecución de este archivo PHP
 }
 
-// Obtenemos el assoc array con los datos del archivo subido
+// Obtener el array asociativo con los datos del archivo subido
 $archivoSubido = $_FILES["archivo"];
 
-// Para obtener el dato de la descripción del archivo, si es que se envió
+// Obtener la descripción del archivo
 $descripcion = filter_input(INPUT_POST, "descripcion");
-$descripcion = $descripcion && strlen(trim($descripcion)) ? // valor establecido?
-    trim($descripcion) : NULL;  // SI -> quitamos espacios en blanco : NO -> NULL
+$descripcion = $descripcion && strlen(trim($descripcion)) ? // Valor establecido?
+    trim($descripcion) : NULL;  // SI -> Quitamos espacios en blanco : NO -> NULL
 
-// Se obtienen los datos del archivo que se subió
-$nombreArchivo = $archivoSubido["name"];  // el nombre de archivo original
-$nombreArchivoParts = explode(".", $nombreArchivo);  // obtenemos array por "."
+// Obtener los datos del archivo que se subió
+$nombreArchivo = $archivoSubido["name"];  // Nombre del archivo original
+$nombreArchivoParts = explode(".", $nombreArchivo);  // Obtener array por "."
 $extension = strtolower($nombreArchivoParts[count($nombreArchivoParts) - 1]);
-$tamaño = $archivoSubido["size"];  // tamaño del archivo subido
+$tamaño = $archivoSubido["size"];  // Tamaño del archivo subido
 
-// Validación del tipo de archivo que se subió, que su extensión corresponda a
-// algún tipo de archivo de imagen
+// Validación del tipo de archivo que se subió
 if (!in_array($extension, $EXT_ARCHIVOS_FOTOS)) {
-    $errores[] = "El tipo de archivo no es el correcto, solo agregue imagenes";
+    $errores[] = "El tipo de archivo no es el correcto, solo agregue imágenes.";
     echo json_encode(["errores" => $errores]);
-    exit();  // fin de la ejecución de este archivo PHP
+    exit();  // Fin de la ejecución de este archivo PHP
 }
 
-// Generamos un nombre de archivo random (que para este caso será un número
-// hexadecimal) de longitud de 64 chars según 32 bytes random
+// Generar un nombre de archivo aleatorio
 $nombreArchivoGuardado = strtoupper(bin2hex(random_bytes(32)));
-$ruta = "C:/xampp/htdocs/xampp/InstagramWEB/fotos/" . $nombreArchivoGuardado . "." . $extension;  // ruta donde se guardará el archivo
+$ruta = "C:/xampp/htdocs/xampp/UPVBOOKS/fotos/" . $nombreArchivoGuardado . "." . $extension;  // Ruta donde se guardará el archivo
 $seGuardo = move_uploaded_file($archivoSubido["tmp_name"], $ruta);
 
-// Si no se guardo el archivo, regresamos un error
+// Si no se guardó el archivo, regresar un error
 if (!$seGuardo) {
-    $errores[] = "Ocurrio un error al guardar el archivo";
+    $errores[] = "Ocurrió un error al guardar el archivo.";
     echo json_encode(["errores" => $errores]);
-    exit();  // fin de la ejecución de este archivo PHP
+    exit();  // Fin de la ejecución de este archivo PHP
 }
 
-// Obtenemos el SHA256 del archivo
+// Obtener el SHA256 del archivo
 $hashSha256 = strtoupper(hash_file("sha256", $ruta));
 
-// Se obtiene la fecha-hora actual en string con formato yyyy-MM-dd HH:mm:ss
-// (ej. "2024-12-31 23:59:59") porque es el formato que el MySQL/MariaDB 
-// reconoce como una fecha-hora válida
+// Obtener la fecha-hora actual en string con formato yyyy-MM-dd HH:mm:ss
 $fechaSubido = $now->format("Y-m-d H:i:s");
 
-// Ejecutamos la operación de insert del registro del archivo en DB
+// Ejecutar la operación de insert del registro del archivo en DB
 $sqlCmd =  // Sentencia SQL del INSERT
     "INSERT INTO fotos (secure_id, extension, usuario_subio_id, nombre_archivo, tamaño, descripcion, fecha_subido) VALUES (?, ?, ?, ?, ?, ?, ?)";
-$sqlParam = [  // array con los datos a guardar, según los placeholders '?'
+$sqlParam = [  // Array con los datos a guardar
     $nombreArchivoGuardado, $extension, $usuarioID, $nombreArchivo, $tamaño, $descripcion, $fechaSubido
 ];
 
-$stmt = $connection->prepare($sqlCmd);  // obtenemos el statement de la ejecución
+$stmt = $connection->prepare($sqlCmd);  // Obtener el statement de la ejecución
 $stmt->execute($sqlParam);
 
-// Obtenemos el id del registro que insertamos en tabla archivos, dado que 
-// este se calcula en DB al ser autoincrement
-$id = (int)$connection->lastInsertId(); // la función regresa string, convertimos a int
+// Obtener el id del registro que insertamos en tabla archivos
+$id = (int)$connection->lastInsertId(); // Convertir a int
 
-// Regresamos una respuesta como un JSON string, aquí pueden ir los diferentes datos que
-// pudieramos necesitar en el front-end.
+// Regresar una respuesta como un JSON string
 $resObj = [
     "errores" => $errores,
     "archivo" => [
