@@ -23,7 +23,7 @@ if (isset($usuarioResp['foto_perfil']) && !empty($usuarioResp['foto_perfil'])) {
 }
 
 
-$usuario_nombre = htmlspecialchars($usuarioResp['nombre']); // Asegúrate de que el campo 'nombre' existe en tu base de datos
+$usuario_nombre = htmlspecialchars($usuarioResp['username']); // Asegúrate de que el campo 'nombre' existe en tu base de datos
 ?>
 <!DOCTYPE html>
 <html lang="en">
