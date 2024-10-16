@@ -32,7 +32,7 @@ $stmt->execute([$usuarioID, $usuarioID]);
 
 <body>
     <div class="panel">
-        <div class="opcion" id="lydch"><a href="#"><img src="./img/Logo.png" alt="LYDCH" style="width: 60px; height: 60px;"><span style="font-size: larger; font-weight: bold;">LYDCH</span></a></div>
+        <div class="opcion" id="lydch"><a href="#"><img src="./img/Logo.png" alt="LYDCH" style="width: 60px; height: 60px;"><span style="font-size: larger; font-weight: bold;">UPVBOOKS</span></a></div>
         <div class="espacio"></div>
         <div class="opcion"><a href="index.php"><img src="./img/Inicio.png" alt="Inicio"><span>Inicio</span></a></div>
         <div class="opcion"><a href="./vistas/buscador.html"><img src="./img/Buscador.png" alt="Buscador"><span>Buscador</span></a></div>
@@ -65,13 +65,7 @@ $stmt->execute([$usuarioID, $usuarioID]);
                             <img src="fotos/<?= htmlspecialchars($publicacion["secure_id"] . "." . $publicacion["extension"]) ?>" alt="<?= htmlspecialchars($publicacion["nombre_archivo"]) ?>">
                         </div>
 
-                        <div class="reaccion" id="like" data-id="<?= $publicacion["id"] ?>">
-                            <img src="./img/Like.png" alt="Like">
-                        </div>
-
-                        <div class="interacciones">
-                            <span class="likes"></span>
-                        </div>
+                        
                     </div>
                 </div>
         <?php

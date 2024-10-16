@@ -44,7 +44,8 @@ if ($stmt->rowCount() > 0) {
 }
 
 // Función para verificar si el usuario actual sigue a otro usuario
-function esta_siguiendo_usuario($usuario_id, $usuario_seguir_id) {
+function esta_siguiendo_usuario($usuario_id, $usuario_seguir_id)
+{
     global $connection;
     $sql = "SELECT COUNT(*) AS num_filas FROM seguidores WHERE usuario_seguidor_id = :usuario_id AND usuario_siguiendo_id = :usuario_seguir_id";
     $stmt = $connection->prepare($sql);
@@ -87,6 +88,7 @@ if (isset($_POST['eliminar_publicacion'])) {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -94,6 +96,7 @@ if (isset($_POST['eliminar_publicacion'])) {
     <link rel="icon" href="../img/Logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../css/stylesPerfil.css">
 </head>
+
 <body>
     <div class="panel">
         <div class="opcion" id="lydch"><a href="#"><img src="../img/Logo.png" alt="LYDCH" style="width: 60px; height: 60px;"><span style="font-size: larger; font-weight: bold;">UPVBOOKS</span></a></div>
@@ -131,12 +134,10 @@ if (isset($_POST['eliminar_publicacion'])) {
                     <?php foreach ($publicaciones_usuario as $publicacion) : ?>
                         <div class="publicacion">
                             <img src="../fotos/<?php echo htmlspecialchars($publicacion['secure_id'] . "." . $publicacion['extension']); ?>" alt="<?php echo htmlspecialchars($publicacion['descripcion']); ?>">
-                            <form method="post" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta publicación?');">
-                                <input type="hidden" name="publicacion_id" value="<?php echo htmlspecialchars($publicacion['id']); ?>">
-                                <button type="submit" name="eliminar_publicacion">Eliminar</button>
-                            </form>
+                            <p><?php echo htmlspecialchars($publicacion['descripcion']); ?></p> <!-- Descripción debajo de la imagen -->
                         </div>
                     <?php endforeach; ?>
+
                 </div>
             <?php else : ?>
                 <p>No hay publicaciones disponibles.</p>
@@ -144,4 +145,5 @@ if (isset($_POST['eliminar_publicacion'])) {
         </div>
     </div>
 </body>
+
 </html>
