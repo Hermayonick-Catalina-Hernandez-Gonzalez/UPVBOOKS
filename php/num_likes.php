@@ -11,7 +11,7 @@ if (!$id) {
 }
 
 // Actualizar la consulta para seleccionar el campo `likes` desde la vista `fotos_v`
-$sql = "SELECT `likes` FROM `fotos_v` WHERE `id` = ? AND `eliminado` = 0";
+$sql = "SELECT COUNT(*) AS `likes` FROM `fotos_v` WHERE `id` = ? AND `eliminado` = 0";
 $stmt = $connection->prepare($sql);
 $stmt->execute([$id]);
 

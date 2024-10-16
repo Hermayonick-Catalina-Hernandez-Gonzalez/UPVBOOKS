@@ -36,7 +36,7 @@ CREATE TABLE `fotos` (
 
 -- Creación de la tabla `fotos_likes`
 CREATE TABLE `fotos_likes` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `foto_id` int(11) NOT NULL,
   `usuario_dio_like_id` int(11) NOT NULL,
   `fecha_hora` datetime NOT NULL,
