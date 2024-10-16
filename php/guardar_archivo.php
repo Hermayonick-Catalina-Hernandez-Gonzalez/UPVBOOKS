@@ -1,85 +1,79 @@
 <?php
 
 // Importar los archivos necesarios para la ejecución
-require "./config.php";  // Configuraciones generales de la aplicación
-require "./sesion_requerida.php";  // Para acceder a las variables de sesión
-require "./connection.php";  // Para el acceso a datos
+require "./config.php";
+require "./sesion_requerida.php";
+require "./connection.php";
 
-// Indicamos que la respuesta es de tipo JSON, porque la petición será por AJAX
 header("Content-Type: application/json");
 
-$errores = [];  // Array para guardar los errores obtenidos.
-$now = new DateTime();  // Fecha y hora actual de la ejecución
+$errores = [];
+$now = new DateTime();
 
 // Validar que el usuario está autenticado
 if (!$usuarioAutenticado) {
     $errores[] = "El usuario no se ha autenticado";
     echo json_encode(["errores" => $errores]);
-    exit();  // Fin de la ejecución de este archivo PHP
+    exit();
 }
 
 // Validar que se haya enviado el archivo en el request
-if (
-    empty($_FILES) || !isset($_FILES["archivo"]) || empty($_FILES["archivo"]["name"])
-) {
+if (empty($_FILES) || !isset($_FILES["foto"]) || empty($_FILES["foto"]["name"])) {
     $errores[] = "No se recibió el archivo a publicar.";
     echo json_encode(["errores" => $errores]);
-    exit();  // Fin de la ejecución de este archivo PHP
+    exit();
+}
+
+// Verificar si la carpeta de destino existe
+if (!is_dir("C:/xampp/htdocs/xampp/UPVBOOKS/fotos/")) {
+    echo json_encode(["error" => "Directorio no existe."]);
+    exit();
 }
 
 // Obtener el array asociativo con los datos del archivo subido
-$archivoSubido = $_FILES["archivo"];
-
-// Obtener la descripción del archivo
+$archivoSubido = $_FILES["foto"];
 $descripcion = filter_input(INPUT_POST, "descripcion");
-$descripcion = $descripcion && strlen(trim($descripcion)) ? // Valor establecido?
-    trim($descripcion) : NULL;  // SI -> Quitamos espacios en blanco : NO -> NULL
-
-// Obtener los datos del archivo que se subió
-$nombreArchivo = $archivoSubido["name"];  // Nombre del archivo original
-$nombreArchivoParts = explode(".", $nombreArchivo);  // Obtener array por "."
+$descripcion = $descripcion && strlen(trim($descripcion)) ? trim($descripcion) : NULL;
+$nombreArchivo = $archivoSubido["name"];
+$nombreArchivoParts = explode(".", $nombreArchivo);
 $extension = strtolower($nombreArchivoParts[count($nombreArchivoParts) - 1]);
-$tamaño = $archivoSubido["size"];  // Tamaño del archivo subido
+$tamaño = $archivoSubido["size"];
 
 // Validación del tipo de archivo que se subió
 if (!in_array($extension, $EXT_ARCHIVOS_FOTOS)) {
     $errores[] = "El tipo de archivo no es el correcto, solo agregue imágenes.";
     echo json_encode(["errores" => $errores]);
-    exit();  // Fin de la ejecución de este archivo PHP
+    exit();
 }
 
 // Generar un nombre de archivo aleatorio
 $nombreArchivoGuardado = strtoupper(bin2hex(random_bytes(32)));
-$ruta = "C:/xampp/htdocs/xampp/UPVBOOKS/fotos/" . $nombreArchivoGuardado . "." . $extension;  // Ruta donde se guardará el archivo
+$ruta = "C:/xampp/htdocs/xampp/UPVBOOKS/fotos/" . $nombreArchivoGuardado . "." . $extension;
+
+// Intentar mover el archivo subido
 $seGuardo = move_uploaded_file($archivoSubido["tmp_name"], $ruta);
 
-// Si no se guardó el archivo, regresar un error
+// Verificar si se guardó correctamente
 if (!$seGuardo) {
     $errores[] = "Ocurrió un error al guardar el archivo.";
     echo json_encode(["errores" => $errores]);
-    exit();  // Fin de la ejecución de este archivo PHP
+    exit();
 }
 
 // Obtener el SHA256 del archivo
 $hashSha256 = strtoupper(hash_file("sha256", $ruta));
-
-// Obtener la fecha-hora actual en string con formato yyyy-MM-dd HH:mm:ss
 $fechaSubido = $now->format("Y-m-d H:i:s");
 
-// Ejecutar la operación de insert del registro del archivo en DB
-$sqlCmd =  // Sentencia SQL del INSERT
-    "INSERT INTO fotos (secure_id, extension, usuario_subio_id, nombre_archivo, tamaño, descripcion, fecha_subido) VALUES (?, ?, ?, ?, ?, ?, ?)";
-$sqlParam = [  // Array con los datos a guardar
-    $nombreArchivoGuardado, $extension, $usuarioID, $nombreArchivo, $tamaño, $descripcion, $fechaSubido
-];
-
-$stmt = $connection->prepare($sqlCmd);  // Obtener el statement de la ejecución
+// Ejecutar la operación de insert en la base de datos
+$sqlCmd = "INSERT INTO fotos (secure_id, extension, usuario_subio_id, nombre_archivo, tamaño, descripcion, fecha_subido) VALUES (?, ?, ?, ?, ?, ?, ?)";
+$sqlParam = [$nombreArchivoGuardado, $extension, $usuarioID, $nombreArchivo, $tamaño, $descripcion, $fechaSubido];
+$stmt = $connection->prepare($sqlCmd);
 $stmt->execute($sqlParam);
 
-// Obtener el id del registro que insertamos en tabla archivos
-$id = (int)$connection->lastInsertId(); // Convertir a int
+// Obtener el id del registro insertado
+$id = (int)$connection->lastInsertId();
 
-// Regresar una respuesta como un JSON string
+// Responder con el resultado
 $resObj = [
     "errores" => $errores,
     "archivo" => [
@@ -93,4 +87,5 @@ $resObj = [
     ]
 ];
 
-echo json_encode($resObj);  // JSON a regresar como respuesta
+// Aquí es donde regresamos la respuesta como JSON
+echo json_encode($resObj);

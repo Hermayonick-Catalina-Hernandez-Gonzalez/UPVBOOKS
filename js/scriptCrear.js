@@ -26,6 +26,9 @@ document.getElementById('formCrear').addEventListener("submit", function (e) {
 
   var formData = new FormData(this);
 
+  // Depuración: mostrar qué datos se están enviando
+  console.log([...formData.entries()]);
+
   $.ajax({
     type: "post",
     url: "../php/guardar_archivo.php",
@@ -37,6 +40,6 @@ document.getElementById('formCrear').addEventListener("submit", function (e) {
     },
     error: function(jqXHR, textStatus, errorThrown) {
       console.error('Error:', textStatus);
-  }
+    }
   });
 });
