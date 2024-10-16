@@ -20,14 +20,11 @@ document.getElementById('seleccionar-foto').addEventListener('click', function (
 document.getElementById('formCrear').addEventListener("submit", function (e) {
   e.preventDefault();
 
-  if(!confirm("¿Quieres publicar esta foto?")){
+  if (!confirm("¿Quieres publicar esta foto?")) {
     return false;
   }
 
   var formData = new FormData(this);
-
-  // Depuración: mostrar qué datos se están enviando
-  console.log([...formData.entries()]);
 
   $.ajax({
     type: "post",
@@ -38,7 +35,7 @@ document.getElementById('formCrear').addEventListener("submit", function (e) {
     success: function (response) {
       window.location.href = "../vistas/perfil.php";
     },
-    error: function(jqXHR, textStatus, errorThrown) {
+    error: function (jqXHR, textStatus, errorThrown) {
       console.error('Error:', textStatus);
     }
   });

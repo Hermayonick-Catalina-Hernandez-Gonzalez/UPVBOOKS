@@ -22,7 +22,7 @@ CREATE TABLE `usuarios` (
 
 -- Creación de la tabla `fotos`
 CREATE TABLE `fotos` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,,
   `secure_id` varchar(64) NOT NULL,
   `extension` varchar(10) NOT NULL,
   `usuario_subio_id` int(11) NOT NULL,
