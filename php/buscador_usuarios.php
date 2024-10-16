@@ -25,12 +25,10 @@ if ($stmt->rowCount() > 0) {
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         echo "<li class='perfil-usuario'>"; // Inicia un elemento de lista
 
-        // Mostrar la imagen de perfil si existe en formato BLOB
+        // Mostrar la imagen de perfil si existe
         if (!empty($row["foto_perfil"])) {
-            // Convertir el BLOB a base64
-            $imagen_base64 = base64_encode($row['foto_perfil']); // Cambia usuarioResp a row
-            // Crear el formato adecuado para la etiqueta <img>
-            $imagen_usuario = "data:image/jpeg;base64," . $imagen_base64;
+            // Suponiendo que el nombre del archivo de imagen de perfil está almacenado en la base de datos
+            $imagen_usuario = "../fotos_perfil/" . $row['foto_perfil'];
             echo "<img src='$imagen_usuario' alt='Foto de Usuario' class='foto-usuario'>";
         } else {
             // Imagen predeterminada si no hay foto de perfil

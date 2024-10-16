@@ -2,8 +2,8 @@
 require "./php/sesion_requerida.php";
 require "./php/connection.php";
 
-// Consulta para obtener publicaciones de usuarios seguidos
-$sql = "SELECT f.*, u.username as usuario_subio_username 
+// Consulta para obtener publicaciones de usuarios seguidos junto con sus fotos de perfil
+$sql = "SELECT f.*, u.username as usuario_subio_username, u.foto_perfil
         FROM fotos_v f
         JOIN usuarios u ON f.usuario_subio_id = u.id
         WHERE (
@@ -46,31 +46,23 @@ $stmt->execute([$usuarioID, $usuarioID]);
         if ($stmt->rowCount() > 0) {
             $publicaciones = $stmt->fetchAll();
             foreach ($publicaciones as $publicacion) {
-                // Consulta para obtener la foto de perfil del usuario
-                $sqlUsuario = "SELECT foto_perfil FROM usuarios WHERE id = ?";
-                $stmtUsuario = $connection->prepare($sqlUsuario);
-                $stmtUsuario->execute([$publicacion["usuario_subio_id"]]);
-                $resultadoUsuario = $stmtUsuario->fetch();
-
-                // Verificar si el usuario tiene foto de perfil
-                $fotoPerfil = (!empty($resultadoUsuario['foto_perfil']))
-                    ? 'data:image/jpeg;base64,' . base64_encode($resultadoUsuario['foto_perfil'])
-                    : 'fotos_perfil/default.png';  // Ruta de la imagen por defecto
-
+                // Verificar si el usuario tiene una imagen de perfil personalizada
+                $fotoPerfil = (!empty($publicacion['foto_perfil']))
+                    ? './fotos_perfil/' . $publicacion['foto_perfil']
+                    : './fotos_perfil/default.png';  // Ruta de la imagen por defecto
         ?>
                 <div class="publicacion">
                     <div class="info-usuario">
                         <div class="nombre">
                             <img src="<?= $fotoPerfil ?>" alt="Perfil" style="width: 60px; height: 60px;">
                             <span>
-                                <?= isset($publicacion["usuario_subio_username"]) ? $publicacion["usuario_subio_username"] : 'Usuario desconocido'; ?>
+                                <?= isset($publicacion["usuario_subio_username"]) ? htmlspecialchars($publicacion["usuario_subio_username"]) : 'Usuario desconocido'; ?>
                             </span>
-
                         </div>
-                        <p><?= $publicacion["descripcion"] ?></p>
+                        <p><?= htmlspecialchars($publicacion["descripcion"]) ?></p>
 
                         <div class="foto-publicacion">
-                            <img src="fotos/<?= $publicacion["secure_id"] . "." . $publicacion["extension"] ?>" alt="<?= $publicacion["nombre_archivo"] ?>">
+                            <img src="fotos/<?= htmlspecialchars($publicacion["secure_id"] . "." . $publicacion["extension"]) ?>" alt="<?= htmlspecialchars($publicacion["nombre_archivo"]) ?>">
                         </div>
 
                         <div class="reaccion" id="like" data-id="<?= $publicacion["id"] ?>">
@@ -90,4 +82,4 @@ $stmt->execute([$usuarioID, $usuarioID]);
     <script src="./js/scriptInicio.js"></script>
 </body>
 
-</html> 
+</html>

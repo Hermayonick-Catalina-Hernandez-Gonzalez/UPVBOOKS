@@ -11,6 +11,15 @@ $stmt = $connection->prepare($sql);
 $stmt->execute([$usuario_id]);
 $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
 
+// Verificar si el usuario tiene una foto de perfil guardada
+if (!empty($usuario['foto_perfil'])) {
+    // Si el campo foto_perfil contiene el nombre de un archivo, cargar desde la carpeta fotos_perfil
+    $imagen_usuario = "../fotos_perfil/" . $usuario['foto_perfil'];
+} else {
+    // Imagen predeterminada si no hay foto de perfil
+    $imagen_usuario = "../img/default_perfil.png"; 
+}
+
 // Consulta para obtener el número de publicaciones
 $sql_publicaciones = "SELECT COUNT(*) AS num_publicaciones FROM fotos WHERE usuario_subio_id = ? AND eliminado = 0";
 $stmt_publicaciones = $connection->prepare($sql_publicaciones);
@@ -37,23 +46,8 @@ $sql_publicaciones_usuario = "SELECT * FROM fotos WHERE usuario_subio_id = ? AND
 $stmt_publicaciones_usuario = $connection->prepare($sql_publicaciones_usuario);
 $stmt_publicaciones_usuario->execute([$usuario_id]);
 $publicaciones_usuario = $stmt_publicaciones_usuario->fetchAll(PDO::FETCH_ASSOC);
-
-if (isset($usuario['foto_perfil']) && !empty($usuario['foto_perfil'])) {
-  // Intenta determinar el formato de la imagen
-  $finfo = finfo_open(FILEINFO_MIME_TYPE);
-  $mime_type = finfo_buffer($finfo, $usuario['foto_perfil']);
-  
-  $imagen_base64 = base64_encode($usuario['foto_perfil']);
-  $imagen_usuario = "data:" . $mime_type . ";base64," . $imagen_base64;
-} else {
-  // Imagen predeterminada si no hay foto de perfil
-  $imagen_usuario = "../img/default_perfil.png"; 
-}
-
-
-
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -83,7 +77,7 @@ if (isset($usuario['foto_perfil']) && !empty($usuario['foto_perfil'])) {
       </div>
 
       <div class="info-usuario">
-        <div class="nombre-usuario"><?php echo $usuario['username']; ?></div>
+        <div class="nombre-usuario"><?php echo htmlspecialchars($usuario['username']); ?></div>
         <button class="editar-perfil"><a href="./editarperfil.php">Editar</a></button>
       </div>
 
@@ -97,7 +91,7 @@ if (isset($usuario['foto_perfil']) && !empty($usuario['foto_perfil'])) {
         <?php if (isset($publicaciones_usuario) && !empty($publicaciones_usuario)) : ?>
           <?php foreach ($publicaciones_usuario as $publicacion) : ?>
             <div class="publicacion">
-              <img src="../fotos/<?php echo $publicacion['secure_id'] . "." . $publicacion['extension']; ?>" alt="<?php echo $publicacion['descripcion']; ?>">
+              <img src="../fotos/<?php echo htmlspecialchars($publicacion['secure_id'] . "." . $publicacion['extension']); ?>" alt="<?php echo htmlspecialchars($publicacion['descripcion']); ?>">
               <form method="post" onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta publicación?');" action="../php/borrar_archivo.php">
                 <input type="hidden" name="publicacion_id" value="<?php echo $publicacion['id']; ?>" id="publicacion_id">
                 <button class="eliminar-publicacion" type="submit" name="eliminar_publicacion">Eliminar</button>
