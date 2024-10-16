@@ -39,18 +39,18 @@ $stmt_publicaciones_usuario->execute([$usuario_id]);
 $publicaciones_usuario = $stmt_publicaciones_usuario->fetchAll(PDO::FETCH_ASSOC);
 
 if (isset($usuario['foto_perfil']) && !empty($usuario['foto_perfil'])) {
-  // Verificar si hay datos en la imagen
-  if (strlen($usuario['foto_perfil']) > 0) {
-      $imagen_base64 = base64_encode($usuario['foto_perfil']);
-      $imagen_usuario = "data:image/jpeg;base64," . $imagen_base64;
-  } else {
-      // Imagen predeterminada si no hay foto de perfil
-      $imagen_usuario = "../img/default_perfil.png"; 
-  }
+  // Intenta determinar el formato de la imagen
+  $finfo = finfo_open(FILEINFO_MIME_TYPE);
+  $mime_type = finfo_buffer($finfo, $usuario['foto_perfil']);
+  
+  $imagen_base64 = base64_encode($usuario['foto_perfil']);
+  $imagen_usuario = "data:" . $mime_type . ";base64," . $imagen_base64;
 } else {
   // Imagen predeterminada si no hay foto de perfil
   $imagen_usuario = "../img/default_perfil.png"; 
 }
+
+
 
 
 ?>
