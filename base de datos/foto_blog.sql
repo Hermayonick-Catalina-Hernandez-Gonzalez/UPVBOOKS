@@ -1,7 +1,7 @@
 -- Creación de la base de datos.
-CREATE DATABASE `foto_blog` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
+CREATE DATABASE `foto` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
 
-USE foto_blog;
+USE foto;
 
 -- Creación de table usuarios.
 CREATE TABLE `usuarios` (

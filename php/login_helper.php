@@ -52,4 +52,3 @@ function autentificar($username, $password) {
         "apellidos" => $usuario["apellidos"],
     ];
 }
-

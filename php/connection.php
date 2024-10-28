@@ -2,7 +2,7 @@
 $nombreServidor = "localhost";
 $userBD = "root";
 $password = "";
-$nombreBD = "foto_blog";
+$nombreBD = "foto";
 
 try {
     $connection = new PDO("mysql:host=$nombreServidor;dbname=$nombreBD;charset=utf8", $userBD, $password);
